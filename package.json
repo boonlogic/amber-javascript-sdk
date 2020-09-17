@@ -7,6 +7,7 @@
   "scripts": {
     "package": "rm -rf dist && mkdir dist && babel ./src -d dist --copy-files",
     "test": "mocha --compilers js:babel-core/register --recursive"
+    "generate": "swagger-codegen generate -DprojectName=amber-javascript-sdk -DusePromises=true -i swagger.json -l javascript -o .
   },
   "browser": {
     "fs": false
