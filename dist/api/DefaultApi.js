@@ -422,12 +422,14 @@ var DefaultApi = function () {
 
   }, {
     key: 'putSensor',
-    value: function putSensor(body, callback) {
+    value: function putSensor(body, sensorId, callback) {
       var postBody = body;
 
       var pathParams = {};
       var queryParams = {};
-      var headerParams = {};
+      var headerParams = {
+        'sensorId': sensorId
+      };
       var formParams = {};
 
       var authNames = ['authorize-amber-pool'];
