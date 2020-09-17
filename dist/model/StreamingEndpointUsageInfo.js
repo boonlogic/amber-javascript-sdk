@@ -40,11 +40,11 @@ var StreamingEndpointUsageInfo = function () {
     function StreamingEndpointUsageInfo() {
         _classCallCheck(this, StreamingEndpointUsageInfo);
 
-        this['callsTotal'] = undefined;
         this['callsThisPeriod'] = undefined;
-        this['samplesTotal'] = undefined;
-        this['samplesThisPeriod'] = undefined;
+        this['callsTotal'] = undefined;
         this['lastCalled'] = undefined;
+        this['samplesThisPeriod'] = undefined;
+        this['samplesTotal'] = undefined;
     }
 
     /**
@@ -62,29 +62,24 @@ var StreamingEndpointUsageInfo = function () {
             if (data) {
                 obj = obj || new StreamingEndpointUsageInfo();
 
-                if (data.hasOwnProperty('callsTotal')) {
-                    obj['callsTotal'] = _ApiClient2.default.convertToType(data['callsTotal'], 'Number');
-                }
                 if (data.hasOwnProperty('callsThisPeriod')) {
                     obj['callsThisPeriod'] = _ApiClient2.default.convertToType(data['callsThisPeriod'], 'Number');
                 }
-                if (data.hasOwnProperty('samplesTotal')) {
-                    obj['samplesTotal'] = _ApiClient2.default.convertToType(data['samplesTotal'], 'Number');
-                }
-                if (data.hasOwnProperty('samplesThisPeriod')) {
-                    obj['samplesThisPeriod'] = _ApiClient2.default.convertToType(data['samplesThisPeriod'], 'Number');
+                if (data.hasOwnProperty('callsTotal')) {
+                    obj['callsTotal'] = _ApiClient2.default.convertToType(data['callsTotal'], 'Number');
                 }
                 if (data.hasOwnProperty('lastCalled')) {
                     obj['lastCalled'] = _ApiClient2.default.convertToType(data['lastCalled'], 'String');
                 }
+                if (data.hasOwnProperty('samplesThisPeriod')) {
+                    obj['samplesThisPeriod'] = _ApiClient2.default.convertToType(data['samplesThisPeriod'], 'Number');
+                }
+                if (data.hasOwnProperty('samplesTotal')) {
+                    obj['samplesTotal'] = _ApiClient2.default.convertToType(data['samplesTotal'], 'Number');
+                }
             }
             return obj;
         }
-
-        /**
-        * total number of calls to this endpoint
-        * @member {Number} callsTotal
-        */
 
         /**
         * number of calls to this endpoint during the current billing period
@@ -92,8 +87,13 @@ var StreamingEndpointUsageInfo = function () {
         */
 
         /**
-        * total number of samples processed
-        * @member {Number} samplesTotal
+        * total number of calls to this endpoint
+        * @member {Number} callsTotal
+        */
+
+        /**
+        * ISO formatted time of last call to this endpoint
+        * @member {String} lastCalled
         */
 
         /**
@@ -102,8 +102,8 @@ var StreamingEndpointUsageInfo = function () {
         */
 
         /**
-        * ISO formatted time of last call to this endpoint
-        * @member {String} lastCalled
+        * total number of samples processed
+        * @member {Number} samplesTotal
         */
 
     }]);

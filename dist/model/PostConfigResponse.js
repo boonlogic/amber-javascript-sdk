@@ -21,10 +21,6 @@ var _ApiClient = require('../ApiClient');
 
 var _ApiClient2 = _interopRequireDefault(_ApiClient);
 
-var _PostConfigRequest = require('./PostConfigRequest');
-
-var _PostConfigRequest2 = _interopRequireDefault(_PostConfigRequest);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -39,15 +35,10 @@ var PostConfigResponse = function () {
     * Constructs a new <code>PostConfigResponse</code>.
     * @alias module:model/PostConfigResponse
     * @class
-    * @extends module:model/PostConfigRequest
-    * @param featureCount {} number of features per sample
-    * @param streamingWindowSize {} streaming window size
     */
 
-    function PostConfigResponse(featureCount, streamingWindowSize) {
+    function PostConfigResponse() {
         _classCallCheck(this, PostConfigResponse);
-
-        _PostConfigRequest2.default.call(this, featureCount, streamingWindowSize);
     }
 
     /**
@@ -64,8 +55,6 @@ var PostConfigResponse = function () {
         value: function constructFromObject(data, obj) {
             if (data) {
                 obj = obj || new PostConfigResponse();
-
-                _PostConfigRequest2.default.constructFromObject(data, obj);
             }
             return obj;
         }

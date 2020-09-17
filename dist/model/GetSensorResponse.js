@@ -21,14 +21,6 @@ var _ApiClient = require('../ApiClient');
 
 var _ApiClient2 = _interopRequireDefault(_ApiClient);
 
-var _SensorInstanceFull = require('./SensorInstanceFull');
-
-var _SensorInstanceFull2 = _interopRequireDefault(_SensorInstanceFull);
-
-var _SensorUsageInfo = require('./SensorUsageInfo');
-
-var _SensorUsageInfo2 = _interopRequireDefault(_SensorUsageInfo);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43,13 +35,10 @@ var GetSensorResponse = function () {
     * Constructs a new <code>GetSensorResponse</code>.
     * @alias module:model/GetSensorResponse
     * @class
-    * @extends module:model/SensorInstanceFull
     */
 
     function GetSensorResponse() {
         _classCallCheck(this, GetSensorResponse);
-
-        _SensorInstanceFull2.default.call(this);
     }
 
     /**
@@ -66,8 +55,6 @@ var GetSensorResponse = function () {
         value: function constructFromObject(data, obj) {
             if (data) {
                 obj = obj || new GetSensorResponse();
-
-                _SensorInstanceFull2.default.constructFromObject(data, obj);
             }
             return obj;
         }

@@ -12,7 +12,6 @@
  */
 
 import ApiClient from '../ApiClient';
-import PostConfigRequest from './PostConfigRequest';
 
 /**
 * The PostConfigResponse model module.
@@ -24,13 +23,10 @@ export default class PostConfigResponse {
     * Constructs a new <code>PostConfigResponse</code>.
     * @alias module:model/PostConfigResponse
     * @class
-    * @extends module:model/PostConfigRequest
-    * @param featureCount {} number of features per sample
-    * @param streamingWindowSize {} streaming window size
     */
 
-    constructor(featureCount, streamingWindowSize) {
-        PostConfigRequest.call(this, featureCount, streamingWindowSize);
+    constructor() {
+        
         
         
     }
@@ -45,8 +41,7 @@ export default class PostConfigResponse {
     static constructFromObject(data, obj) {
         if (data) {
             obj = obj || new PostConfigResponse();
-            
-            PostConfigRequest.constructFromObject(data, obj);
+                        
             
         }
         return obj;

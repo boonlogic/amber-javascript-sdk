@@ -35,24 +35,24 @@ var PostAuth2Response = function () {
     * Constructs a new <code>PostAuth2Response</code>.
     * @alias module:model/PostAuth2Response
     * @class
+    * @param expiresIn {Number} Amount of time before token expires
     * @param idToken {String} Identifier token to be used as Bearer token
     * @param refreshToken {String} Refresh token identifier
-    * @param expiresIn {Number} Amount of time before token expires
     * @param tokenType {String} Type of authentication token
     */
 
-    function PostAuth2Response(idToken, refreshToken, expiresIn, tokenType) {
+    function PostAuth2Response(expiresIn, idToken, refreshToken, tokenType) {
         _classCallCheck(this, PostAuth2Response);
 
+        this['expiresIn'] = undefined;
         this['idToken'] = undefined;
         this['refreshToken'] = undefined;
-        this['expiresIn'] = undefined;
         this['tokenType'] = undefined;
 
 
+        this['expiresIn'] = expiresIn;
         this['idToken'] = idToken;
         this['refreshToken'] = refreshToken;
-        this['expiresIn'] = expiresIn;
         this['tokenType'] = tokenType;
     }
 
@@ -71,14 +71,14 @@ var PostAuth2Response = function () {
             if (data) {
                 obj = obj || new PostAuth2Response();
 
+                if (data.hasOwnProperty('expiresIn')) {
+                    obj['expiresIn'] = _ApiClient2.default.convertToType(data['expiresIn'], 'Number');
+                }
                 if (data.hasOwnProperty('idToken')) {
                     obj['idToken'] = _ApiClient2.default.convertToType(data['idToken'], 'String');
                 }
                 if (data.hasOwnProperty('refreshToken')) {
                     obj['refreshToken'] = _ApiClient2.default.convertToType(data['refreshToken'], 'String');
-                }
-                if (data.hasOwnProperty('expiresIn')) {
-                    obj['expiresIn'] = _ApiClient2.default.convertToType(data['expiresIn'], 'Number');
                 }
                 if (data.hasOwnProperty('tokenType')) {
                     obj['tokenType'] = _ApiClient2.default.convertToType(data['tokenType'], 'String');
@@ -88,6 +88,11 @@ var PostAuth2Response = function () {
         }
 
         /**
+        * Amount of time before token expires
+        * @member {Number} expiresIn
+        */
+
+        /**
         * Identifier token to be used as Bearer token
         * @member {String} idToken
         */
@@ -95,11 +100,6 @@ var PostAuth2Response = function () {
         /**
         * Refresh token identifier
         * @member {String} refreshToken
-        */
-
-        /**
-        * Amount of time before token expires
-        * @member {Number} expiresIn
         */
 
         /**

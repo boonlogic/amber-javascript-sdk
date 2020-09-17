@@ -35,32 +35,32 @@ var StreamStatus = function () {
     * Constructs a new <code>StreamStatus</code>.
     * @alias module:model/StreamStatus
     * @class
-    * @param state {String} state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error, Autotuning retry
+    * @param clusterCount {Number} current cluster count (applies to Learning and Monitoring states)
     * @param message {String} message to accompany the current state
     * @param progress {Number} completion percentage (applies to Buffering and Autotuning states)
-    * @param clusterCount {Number} current cluster count (applies to Learning and Monitoring states)
     * @param retryCount {Number} number of restarts that have happened during autotuning
+    * @param state {String} state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error, Autotuning retry
     * @param streamingWindowSize {Number} the current streaming window size that is being used
     * @param totalInferences {Number} inferences since the most recent restart
     */
 
-    function StreamStatus(state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences) {
+    function StreamStatus(clusterCount, message, progress, retryCount, state, streamingWindowSize, totalInferences) {
         _classCallCheck(this, StreamStatus);
 
-        this['state'] = undefined;
+        this['clusterCount'] = undefined;
         this['message'] = undefined;
         this['progress'] = undefined;
-        this['clusterCount'] = undefined;
         this['retryCount'] = undefined;
+        this['state'] = undefined;
         this['streamingWindowSize'] = undefined;
         this['totalInferences'] = undefined;
 
 
-        this['state'] = state;
+        this['clusterCount'] = clusterCount;
         this['message'] = message;
         this['progress'] = progress;
-        this['clusterCount'] = clusterCount;
         this['retryCount'] = retryCount;
+        this['state'] = state;
         this['streamingWindowSize'] = streamingWindowSize;
         this['totalInferences'] = totalInferences;
     }
@@ -80,8 +80,8 @@ var StreamStatus = function () {
             if (data) {
                 obj = obj || new StreamStatus();
 
-                if (data.hasOwnProperty('state')) {
-                    obj['state'] = _ApiClient2.default.convertToType(data['state'], 'String');
+                if (data.hasOwnProperty('clusterCount')) {
+                    obj['clusterCount'] = _ApiClient2.default.convertToType(data['clusterCount'], 'Number');
                 }
                 if (data.hasOwnProperty('message')) {
                     obj['message'] = _ApiClient2.default.convertToType(data['message'], 'String');
@@ -89,11 +89,11 @@ var StreamStatus = function () {
                 if (data.hasOwnProperty('progress')) {
                     obj['progress'] = _ApiClient2.default.convertToType(data['progress'], 'Number');
                 }
-                if (data.hasOwnProperty('clusterCount')) {
-                    obj['clusterCount'] = _ApiClient2.default.convertToType(data['clusterCount'], 'Number');
-                }
                 if (data.hasOwnProperty('retryCount')) {
                     obj['retryCount'] = _ApiClient2.default.convertToType(data['retryCount'], 'Number');
+                }
+                if (data.hasOwnProperty('state')) {
+                    obj['state'] = _ApiClient2.default.convertToType(data['state'], 'String');
                 }
                 if (data.hasOwnProperty('streamingWindowSize')) {
                     obj['streamingWindowSize'] = _ApiClient2.default.convertToType(data['streamingWindowSize'], 'Number');
@@ -106,8 +106,8 @@ var StreamStatus = function () {
         }
 
         /**
-        * state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error, Autotuning retry
-        * @member {String} state
+        * current cluster count (applies to Learning and Monitoring states)
+        * @member {Number} clusterCount
         */
 
         /**
@@ -121,13 +121,13 @@ var StreamStatus = function () {
         */
 
         /**
-        * current cluster count (applies to Learning and Monitoring states)
-        * @member {Number} clusterCount
+        * number of restarts that have happened during autotuning
+        * @member {Number} retryCount
         */
 
         /**
-        * number of restarts that have happened during autotuning
-        * @member {Number} retryCount
+        * state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error, Autotuning retry
+        * @member {String} state
         */
 
         /**

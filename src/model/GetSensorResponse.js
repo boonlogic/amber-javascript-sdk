@@ -12,8 +12,6 @@
  */
 
 import ApiClient from '../ApiClient';
-import SensorInstanceFull from './SensorInstanceFull';
-import SensorUsageInfo from './SensorUsageInfo';
 
 /**
 * The GetSensorResponse model module.
@@ -25,11 +23,10 @@ export default class GetSensorResponse {
     * Constructs a new <code>GetSensorResponse</code>.
     * @alias module:model/GetSensorResponse
     * @class
-    * @extends module:model/SensorInstanceFull
     */
 
     constructor() {
-        SensorInstanceFull.call(this);
+        
         
         
     }
@@ -44,8 +41,7 @@ export default class GetSensorResponse {
     static constructFromObject(data, obj) {
         if (data) {
             obj = obj || new GetSensorResponse();
-            
-            SensorInstanceFull.constructFromObject(data, obj);
+                        
             
         }
         return obj;

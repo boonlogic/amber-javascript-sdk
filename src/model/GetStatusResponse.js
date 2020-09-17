@@ -48,8 +48,8 @@ export default class GetStatusResponse {
             obj = obj || new GetStatusResponse();
                         
             
-            if (data.hasOwnProperty('pca')) {
-                obj['pca'] = PCA.constructFromObject(data['pca']);
+            if (data.hasOwnProperty('anomalyIndexes')) {
+                obj['anomalyIndexes'] = Uint16Array.constructFromObject(data['anomalyIndexes']);
             }
             if (data.hasOwnProperty('clusterGrowth')) {
                 obj['clusterGrowth'] = Uint64Array.constructFromObject(data['clusterGrowth']);
@@ -57,29 +57,29 @@ export default class GetStatusResponse {
             if (data.hasOwnProperty('clusterSizes')) {
                 obj['clusterSizes'] = Uint64Array.constructFromObject(data['clusterSizes']);
             }
-            if (data.hasOwnProperty('anomalyIndexes')) {
-                obj['anomalyIndexes'] = Uint16Array.constructFromObject(data['anomalyIndexes']);
+            if (data.hasOwnProperty('distanceIndexes')) {
+                obj['distanceIndexes'] = Uint16Array.constructFromObject(data['distanceIndexes']);
             }
             if (data.hasOwnProperty('frequencyIndexes')) {
                 obj['frequencyIndexes'] = Uint16Array.constructFromObject(data['frequencyIndexes']);
             }
-            if (data.hasOwnProperty('distanceIndexes')) {
-                obj['distanceIndexes'] = Uint16Array.constructFromObject(data['distanceIndexes']);
+            if (data.hasOwnProperty('numClusters')) {
+                obj['numClusters'] = NumClusters.constructFromObject(data['numClusters']);
+            }
+            if (data.hasOwnProperty('pca')) {
+                obj['pca'] = PCA.constructFromObject(data['pca']);
             }
             if (data.hasOwnProperty('totalInferences')) {
                 obj['totalInferences'] = TotalInferences.constructFromObject(data['totalInferences']);
-            }
-            if (data.hasOwnProperty('numClusters')) {
-                obj['numClusters'] = NumClusters.constructFromObject(data['numClusters']);
             }
         }
         return obj;
     }
 
     /**
-    * @member {module:model/PCA} pca
+    * @member {module:model/Uint16Array} anomalyIndexes
     */
-    'pca' = undefined;
+    'anomalyIndexes' = undefined;
     /**
     * @member {module:model/Uint64Array} clusterGrowth
     */
@@ -89,25 +89,25 @@ export default class GetStatusResponse {
     */
     'clusterSizes' = undefined;
     /**
-    * @member {module:model/Uint16Array} anomalyIndexes
+    * @member {module:model/Uint16Array} distanceIndexes
     */
-    'anomalyIndexes' = undefined;
+    'distanceIndexes' = undefined;
     /**
     * @member {module:model/Uint16Array} frequencyIndexes
     */
     'frequencyIndexes' = undefined;
     /**
-    * @member {module:model/Uint16Array} distanceIndexes
+    * @member {module:model/NumClusters} numClusters
     */
-    'distanceIndexes' = undefined;
+    'numClusters' = undefined;
+    /**
+    * @member {module:model/PCA} pca
+    */
+    'pca' = undefined;
     /**
     * @member {module:model/TotalInferences} totalInferences
     */
     'totalInferences' = undefined;
-    /**
-    * @member {module:model/NumClusters} numClusters
-    */
-    'numClusters' = undefined;
 
 
 

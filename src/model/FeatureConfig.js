@@ -23,15 +23,15 @@ export default class FeatureConfig {
     * Constructs a new <code>FeatureConfig</code>.
     * @alias module:model/FeatureConfig
     * @class
-    * @param minVal {Number} the value that should be considered the minimum value for this feature. This can be set to a value larger than the actual min if you want to treat all value less than that as the same (for instance, to keep a noise spike from having undue influence in the clustering
     * @param maxVal {Number} corresponding maximum value
+    * @param minVal {Number} the value that should be considered the minimum value for this feature. This can be set to a value larger than the actual min if you want to treat all value less than that as the same (for instance, to keep a noise spike from having undue influence in the clustering
     */
 
-    constructor(minVal, maxVal) {
+    constructor(maxVal, minVal) {
         
         
-        this['minVal'] = minVal;
         this['maxVal'] = maxVal;
+        this['minVal'] = minVal;
         
     }
 
@@ -47,26 +47,26 @@ export default class FeatureConfig {
             obj = obj || new FeatureConfig();
                         
             
-            if (data.hasOwnProperty('minVal')) {
-                obj['minVal'] = ApiClient.convertToType(data['minVal'], 'Number');
-            }
             if (data.hasOwnProperty('maxVal')) {
                 obj['maxVal'] = ApiClient.convertToType(data['maxVal'], 'Number');
+            }
+            if (data.hasOwnProperty('minVal')) {
+                obj['minVal'] = ApiClient.convertToType(data['minVal'], 'Number');
             }
         }
         return obj;
     }
 
     /**
-    * the value that should be considered the minimum value for this feature. This can be set to a value larger than the actual min if you want to treat all value less than that as the same (for instance, to keep a noise spike from having undue influence in the clustering
-    * @member {Number} minVal
-    */
-    'minVal' = undefined;
-    /**
     * corresponding maximum value
     * @member {Number} maxVal
     */
     'maxVal' = undefined;
+    /**
+    * the value that should be considered the minimum value for this feature. This can be set to a value larger than the actual min if you want to treat all value less than that as the same (for instance, to keep a noise spike from having undue influence in the clustering
+    * @member {Number} minVal
+    */
+    'minVal' = undefined;
 
 
 

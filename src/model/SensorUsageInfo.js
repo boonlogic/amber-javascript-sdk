@@ -45,6 +45,15 @@ export default class SensorUsageInfo {
             obj = obj || new SensorUsageInfo();
                         
             
+            if (data.hasOwnProperty('getConfig')) {
+                obj['getConfig'] = EndpointUsageInfo.constructFromObject(data['getConfig']);
+            }
+            if (data.hasOwnProperty('getSensor')) {
+                obj['getSensor'] = EndpointUsageInfo.constructFromObject(data['getSensor']);
+            }
+            if (data.hasOwnProperty('getStatus')) {
+                obj['getStatus'] = EndpointUsageInfo.constructFromObject(data['getStatus']);
+            }
             if (data.hasOwnProperty('postConfig')) {
                 obj['postConfig'] = EndpointUsageInfo.constructFromObject(data['postConfig']);
             }
@@ -54,19 +63,22 @@ export default class SensorUsageInfo {
             if (data.hasOwnProperty('putSensor')) {
                 obj['putSensor'] = EndpointUsageInfo.constructFromObject(data['putSensor']);
             }
-            if (data.hasOwnProperty('getSensor')) {
-                obj['getSensor'] = EndpointUsageInfo.constructFromObject(data['getSensor']);
-            }
-            if (data.hasOwnProperty('getConfig')) {
-                obj['getConfig'] = EndpointUsageInfo.constructFromObject(data['getConfig']);
-            }
-            if (data.hasOwnProperty('getStatus')) {
-                obj['getStatus'] = EndpointUsageInfo.constructFromObject(data['getStatus']);
-            }
         }
         return obj;
     }
 
+    /**
+    * @member {module:model/EndpointUsageInfo} getConfig
+    */
+    'getConfig' = undefined;
+    /**
+    * @member {module:model/EndpointUsageInfo} getSensor
+    */
+    'getSensor' = undefined;
+    /**
+    * @member {module:model/EndpointUsageInfo} getStatus
+    */
+    'getStatus' = undefined;
     /**
     * @member {module:model/EndpointUsageInfo} postConfig
     */
@@ -79,18 +91,6 @@ export default class SensorUsageInfo {
     * @member {module:model/EndpointUsageInfo} putSensor
     */
     'putSensor' = undefined;
-    /**
-    * @member {module:model/EndpointUsageInfo} getSensor
-    */
-    'getSensor' = undefined;
-    /**
-    * @member {module:model/EndpointUsageInfo} getConfig
-    */
-    'getConfig' = undefined;
-    /**
-    * @member {module:model/EndpointUsageInfo} getStatus
-    */
-    'getStatus' = undefined;
 
 
 

@@ -35,19 +35,19 @@ var PostAuth2Request = function () {
     * Constructs a new <code>PostAuth2Request</code>.
     * @alias module:model/PostAuth2Request
     * @class
-    * @param username {String} Username for authenticating
     * @param password {String} Password for authenticating
+    * @param username {String} Username for authenticating
     */
 
-    function PostAuth2Request(username, password) {
+    function PostAuth2Request(password, username) {
         _classCallCheck(this, PostAuth2Request);
 
-        this['username'] = undefined;
         this['password'] = undefined;
+        this['username'] = undefined;
 
 
-        this['username'] = username;
         this['password'] = password;
+        this['username'] = username;
     }
 
     /**
@@ -65,24 +65,24 @@ var PostAuth2Request = function () {
             if (data) {
                 obj = obj || new PostAuth2Request();
 
-                if (data.hasOwnProperty('username')) {
-                    obj['username'] = _ApiClient2.default.convertToType(data['username'], 'String');
-                }
                 if (data.hasOwnProperty('password')) {
                     obj['password'] = _ApiClient2.default.convertToType(data['password'], 'String');
+                }
+                if (data.hasOwnProperty('username')) {
+                    obj['username'] = _ApiClient2.default.convertToType(data['username'], 'String');
                 }
             }
             return obj;
         }
 
         /**
-        * Username for authenticating
-        * @member {String} username
+        * Password for authenticating
+        * @member {String} password
         */
 
         /**
-        * Password for authenticating
-        * @member {String} password
+        * Username for authenticating
+        * @member {String} username
         */
 
     }]);

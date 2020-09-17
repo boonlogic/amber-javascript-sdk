@@ -43,11 +43,11 @@ export default class EndpointUsageInfo {
             obj = obj || new EndpointUsageInfo();
                         
             
-            if (data.hasOwnProperty('callsTotal')) {
-                obj['callsTotal'] = ApiClient.convertToType(data['callsTotal'], 'Number');
-            }
             if (data.hasOwnProperty('callsThisPeriod')) {
                 obj['callsThisPeriod'] = ApiClient.convertToType(data['callsThisPeriod'], 'Number');
+            }
+            if (data.hasOwnProperty('callsTotal')) {
+                obj['callsTotal'] = ApiClient.convertToType(data['callsTotal'], 'Number');
             }
             if (data.hasOwnProperty('lastCalled')) {
                 obj['lastCalled'] = ApiClient.convertToType(data['lastCalled'], 'String');
@@ -57,15 +57,15 @@ export default class EndpointUsageInfo {
     }
 
     /**
-    * total number of calls to this endpoint
-    * @member {Number} callsTotal
-    */
-    'callsTotal' = undefined;
-    /**
     * number of calls to this endpoint during the current billing period
     * @member {Number} callsThisPeriod
     */
     'callsThisPeriod' = undefined;
+    /**
+    * total number of calls to this endpoint
+    * @member {Number} callsTotal
+    */
+    'callsTotal' = undefined;
     /**
     * ISO formatted time of last call to this endpoint
     * @member {String} lastCalled

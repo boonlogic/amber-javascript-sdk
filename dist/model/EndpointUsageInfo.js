@@ -40,8 +40,8 @@ var EndpointUsageInfo = function () {
     function EndpointUsageInfo() {
         _classCallCheck(this, EndpointUsageInfo);
 
-        this['callsTotal'] = undefined;
         this['callsThisPeriod'] = undefined;
+        this['callsTotal'] = undefined;
         this['lastCalled'] = undefined;
     }
 
@@ -60,11 +60,11 @@ var EndpointUsageInfo = function () {
             if (data) {
                 obj = obj || new EndpointUsageInfo();
 
-                if (data.hasOwnProperty('callsTotal')) {
-                    obj['callsTotal'] = _ApiClient2.default.convertToType(data['callsTotal'], 'Number');
-                }
                 if (data.hasOwnProperty('callsThisPeriod')) {
                     obj['callsThisPeriod'] = _ApiClient2.default.convertToType(data['callsThisPeriod'], 'Number');
+                }
+                if (data.hasOwnProperty('callsTotal')) {
+                    obj['callsTotal'] = _ApiClient2.default.convertToType(data['callsTotal'], 'Number');
                 }
                 if (data.hasOwnProperty('lastCalled')) {
                     obj['lastCalled'] = _ApiClient2.default.convertToType(data['lastCalled'], 'String');
@@ -74,13 +74,13 @@ var EndpointUsageInfo = function () {
         }
 
         /**
-        * total number of calls to this endpoint
-        * @member {Number} callsTotal
+        * number of calls to this endpoint during the current billing period
+        * @member {Number} callsThisPeriod
         */
 
         /**
-        * number of calls to this endpoint during the current billing period
-        * @member {Number} callsThisPeriod
+        * total number of calls to this endpoint
+        * @member {Number} callsTotal
         */
 
         /**

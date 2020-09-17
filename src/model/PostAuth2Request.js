@@ -23,15 +23,15 @@ export default class PostAuth2Request {
     * Constructs a new <code>PostAuth2Request</code>.
     * @alias module:model/PostAuth2Request
     * @class
-    * @param username {String} Username for authenticating
     * @param password {String} Password for authenticating
+    * @param username {String} Username for authenticating
     */
 
-    constructor(username, password) {
+    constructor(password, username) {
         
         
-        this['username'] = username;
         this['password'] = password;
+        this['username'] = username;
         
     }
 
@@ -47,26 +47,26 @@ export default class PostAuth2Request {
             obj = obj || new PostAuth2Request();
                         
             
-            if (data.hasOwnProperty('username')) {
-                obj['username'] = ApiClient.convertToType(data['username'], 'String');
-            }
             if (data.hasOwnProperty('password')) {
                 obj['password'] = ApiClient.convertToType(data['password'], 'String');
+            }
+            if (data.hasOwnProperty('username')) {
+                obj['username'] = ApiClient.convertToType(data['username'], 'String');
             }
         }
         return obj;
     }
 
     /**
-    * Username for authenticating
-    * @member {String} username
-    */
-    'username' = undefined;
-    /**
     * Password for authenticating
     * @member {String} password
     */
     'password' = undefined;
+    /**
+    * Username for authenticating
+    * @member {String} username
+    */
+    'username' = undefined;
 
 
 

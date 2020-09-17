@@ -60,14 +60,14 @@ var GetStatusResponse = function () {
     function GetStatusResponse() {
         _classCallCheck(this, GetStatusResponse);
 
-        this['pca'] = undefined;
+        this['anomalyIndexes'] = undefined;
         this['clusterGrowth'] = undefined;
         this['clusterSizes'] = undefined;
-        this['anomalyIndexes'] = undefined;
-        this['frequencyIndexes'] = undefined;
         this['distanceIndexes'] = undefined;
-        this['totalInferences'] = undefined;
+        this['frequencyIndexes'] = undefined;
         this['numClusters'] = undefined;
+        this['pca'] = undefined;
+        this['totalInferences'] = undefined;
     }
 
     /**
@@ -85,8 +85,8 @@ var GetStatusResponse = function () {
             if (data) {
                 obj = obj || new GetStatusResponse();
 
-                if (data.hasOwnProperty('pca')) {
-                    obj['pca'] = _PCA2.default.constructFromObject(data['pca']);
+                if (data.hasOwnProperty('anomalyIndexes')) {
+                    obj['anomalyIndexes'] = _Uint16Array2.default.constructFromObject(data['anomalyIndexes']);
                 }
                 if (data.hasOwnProperty('clusterGrowth')) {
                     obj['clusterGrowth'] = _Uint64Array2.default.constructFromObject(data['clusterGrowth']);
@@ -94,27 +94,27 @@ var GetStatusResponse = function () {
                 if (data.hasOwnProperty('clusterSizes')) {
                     obj['clusterSizes'] = _Uint64Array2.default.constructFromObject(data['clusterSizes']);
                 }
-                if (data.hasOwnProperty('anomalyIndexes')) {
-                    obj['anomalyIndexes'] = _Uint16Array2.default.constructFromObject(data['anomalyIndexes']);
+                if (data.hasOwnProperty('distanceIndexes')) {
+                    obj['distanceIndexes'] = _Uint16Array2.default.constructFromObject(data['distanceIndexes']);
                 }
                 if (data.hasOwnProperty('frequencyIndexes')) {
                     obj['frequencyIndexes'] = _Uint16Array2.default.constructFromObject(data['frequencyIndexes']);
                 }
-                if (data.hasOwnProperty('distanceIndexes')) {
-                    obj['distanceIndexes'] = _Uint16Array2.default.constructFromObject(data['distanceIndexes']);
+                if (data.hasOwnProperty('numClusters')) {
+                    obj['numClusters'] = _NumClusters2.default.constructFromObject(data['numClusters']);
+                }
+                if (data.hasOwnProperty('pca')) {
+                    obj['pca'] = _PCA2.default.constructFromObject(data['pca']);
                 }
                 if (data.hasOwnProperty('totalInferences')) {
                     obj['totalInferences'] = _TotalInferences2.default.constructFromObject(data['totalInferences']);
-                }
-                if (data.hasOwnProperty('numClusters')) {
-                    obj['numClusters'] = _NumClusters2.default.constructFromObject(data['numClusters']);
                 }
             }
             return obj;
         }
 
         /**
-        * @member {module:model/PCA} pca
+        * @member {module:model/Uint16Array} anomalyIndexes
         */
 
         /**
@@ -126,7 +126,7 @@ var GetStatusResponse = function () {
         */
 
         /**
-        * @member {module:model/Uint16Array} anomalyIndexes
+        * @member {module:model/Uint16Array} distanceIndexes
         */
 
         /**
@@ -134,15 +134,15 @@ var GetStatusResponse = function () {
         */
 
         /**
-        * @member {module:model/Uint16Array} distanceIndexes
+        * @member {module:model/NumClusters} numClusters
+        */
+
+        /**
+        * @member {module:model/PCA} pca
         */
 
         /**
         * @member {module:model/TotalInferences} totalInferences
-        */
-
-        /**
-        * @member {module:model/NumClusters} numClusters
         */
 
     }]);

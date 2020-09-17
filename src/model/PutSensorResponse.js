@@ -12,7 +12,6 @@
  */
 
 import ApiClient from '../ApiClient';
-import PostSensorResponse from './PostSensorResponse';
 
 /**
 * The PutSensorResponse model module.
@@ -24,11 +23,10 @@ export default class PutSensorResponse {
     * Constructs a new <code>PutSensorResponse</code>.
     * @alias module:model/PutSensorResponse
     * @class
-    * @extends module:model/PostSensorResponse
     */
 
     constructor() {
-        PostSensorResponse.call(this);
+        
         
         
     }
@@ -43,8 +41,7 @@ export default class PutSensorResponse {
     static constructFromObject(data, obj) {
         if (data) {
             obj = obj || new PutSensorResponse();
-            
-            PostSensorResponse.constructFromObject(data, obj);
+                        
             
         }
         return obj;

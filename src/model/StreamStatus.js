@@ -23,23 +23,23 @@ export default class StreamStatus {
     * Constructs a new <code>StreamStatus</code>.
     * @alias module:model/StreamStatus
     * @class
-    * @param state {String} state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error, Autotuning retry
+    * @param clusterCount {Number} current cluster count (applies to Learning and Monitoring states)
     * @param message {String} message to accompany the current state
     * @param progress {Number} completion percentage (applies to Buffering and Autotuning states)
-    * @param clusterCount {Number} current cluster count (applies to Learning and Monitoring states)
     * @param retryCount {Number} number of restarts that have happened during autotuning
+    * @param state {String} state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error, Autotuning retry
     * @param streamingWindowSize {Number} the current streaming window size that is being used
     * @param totalInferences {Number} inferences since the most recent restart
     */
 
-    constructor(state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences) {
+    constructor(clusterCount, message, progress, retryCount, state, streamingWindowSize, totalInferences) {
         
         
-        this['state'] = state;
+        this['clusterCount'] = clusterCount;
         this['message'] = message;
         this['progress'] = progress;
-        this['clusterCount'] = clusterCount;
         this['retryCount'] = retryCount;
+        this['state'] = state;
         this['streamingWindowSize'] = streamingWindowSize;
         this['totalInferences'] = totalInferences;
         
@@ -57,8 +57,8 @@ export default class StreamStatus {
             obj = obj || new StreamStatus();
                         
             
-            if (data.hasOwnProperty('state')) {
-                obj['state'] = ApiClient.convertToType(data['state'], 'String');
+            if (data.hasOwnProperty('clusterCount')) {
+                obj['clusterCount'] = ApiClient.convertToType(data['clusterCount'], 'Number');
             }
             if (data.hasOwnProperty('message')) {
                 obj['message'] = ApiClient.convertToType(data['message'], 'String');
@@ -66,11 +66,11 @@ export default class StreamStatus {
             if (data.hasOwnProperty('progress')) {
                 obj['progress'] = ApiClient.convertToType(data['progress'], 'Number');
             }
-            if (data.hasOwnProperty('clusterCount')) {
-                obj['clusterCount'] = ApiClient.convertToType(data['clusterCount'], 'Number');
-            }
             if (data.hasOwnProperty('retryCount')) {
                 obj['retryCount'] = ApiClient.convertToType(data['retryCount'], 'Number');
+            }
+            if (data.hasOwnProperty('state')) {
+                obj['state'] = ApiClient.convertToType(data['state'], 'String');
             }
             if (data.hasOwnProperty('streamingWindowSize')) {
                 obj['streamingWindowSize'] = ApiClient.convertToType(data['streamingWindowSize'], 'Number');
@@ -83,10 +83,10 @@ export default class StreamStatus {
     }
 
     /**
-    * state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error, Autotuning retry
-    * @member {String} state
+    * current cluster count (applies to Learning and Monitoring states)
+    * @member {Number} clusterCount
     */
-    'state' = undefined;
+    'clusterCount' = undefined;
     /**
     * message to accompany the current state
     * @member {String} message
@@ -98,15 +98,15 @@ export default class StreamStatus {
     */
     'progress' = undefined;
     /**
-    * current cluster count (applies to Learning and Monitoring states)
-    * @member {Number} clusterCount
-    */
-    'clusterCount' = undefined;
-    /**
     * number of restarts that have happened during autotuning
     * @member {Number} retryCount
     */
     'retryCount' = undefined;
+    /**
+    * state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error, Autotuning retry
+    * @member {String} state
+    */
+    'state' = undefined;
     /**
     * the current streaming window size that is being used
     * @member {Number} streamingWindowSize

@@ -43,50 +43,50 @@ export default class StreamingEndpointUsageInfo {
             obj = obj || new StreamingEndpointUsageInfo();
                         
             
-            if (data.hasOwnProperty('callsTotal')) {
-                obj['callsTotal'] = ApiClient.convertToType(data['callsTotal'], 'Number');
-            }
             if (data.hasOwnProperty('callsThisPeriod')) {
                 obj['callsThisPeriod'] = ApiClient.convertToType(data['callsThisPeriod'], 'Number');
             }
-            if (data.hasOwnProperty('samplesTotal')) {
-                obj['samplesTotal'] = ApiClient.convertToType(data['samplesTotal'], 'Number');
+            if (data.hasOwnProperty('callsTotal')) {
+                obj['callsTotal'] = ApiClient.convertToType(data['callsTotal'], 'Number');
+            }
+            if (data.hasOwnProperty('lastCalled')) {
+                obj['lastCalled'] = ApiClient.convertToType(data['lastCalled'], 'String');
             }
             if (data.hasOwnProperty('samplesThisPeriod')) {
                 obj['samplesThisPeriod'] = ApiClient.convertToType(data['samplesThisPeriod'], 'Number');
             }
-            if (data.hasOwnProperty('lastCalled')) {
-                obj['lastCalled'] = ApiClient.convertToType(data['lastCalled'], 'String');
+            if (data.hasOwnProperty('samplesTotal')) {
+                obj['samplesTotal'] = ApiClient.convertToType(data['samplesTotal'], 'Number');
             }
         }
         return obj;
     }
 
     /**
-    * total number of calls to this endpoint
-    * @member {Number} callsTotal
-    */
-    'callsTotal' = undefined;
-    /**
     * number of calls to this endpoint during the current billing period
     * @member {Number} callsThisPeriod
     */
     'callsThisPeriod' = undefined;
     /**
-    * total number of samples processed
-    * @member {Number} samplesTotal
+    * total number of calls to this endpoint
+    * @member {Number} callsTotal
     */
-    'samplesTotal' = undefined;
+    'callsTotal' = undefined;
+    /**
+    * ISO formatted time of last call to this endpoint
+    * @member {String} lastCalled
+    */
+    'lastCalled' = undefined;
     /**
     * number of samples processed during the current billing period
     * @member {Number} samplesThisPeriod
     */
     'samplesThisPeriod' = undefined;
     /**
-    * ISO formatted time of last call to this endpoint
-    * @member {String} lastCalled
+    * total number of samples processed
+    * @member {Number} samplesTotal
     */
-    'lastCalled' = undefined;
+    'samplesTotal' = undefined;
 
 
 

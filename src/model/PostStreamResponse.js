@@ -28,30 +28,30 @@ export default class PostStreamResponse {
     * @alias module:model/PostStreamResponse
     * @class
     * @extends module:model/StreamStatus
-    * @param state {} state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error, Autotuning retry
+    * @param clusterCount {} current cluster count (applies to Learning and Monitoring states)
     * @param message {} message to accompany the current state
     * @param progress {} completion percentage (applies to Buffering and Autotuning states)
-    * @param clusterCount {} current cluster count (applies to Learning and Monitoring states)
     * @param retryCount {} number of restarts that have happened during autotuning
+    * @param state {} state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error, Autotuning retry
     * @param streamingWindowSize {} the current streaming window size that is being used
     * @param totalInferences {} inferences since the most recent restart
-    * @param SI {} 
     * @param AD {} 
     * @param AH {} 
     * @param AM {} 
     * @param AW {} 
     * @param ID {} 
+    * @param SI {} 
     */
 
-    constructor(state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences, SI, AD, AH, AM, AW, ID) {
-        StreamStatus.call(this, state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences);
+    constructor(clusterCount, message, progress, retryCount, state, streamingWindowSize, totalInferences, AD, AH, AM, AW, ID, SI) {
+        StreamStatus.call(this, clusterCount, message, progress, retryCount, state, streamingWindowSize, totalInferences);
         
-        this['SI'] = SI;
         this['AD'] = AD;
         this['AH'] = AH;
         this['AM'] = AM;
         this['AW'] = AW;
         this['ID'] = ID;
+        this['SI'] = SI;
         
     }
 
@@ -68,9 +68,6 @@ export default class PostStreamResponse {
             
             StreamStatus.constructFromObject(data, obj);
             
-            if (data.hasOwnProperty('SI')) {
-                obj['SI'] = Uint16Array.constructFromObject(data['SI']);
-            }
             if (data.hasOwnProperty('AD')) {
                 obj['AD'] = Uint16Array.constructFromObject(data['AD']);
             }
@@ -86,14 +83,13 @@ export default class PostStreamResponse {
             if (data.hasOwnProperty('ID')) {
                 obj['ID'] = Uint32Array.constructFromObject(data['ID']);
             }
+            if (data.hasOwnProperty('SI')) {
+                obj['SI'] = Uint16Array.constructFromObject(data['SI']);
+            }
         }
         return obj;
     }
 
-    /**
-    * @member {module:model/Uint16Array} SI
-    */
-    'SI' = undefined;
     /**
     * @member {module:model/Uint16Array} AD
     */
@@ -114,6 +110,10 @@ export default class PostStreamResponse {
     * @member {module:model/Uint32Array} ID
     */
     'ID' = undefined;
+    /**
+    * @member {module:model/Uint16Array} SI
+    */
+    'SI' = undefined;
 
 
 

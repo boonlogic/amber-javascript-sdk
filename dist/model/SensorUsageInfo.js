@@ -48,12 +48,12 @@ var SensorUsageInfo = function () {
     function SensorUsageInfo() {
         _classCallCheck(this, SensorUsageInfo);
 
+        this['getConfig'] = undefined;
+        this['getSensor'] = undefined;
+        this['getStatus'] = undefined;
         this['postConfig'] = undefined;
         this['postStream'] = undefined;
         this['putSensor'] = undefined;
-        this['getSensor'] = undefined;
-        this['getConfig'] = undefined;
-        this['getStatus'] = undefined;
     }
 
     /**
@@ -71,6 +71,15 @@ var SensorUsageInfo = function () {
             if (data) {
                 obj = obj || new SensorUsageInfo();
 
+                if (data.hasOwnProperty('getConfig')) {
+                    obj['getConfig'] = _EndpointUsageInfo2.default.constructFromObject(data['getConfig']);
+                }
+                if (data.hasOwnProperty('getSensor')) {
+                    obj['getSensor'] = _EndpointUsageInfo2.default.constructFromObject(data['getSensor']);
+                }
+                if (data.hasOwnProperty('getStatus')) {
+                    obj['getStatus'] = _EndpointUsageInfo2.default.constructFromObject(data['getStatus']);
+                }
                 if (data.hasOwnProperty('postConfig')) {
                     obj['postConfig'] = _EndpointUsageInfo2.default.constructFromObject(data['postConfig']);
                 }
@@ -80,18 +89,21 @@ var SensorUsageInfo = function () {
                 if (data.hasOwnProperty('putSensor')) {
                     obj['putSensor'] = _EndpointUsageInfo2.default.constructFromObject(data['putSensor']);
                 }
-                if (data.hasOwnProperty('getSensor')) {
-                    obj['getSensor'] = _EndpointUsageInfo2.default.constructFromObject(data['getSensor']);
-                }
-                if (data.hasOwnProperty('getConfig')) {
-                    obj['getConfig'] = _EndpointUsageInfo2.default.constructFromObject(data['getConfig']);
-                }
-                if (data.hasOwnProperty('getStatus')) {
-                    obj['getStatus'] = _EndpointUsageInfo2.default.constructFromObject(data['getStatus']);
-                }
             }
             return obj;
         }
+
+        /**
+        * @member {module:model/EndpointUsageInfo} getConfig
+        */
+
+        /**
+        * @member {module:model/EndpointUsageInfo} getSensor
+        */
+
+        /**
+        * @member {module:model/EndpointUsageInfo} getStatus
+        */
 
         /**
         * @member {module:model/EndpointUsageInfo} postConfig
@@ -103,18 +115,6 @@ var SensorUsageInfo = function () {
 
         /**
         * @member {module:model/EndpointUsageInfo} putSensor
-        */
-
-        /**
-        * @member {module:model/EndpointUsageInfo} getSensor
-        */
-
-        /**
-        * @member {module:model/EndpointUsageInfo} getConfig
-        */
-
-        /**
-        * @member {module:model/EndpointUsageInfo} getStatus
         */
 
     }]);

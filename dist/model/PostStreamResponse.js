@@ -52,39 +52,39 @@ var PostStreamResponse = function () {
     * @alias module:model/PostStreamResponse
     * @class
     * @extends module:model/StreamStatus
-    * @param state {} state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error, Autotuning retry
+    * @param clusterCount {} current cluster count (applies to Learning and Monitoring states)
     * @param message {} message to accompany the current state
     * @param progress {} completion percentage (applies to Buffering and Autotuning states)
-    * @param clusterCount {} current cluster count (applies to Learning and Monitoring states)
     * @param retryCount {} number of restarts that have happened during autotuning
+    * @param state {} state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error, Autotuning retry
     * @param streamingWindowSize {} the current streaming window size that is being used
     * @param totalInferences {} inferences since the most recent restart
-    * @param SI {} 
     * @param AD {} 
     * @param AH {} 
     * @param AM {} 
     * @param AW {} 
     * @param ID {} 
+    * @param SI {} 
     */
 
-    function PostStreamResponse(state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences, SI, AD, AH, AM, AW, ID) {
+    function PostStreamResponse(clusterCount, message, progress, retryCount, state, streamingWindowSize, totalInferences, AD, AH, AM, AW, ID, SI) {
         _classCallCheck(this, PostStreamResponse);
 
-        this['SI'] = undefined;
         this['AD'] = undefined;
         this['AH'] = undefined;
         this['AM'] = undefined;
         this['AW'] = undefined;
         this['ID'] = undefined;
+        this['SI'] = undefined;
 
-        _StreamStatus2.default.call(this, state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences);
+        _StreamStatus2.default.call(this, clusterCount, message, progress, retryCount, state, streamingWindowSize, totalInferences);
 
-        this['SI'] = SI;
         this['AD'] = AD;
         this['AH'] = AH;
         this['AM'] = AM;
         this['AW'] = AW;
         this['ID'] = ID;
+        this['SI'] = SI;
     }
 
     /**
@@ -104,9 +104,6 @@ var PostStreamResponse = function () {
 
                 _StreamStatus2.default.constructFromObject(data, obj);
 
-                if (data.hasOwnProperty('SI')) {
-                    obj['SI'] = _Uint16Array2.default.constructFromObject(data['SI']);
-                }
                 if (data.hasOwnProperty('AD')) {
                     obj['AD'] = _Uint16Array2.default.constructFromObject(data['AD']);
                 }
@@ -122,13 +119,12 @@ var PostStreamResponse = function () {
                 if (data.hasOwnProperty('ID')) {
                     obj['ID'] = _Uint32Array2.default.constructFromObject(data['ID']);
                 }
+                if (data.hasOwnProperty('SI')) {
+                    obj['SI'] = _Uint16Array2.default.constructFromObject(data['SI']);
+                }
             }
             return obj;
         }
-
-        /**
-        * @member {module:model/Uint16Array} SI
-        */
 
         /**
         * @member {module:model/Uint16Array} AD
@@ -148,6 +144,10 @@ var PostStreamResponse = function () {
 
         /**
         * @member {module:model/Uint32Array} ID
+        */
+
+        /**
+        * @member {module:model/Uint16Array} SI
         */
 
     }]);
