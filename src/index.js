@@ -12,14 +12,25 @@
  */
 
 import ApiClient from './ApiClient';
+import Body from './model/Body';
+import Body1 from './model/Body1';
+import Body2 from './model/Body2';
+import Body3 from './model/Body3';
+import Body4 from './model/Body4';
 import EndpointUsageInfo from './model/EndpointUsageInfo';
 import Error from './model/Error';
 import FeatureConfig from './model/FeatureConfig';
 import Float32Array from './model/Float32Array';
 import GetConfigResponse from './model/GetConfigResponse';
+import GetConfigResponseFeatures from './model/GetConfigResponseFeatures';
 import GetSensorResponse from './model/GetSensorResponse';
+import GetSensorResponseUsageInfo from './model/GetSensorResponseUsageInfo';
+import GetSensorResponseUsageInfoGetConfig from './model/GetSensorResponseUsageInfoGetConfig';
+import GetSensorResponseUsageInfoPostStream from './model/GetSensorResponseUsageInfoPostStream';
 import GetSensorsResponse from './model/GetSensorsResponse';
 import GetStatusResponse from './model/GetStatusResponse';
+import InlineResponse200 from './model/InlineResponse200';
+import InlineResponse400 from './model/InlineResponse400';
 import NumClusters from './model/NumClusters';
 import PCA from './model/PCA';
 import PostAuth2Request from './model/PostAuth2Request';
@@ -82,6 +93,36 @@ export {
     ApiClient,
 
     /**
+     * The Body model constructor.
+     * @property {module:model/Body}
+     */
+    Body,
+
+    /**
+     * The Body1 model constructor.
+     * @property {module:model/Body1}
+     */
+    Body1,
+
+    /**
+     * The Body2 model constructor.
+     * @property {module:model/Body2}
+     */
+    Body2,
+
+    /**
+     * The Body3 model constructor.
+     * @property {module:model/Body3}
+     */
+    Body3,
+
+    /**
+     * The Body4 model constructor.
+     * @property {module:model/Body4}
+     */
+    Body4,
+
+    /**
      * The EndpointUsageInfo model constructor.
      * @property {module:model/EndpointUsageInfo}
      */
@@ -112,10 +153,34 @@ export {
     GetConfigResponse,
 
     /**
+     * The GetConfigResponseFeatures model constructor.
+     * @property {module:model/GetConfigResponseFeatures}
+     */
+    GetConfigResponseFeatures,
+
+    /**
      * The GetSensorResponse model constructor.
      * @property {module:model/GetSensorResponse}
      */
     GetSensorResponse,
+
+    /**
+     * The GetSensorResponseUsageInfo model constructor.
+     * @property {module:model/GetSensorResponseUsageInfo}
+     */
+    GetSensorResponseUsageInfo,
+
+    /**
+     * The GetSensorResponseUsageInfoGetConfig model constructor.
+     * @property {module:model/GetSensorResponseUsageInfoGetConfig}
+     */
+    GetSensorResponseUsageInfoGetConfig,
+
+    /**
+     * The GetSensorResponseUsageInfoPostStream model constructor.
+     * @property {module:model/GetSensorResponseUsageInfoPostStream}
+     */
+    GetSensorResponseUsageInfoPostStream,
 
     /**
      * The GetSensorsResponse model constructor.
@@ -128,6 +193,18 @@ export {
      * @property {module:model/GetStatusResponse}
      */
     GetStatusResponse,
+
+    /**
+     * The InlineResponse200 model constructor.
+     * @property {module:model/InlineResponse200}
+     */
+    InlineResponse200,
+
+    /**
+     * The InlineResponse400 model constructor.
+     * @property {module:model/InlineResponse400}
+     */
+    InlineResponse400,
 
     /**
      * The NumClusters model constructor.

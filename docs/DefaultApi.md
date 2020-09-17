@@ -67,7 +67,7 @@ null (empty response body)
 
 <a name="getConfig"></a>
 # **getConfig**
-> GetConfigResponse getConfig(sensorId)
+> Object getConfig(sensorId)
 
 Get the current configuration of a sensor instance
 
@@ -104,7 +104,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetConfigResponse**](GetConfigResponse.md)
+**Object**
 
 ### Authorization
 
@@ -117,7 +117,7 @@ Name | Type | Description  | Notes
 
 <a name="getSensor"></a>
 # **getSensor**
-> GetSensorResponse getSensor(sensorId)
+> Object getSensor(sensorId)
 
 Get basic information about a sensor instance
 
@@ -154,7 +154,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetSensorResponse**](GetSensorResponse.md)
+**Object**
 
 ### Authorization
 
@@ -167,7 +167,7 @@ Name | Type | Description  | Notes
 
 <a name="getSensors"></a>
 # **getSensors**
-> GetSensorsResponse getSensors()
+> [InlineResponse200] getSensors()
 
 List all sensors for this user
 
@@ -199,7 +199,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**GetSensorsResponse**](GetSensorsResponse.md)
+[**[InlineResponse200]**](InlineResponse200.md)
 
 ### Authorization
 
@@ -212,7 +212,7 @@ This endpoint does not need any parameter.
 
 <a name="getStatus"></a>
 # **getStatus**
-> GetStatusResponse getStatus(sensorId)
+> Object getStatus(sensorId)
 
 Get analytic information from a sensor
 
@@ -249,7 +249,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetStatusResponse**](GetStatusResponse.md)
+**Object**
 
 ### Authorization
 
@@ -262,7 +262,7 @@ Name | Type | Description  | Notes
 
 <a name="postConfig"></a>
 # **postConfig**
-> PostConfigResponse postConfig(bodysensorId)
+> Object postConfig(bodysensorId)
 
 Apply configuration to a sensor instance
 
@@ -280,7 +280,7 @@ authorize-amber-pool.apiKey = 'YOUR API KEY';
 //authorize-amber-pool.apiKeyPrefix = 'Token';
 
 let apiInstance = new AmberApiServer.DefaultApi();
-let body = new AmberApiServer.PostConfigRequest(); // PostConfigRequest | Sensor configuration to be applied
+let body = new AmberApiServer.Body(); // Body | Sensor configuration to be applied
 let sensorId = "sensorId_example"; // String | Unique identifier for sensor
 
 apiInstance.postConfig(bodysensorId, (error, data, response) => {
@@ -296,12 +296,12 @@ apiInstance.postConfig(bodysensorId, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**PostConfigRequest**](PostConfigRequest.md)| Sensor configuration to be applied | 
+ **body** | [**Body**](Body.md)| Sensor configuration to be applied | 
  **sensorId** | **String**| Unique identifier for sensor | 
 
 ### Return type
 
-[**PostConfigResponse**](PostConfigResponse.md)
+**Object**
 
 ### Authorization
 
@@ -314,7 +314,7 @@ Name | Type | Description  | Notes
 
 <a name="postOauth2"></a>
 # **postOauth2**
-> PostAuth2Response postOauth2(body)
+> Object postOauth2(body)
 
 Request a bearer token using Amber account credentials
 
@@ -325,7 +325,7 @@ Requests a bearer token using Amber account credentials. The requested bearer to
 import AmberApiServer from 'amber_api_server';
 
 let apiInstance = new AmberApiServer.DefaultApi();
-let body = new AmberApiServer.PostAuth2Request(); // PostAuth2Request | Account credentials to be used for authentication
+let body = new AmberApiServer.Body1(); // Body1 | Account credentials to be used for authentication
 
 apiInstance.postOauth2(body, (error, data, response) => {
   if (error) {
@@ -340,11 +340,11 @@ apiInstance.postOauth2(body, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**PostAuth2Request**](PostAuth2Request.md)| Account credentials to be used for authentication | 
+ **body** | [**Body1**](Body1.md)| Account credentials to be used for authentication | 
 
 ### Return type
 
-[**PostAuth2Response**](PostAuth2Response.md)
+**Object**
 
 ### Authorization
 
@@ -357,7 +357,7 @@ No authorization required
 
 <a name="postSensor"></a>
 # **postSensor**
-> PostSensorResponse postSensor(body)
+> Object postSensor(body)
 
 Create a new a sensor instance
 
@@ -375,7 +375,7 @@ authorize-amber-pool.apiKey = 'YOUR API KEY';
 //authorize-amber-pool.apiKeyPrefix = 'Token';
 
 let apiInstance = new AmberApiServer.DefaultApi();
-let body = new AmberApiServer.PostSensorRequest(); // PostSensorRequest | Label for new sensor instance to be created
+let body = new AmberApiServer.Body3(); // Body3 | Label for new sensor instance to be created
 
 apiInstance.postSensor(body, (error, data, response) => {
   if (error) {
@@ -390,11 +390,11 @@ apiInstance.postSensor(body, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**PostSensorRequest**](PostSensorRequest.md)| Label for new sensor instance to be created | 
+ **body** | [**Body3**](Body3.md)| Label for new sensor instance to be created | 
 
 ### Return type
 
-[**PostSensorResponse**](PostSensorResponse.md)
+**Object**
 
 ### Authorization
 
@@ -407,7 +407,7 @@ Name | Type | Description  | Notes
 
 <a name="postStream"></a>
 # **postStream**
-> PostStreamResponse postStream(bodysensorId)
+> Object postStream(bodysensorId)
 
 Stream data to a sensor
 
@@ -425,7 +425,7 @@ authorize-amber-pool.apiKey = 'YOUR API KEY';
 //authorize-amber-pool.apiKeyPrefix = 'Token';
 
 let apiInstance = new AmberApiServer.DefaultApi();
-let body = new AmberApiServer.PostStreamRequest(); // PostStreamRequest | Data to be streamed to sensor. Should be formatted as a simple string of comma-separated numbers with no spaces (e.g. "0,0.5,1,1.5,2").
+let body = new AmberApiServer.Body4(); // Body4 | Data to be streamed to sensor. Should be formatted as a simple string of comma-separated numbers with no spaces (e.g. "0,0.5,1,1.5,2").
 let sensorId = "sensorId_example"; // String | Unique identifier for sensor
 
 apiInstance.postStream(bodysensorId, (error, data, response) => {
@@ -441,12 +441,12 @@ apiInstance.postStream(bodysensorId, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**PostStreamRequest**](PostStreamRequest.md)| Data to be streamed to sensor. Should be formatted as a simple string of comma-separated numbers with no spaces (e.g. &quot;0,0.5,1,1.5,2&quot;). | 
+ **body** | [**Body4**](Body4.md)| Data to be streamed to sensor. Should be formatted as a simple string of comma-separated numbers with no spaces (e.g. &quot;0,0.5,1,1.5,2&quot;). | 
  **sensorId** | **String**| Unique identifier for sensor | 
 
 ### Return type
 
-[**PostStreamResponse**](PostStreamResponse.md)
+**Object**
 
 ### Authorization
 
@@ -459,7 +459,7 @@ Name | Type | Description  | Notes
 
 <a name="putSensor"></a>
 # **putSensor**
-> PutSensorResponse putSensor(bodysensorId)
+> Object putSensor(bodysensorId)
 
 Update label for a sensor instance
 
@@ -477,7 +477,7 @@ authorize-amber-pool.apiKey = 'YOUR API KEY';
 //authorize-amber-pool.apiKeyPrefix = 'Token';
 
 let apiInstance = new AmberApiServer.DefaultApi();
-let body = new AmberApiServer.PutSensorRequest(); // PutSensorRequest | New label to apply to sensor instance
+let body = new AmberApiServer.Body2(); // Body2 | New label to apply to sensor instance
 let sensorId = "sensorId_example"; // String | Unique identifier for sensor
 
 apiInstance.putSensor(bodysensorId, (error, data, response) => {
@@ -493,12 +493,12 @@ apiInstance.putSensor(bodysensorId, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**PutSensorRequest**](PutSensorRequest.md)| New label to apply to sensor instance | 
+ **body** | [**Body2**](Body2.md)| New label to apply to sensor instance | 
  **sensorId** | **String**| Unique identifier for sensor | 
 
 ### Return type
 
-[**PutSensorResponse**](PutSensorResponse.md)
+**Object**
 
 ### Authorization
 

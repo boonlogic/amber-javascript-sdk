@@ -12,7 +12,7 @@
  */
 
 import ApiClient from '../ApiClient';
-import SensorUsageInfo from './SensorUsageInfo';
+import GetSensorResponseUsageInfo from './GetSensorResponseUsageInfo';
 
 /**
 * The SensorInstanceFull model module.
@@ -54,7 +54,7 @@ export default class SensorInstanceFull {
                 obj['tenantId'] = ApiClient.convertToType(data['tenantId'], 'String');
             }
             if (data.hasOwnProperty('usageInfo')) {
-                obj['usageInfo'] = SensorUsageInfo.constructFromObject(data['usageInfo']);
+                obj['usageInfo'] = GetSensorResponseUsageInfo.constructFromObject(data['usageInfo']);
             }
         }
         return obj;
@@ -76,7 +76,7 @@ export default class SensorInstanceFull {
     */
     'tenantId' = undefined;
     /**
-    * @member {module:model/SensorUsageInfo} usageInfo
+    * @member {module:model/GetSensorResponseUsageInfo} usageInfo
     */
     'usageInfo' = undefined;
 

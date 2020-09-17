@@ -12,8 +12,7 @@
  */
 
 import ApiClient from '../ApiClient';
-import FeatureConfig from './FeatureConfig';
-import PostConfigRequest from './PostConfigRequest';
+import GetConfigResponseFeatures from './GetConfigResponseFeatures';
 
 /**
 * The GetConfigResponse model module.
@@ -25,13 +24,10 @@ export default class GetConfigResponse {
     * Constructs a new <code>GetConfigResponse</code>.
     * @alias module:model/GetConfigResponse
     * @class
-    * @extends module:model/PostConfigRequest
-    * @param featureCount {} number of features per sample
-    * @param streamingWindowSize {} streaming window size
     */
 
-    constructor(featureCount, streamingWindowSize) {
-        PostConfigRequest.call(this, featureCount, streamingWindowSize);
+    constructor() {
+        
         
         
     }
@@ -46,11 +42,10 @@ export default class GetConfigResponse {
     static constructFromObject(data, obj) {
         if (data) {
             obj = obj || new GetConfigResponse();
-            
-            PostConfigRequest.constructFromObject(data, obj);
+                        
             
             if (data.hasOwnProperty('features')) {
-                obj['features'] = ApiClient.convertToType(data['features'], [FeatureConfig]);
+                obj['features'] = ApiClient.convertToType(data['features'], [GetConfigResponseFeatures]);
             }
             if (data.hasOwnProperty('percentVariation')) {
                 obj['percentVariation'] = ApiClient.convertToType(data['percentVariation'], 'Number');
@@ -60,7 +55,7 @@ export default class GetConfigResponse {
     }
 
     /**
-    * @member {Array.<module:model/FeatureConfig>} features
+    * @member {Array.<module:model/GetConfigResponseFeatures>} features
     */
     'features' = undefined;
     /**

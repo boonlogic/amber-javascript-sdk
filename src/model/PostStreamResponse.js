@@ -12,10 +12,6 @@
  */
 
 import ApiClient from '../ApiClient';
-import Float32Array from './Float32Array';
-import StreamStatus from './StreamStatus';
-import Uint16Array from './Uint16Array';
-import Uint32Array from './Uint32Array';
 
 /**
 * The PostStreamResponse model module.
@@ -27,14 +23,6 @@ export default class PostStreamResponse {
     * Constructs a new <code>PostStreamResponse</code>.
     * @alias module:model/PostStreamResponse
     * @class
-    * @extends module:model/StreamStatus
-    * @param clusterCount {} current cluster count (applies to Learning and Monitoring states)
-    * @param message {} message to accompany the current state
-    * @param progress {} completion percentage (applies to Buffering and Autotuning states)
-    * @param retryCount {} number of restarts that have happened during autotuning
-    * @param state {} state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error, Autotuning retry
-    * @param streamingWindowSize {} the current streaming window size that is being used
-    * @param totalInferences {} inferences since the most recent restart
     * @param AD {} 
     * @param AH {} 
     * @param AM {} 
@@ -43,8 +31,8 @@ export default class PostStreamResponse {
     * @param SI {} 
     */
 
-    constructor(clusterCount, message, progress, retryCount, state, streamingWindowSize, totalInferences, AD, AH, AM, AW, ID, SI) {
-        StreamStatus.call(this, clusterCount, message, progress, retryCount, state, streamingWindowSize, totalInferences);
+    constructor(AD, AH, AM, AW, ID, SI) {
+        
         
         this['AD'] = AD;
         this['AH'] = AH;
@@ -65,53 +53,52 @@ export default class PostStreamResponse {
     static constructFromObject(data, obj) {
         if (data) {
             obj = obj || new PostStreamResponse();
-            
-            StreamStatus.constructFromObject(data, obj);
+                        
             
             if (data.hasOwnProperty('AD')) {
-                obj['AD'] = Uint16Array.constructFromObject(data['AD']);
+                obj['AD'] = ApiClient.convertToType(data['AD'], ['Number']);
             }
             if (data.hasOwnProperty('AH')) {
-                obj['AH'] = Uint16Array.constructFromObject(data['AH']);
+                obj['AH'] = ApiClient.convertToType(data['AH'], ['Number']);
             }
             if (data.hasOwnProperty('AM')) {
-                obj['AM'] = Float32Array.constructFromObject(data['AM']);
+                obj['AM'] = ApiClient.convertToType(data['AM'], ['Number']);
             }
             if (data.hasOwnProperty('AW')) {
-                obj['AW'] = Uint16Array.constructFromObject(data['AW']);
+                obj['AW'] = ApiClient.convertToType(data['AW'], ['Number']);
             }
             if (data.hasOwnProperty('ID')) {
-                obj['ID'] = Uint32Array.constructFromObject(data['ID']);
+                obj['ID'] = ApiClient.convertToType(data['ID'], ['Number']);
             }
             if (data.hasOwnProperty('SI')) {
-                obj['SI'] = Uint16Array.constructFromObject(data['SI']);
+                obj['SI'] = ApiClient.convertToType(data['SI'], ['Number']);
             }
         }
         return obj;
     }
 
     /**
-    * @member {module:model/Uint16Array} AD
+    * @member {Array.<Number>} AD
     */
     'AD' = undefined;
     /**
-    * @member {module:model/Uint16Array} AH
+    * @member {Array.<Number>} AH
     */
     'AH' = undefined;
     /**
-    * @member {module:model/Float32Array} AM
+    * @member {Array.<Number>} AM
     */
     'AM' = undefined;
     /**
-    * @member {module:model/Uint16Array} AW
+    * @member {Array.<Number>} AW
     */
     'AW' = undefined;
     /**
-    * @member {module:model/Uint32Array} ID
+    * @member {Array.<Number>} ID
     */
     'ID' = undefined;
     /**
-    * @member {module:model/Uint16Array} SI
+    * @member {Array.<Number>} SI
     */
     'SI' = undefined;
 

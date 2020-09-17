@@ -21,26 +21,6 @@ var _ApiClient = require('../ApiClient');
 
 var _ApiClient2 = _interopRequireDefault(_ApiClient);
 
-var _NumClusters = require('./NumClusters');
-
-var _NumClusters2 = _interopRequireDefault(_NumClusters);
-
-var _PCA = require('./PCA');
-
-var _PCA2 = _interopRequireDefault(_PCA);
-
-var _TotalInferences = require('./TotalInferences');
-
-var _TotalInferences2 = _interopRequireDefault(_TotalInferences);
-
-var _Uint16Array = require('./Uint16Array');
-
-var _Uint16Array2 = _interopRequireDefault(_Uint16Array);
-
-var _Uint64Array = require('./Uint64Array');
-
-var _Uint64Array2 = _interopRequireDefault(_Uint64Array);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -86,63 +66,64 @@ var GetStatusResponse = function () {
                 obj = obj || new GetStatusResponse();
 
                 if (data.hasOwnProperty('anomalyIndexes')) {
-                    obj['anomalyIndexes'] = _Uint16Array2.default.constructFromObject(data['anomalyIndexes']);
+                    obj['anomalyIndexes'] = _ApiClient2.default.convertToType(data['anomalyIndexes'], ['Number']);
                 }
                 if (data.hasOwnProperty('clusterGrowth')) {
-                    obj['clusterGrowth'] = _Uint64Array2.default.constructFromObject(data['clusterGrowth']);
+                    obj['clusterGrowth'] = _ApiClient2.default.convertToType(data['clusterGrowth'], ['Number']);
                 }
                 if (data.hasOwnProperty('clusterSizes')) {
-                    obj['clusterSizes'] = _Uint64Array2.default.constructFromObject(data['clusterSizes']);
+                    obj['clusterSizes'] = _ApiClient2.default.convertToType(data['clusterSizes'], ['Number']);
                 }
                 if (data.hasOwnProperty('distanceIndexes')) {
-                    obj['distanceIndexes'] = _Uint16Array2.default.constructFromObject(data['distanceIndexes']);
+                    obj['distanceIndexes'] = _ApiClient2.default.convertToType(data['distanceIndexes'], ['Number']);
                 }
                 if (data.hasOwnProperty('frequencyIndexes')) {
-                    obj['frequencyIndexes'] = _Uint16Array2.default.constructFromObject(data['frequencyIndexes']);
+                    obj['frequencyIndexes'] = _ApiClient2.default.convertToType(data['frequencyIndexes'], ['Number']);
                 }
                 if (data.hasOwnProperty('numClusters')) {
-                    obj['numClusters'] = _NumClusters2.default.constructFromObject(data['numClusters']);
+                    obj['numClusters'] = _ApiClient2.default.convertToType(data['numClusters'], 'Number');
                 }
                 if (data.hasOwnProperty('pca')) {
-                    obj['pca'] = _PCA2.default.constructFromObject(data['pca']);
+                    obj['pca'] = _ApiClient2.default.convertToType(data['pca'], [['Number']]);
                 }
                 if (data.hasOwnProperty('totalInferences')) {
-                    obj['totalInferences'] = _TotalInferences2.default.constructFromObject(data['totalInferences']);
+                    obj['totalInferences'] = _ApiClient2.default.convertToType(data['totalInferences'], 'Number');
                 }
             }
             return obj;
         }
 
         /**
-        * @member {module:model/Uint16Array} anomalyIndexes
+        * @member {Array.<Number>} anomalyIndexes
         */
 
         /**
-        * @member {module:model/Uint64Array} clusterGrowth
+        * @member {Array.<Number>} clusterGrowth
         */
 
         /**
-        * @member {module:model/Uint64Array} clusterSizes
+        * @member {Array.<Number>} clusterSizes
         */
 
         /**
-        * @member {module:model/Uint16Array} distanceIndexes
+        * @member {Array.<Number>} distanceIndexes
         */
 
         /**
-        * @member {module:model/Uint16Array} frequencyIndexes
+        * @member {Array.<Number>} frequencyIndexes
         */
 
         /**
-        * @member {module:model/NumClusters} numClusters
+        * @member {Number} numClusters
         */
 
         /**
-        * @member {module:model/PCA} pca
+        * array of pca values
+        * @member {Array.<Array.<Number>>} pca
         */
 
         /**
-        * @member {module:model/TotalInferences} totalInferences
+        * @member {Number} totalInferences
         */
 
     }]);

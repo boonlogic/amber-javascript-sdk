@@ -12,8 +12,8 @@
  */
 
 import ApiClient from '../ApiClient';
-import EndpointUsageInfo from './EndpointUsageInfo';
-import StreamingEndpointUsageInfo from './StreamingEndpointUsageInfo';
+import GetSensorResponseUsageInfoGetConfig from './GetSensorResponseUsageInfoGetConfig';
+import GetSensorResponseUsageInfoPostStream from './GetSensorResponseUsageInfoPostStream';
 
 /**
 * The SensorUsageInfo model module.
@@ -46,49 +46,49 @@ export default class SensorUsageInfo {
                         
             
             if (data.hasOwnProperty('getConfig')) {
-                obj['getConfig'] = EndpointUsageInfo.constructFromObject(data['getConfig']);
+                obj['getConfig'] = GetSensorResponseUsageInfoGetConfig.constructFromObject(data['getConfig']);
             }
             if (data.hasOwnProperty('getSensor')) {
-                obj['getSensor'] = EndpointUsageInfo.constructFromObject(data['getSensor']);
+                obj['getSensor'] = GetSensorResponseUsageInfoGetConfig.constructFromObject(data['getSensor']);
             }
             if (data.hasOwnProperty('getStatus')) {
-                obj['getStatus'] = EndpointUsageInfo.constructFromObject(data['getStatus']);
+                obj['getStatus'] = GetSensorResponseUsageInfoGetConfig.constructFromObject(data['getStatus']);
             }
             if (data.hasOwnProperty('postConfig')) {
-                obj['postConfig'] = EndpointUsageInfo.constructFromObject(data['postConfig']);
+                obj['postConfig'] = GetSensorResponseUsageInfoGetConfig.constructFromObject(data['postConfig']);
             }
             if (data.hasOwnProperty('postStream')) {
-                obj['postStream'] = StreamingEndpointUsageInfo.constructFromObject(data['postStream']);
+                obj['postStream'] = GetSensorResponseUsageInfoPostStream.constructFromObject(data['postStream']);
             }
             if (data.hasOwnProperty('putSensor')) {
-                obj['putSensor'] = EndpointUsageInfo.constructFromObject(data['putSensor']);
+                obj['putSensor'] = GetSensorResponseUsageInfoGetConfig.constructFromObject(data['putSensor']);
             }
         }
         return obj;
     }
 
     /**
-    * @member {module:model/EndpointUsageInfo} getConfig
+    * @member {module:model/GetSensorResponseUsageInfoGetConfig} getConfig
     */
     'getConfig' = undefined;
     /**
-    * @member {module:model/EndpointUsageInfo} getSensor
+    * @member {module:model/GetSensorResponseUsageInfoGetConfig} getSensor
     */
     'getSensor' = undefined;
     /**
-    * @member {module:model/EndpointUsageInfo} getStatus
+    * @member {module:model/GetSensorResponseUsageInfoGetConfig} getStatus
     */
     'getStatus' = undefined;
     /**
-    * @member {module:model/EndpointUsageInfo} postConfig
+    * @member {module:model/GetSensorResponseUsageInfoGetConfig} postConfig
     */
     'postConfig' = undefined;
     /**
-    * @member {module:model/StreamingEndpointUsageInfo} postStream
+    * @member {module:model/GetSensorResponseUsageInfoPostStream} postStream
     */
     'postStream' = undefined;
     /**
-    * @member {module:model/EndpointUsageInfo} putSensor
+    * @member {module:model/GetSensorResponseUsageInfoGetConfig} putSensor
     */
     'putSensor' = undefined;
 

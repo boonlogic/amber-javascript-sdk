@@ -10,9 +10,9 @@ var _ApiClient = require('../ApiClient');
 
 var _ApiClient2 = _interopRequireDefault(_ApiClient);
 
-var _SensorInstance = require('./SensorInstance');
+var _InlineResponse = require('./InlineResponse200');
 
-var _SensorInstance2 = _interopRequireDefault(_SensorInstance);
+var _InlineResponse2 = _interopRequireDefault(_InlineResponse);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -97,7 +97,7 @@ var GetSensorsResponse = function (_extendableBuiltin2) {
         value: function constructFromObject(data, obj) {
             if (data) {
                 obj = obj || new GetSensorsResponse();
-                _ApiClient2.default.constructFromObject(data, obj, 'SensorInstance');
+                _ApiClient2.default.constructFromObject(data, obj, 'InlineResponse200');
             }
             return obj;
         }

@@ -23,11 +23,15 @@ export default class PostConfigResponse {
     * Constructs a new <code>PostConfigResponse</code>.
     * @alias module:model/PostConfigResponse
     * @class
+    * @param featureCount {Number} number of features per sample
+    * @param streamingWindowSize {Number} streaming window size
     */
 
-    constructor() {
+    constructor(featureCount, streamingWindowSize) {
         
         
+        this['featureCount'] = featureCount;
+        this['streamingWindowSize'] = streamingWindowSize;
         
     }
 
@@ -43,10 +47,66 @@ export default class PostConfigResponse {
             obj = obj || new PostConfigResponse();
                         
             
+            if (data.hasOwnProperty('featureCount')) {
+                obj['featureCount'] = ApiClient.convertToType(data['featureCount'], 'Number');
+            }
+            if (data.hasOwnProperty('learningMaxClusters')) {
+                obj['learningMaxClusters'] = ApiClient.convertToType(data['learningMaxClusters'], 'Number');
+            }
+            if (data.hasOwnProperty('learningMaxSamples')) {
+                obj['learningMaxSamples'] = ApiClient.convertToType(data['learningMaxSamples'], 'Number');
+            }
+            if (data.hasOwnProperty('learningRateDenominator')) {
+                obj['learningRateDenominator'] = ApiClient.convertToType(data['learningRateDenominator'], 'Number');
+            }
+            if (data.hasOwnProperty('learningRateNumerator')) {
+                obj['learningRateNumerator'] = ApiClient.convertToType(data['learningRateNumerator'], 'Number');
+            }
+            if (data.hasOwnProperty('samplesToBuffer')) {
+                obj['samplesToBuffer'] = ApiClient.convertToType(data['samplesToBuffer'], 'Number');
+            }
+            if (data.hasOwnProperty('streamingWindowSize')) {
+                obj['streamingWindowSize'] = ApiClient.convertToType(data['streamingWindowSize'], 'Number');
+            }
         }
         return obj;
     }
 
+    /**
+    * number of features per sample
+    * @member {Number} featureCount
+    */
+    'featureCount' = undefined;
+    /**
+    * learning graduation requirement for stopping learning upon reaching this cluster count
+    * @member {Number} learningMaxClusters
+    */
+    'learningMaxClusters' = undefined;
+    /**
+    * learning graduation requirement for stopping learning after acquiring this many samples
+    * @member {Number} learningMaxSamples
+    */
+    'learningMaxSamples' = undefined;
+    /**
+    * enables graduation requirements for learning
+    * @member {Number} learningRateDenominator
+    */
+    'learningRateDenominator' = undefined;
+    /**
+    * enables graduation requirements for learning
+    * @member {Number} learningRateNumerator
+    */
+    'learningRateNumerator' = undefined;
+    /**
+    * the number of samples to be applied before autotuning begins
+    * @member {Number} samplesToBuffer
+    */
+    'samplesToBuffer' = undefined;
+    /**
+    * streaming window size
+    * @member {Number} streamingWindowSize
+    */
+    'streamingWindowSize' = undefined;
 
 
 

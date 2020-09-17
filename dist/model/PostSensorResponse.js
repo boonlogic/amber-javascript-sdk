@@ -39,6 +39,10 @@ var PostSensorResponse = function () {
 
     function PostSensorResponse() {
         _classCallCheck(this, PostSensorResponse);
+
+        this['label'] = undefined;
+        this['sensorId'] = undefined;
+        this['tenantId'] = undefined;
     }
 
     /**
@@ -55,9 +59,35 @@ var PostSensorResponse = function () {
         value: function constructFromObject(data, obj) {
             if (data) {
                 obj = obj || new PostSensorResponse();
+
+                if (data.hasOwnProperty('label')) {
+                    obj['label'] = _ApiClient2.default.convertToType(data['label'], 'String');
+                }
+                if (data.hasOwnProperty('sensorId')) {
+                    obj['sensorId'] = _ApiClient2.default.convertToType(data['sensorId'], 'String');
+                }
+                if (data.hasOwnProperty('tenantId')) {
+                    obj['tenantId'] = _ApiClient2.default.convertToType(data['tenantId'], 'String');
+                }
             }
             return obj;
         }
+
+        /**
+        * Additional label to be assigned for sensor
+        * @member {String} label
+        */
+
+        /**
+        * Unique identifier for sensor
+        * @member {String} sensorId
+        */
+
+        /**
+        * Tenant identifier of caller
+        * @member {String} tenantId
+        */
+
     }]);
 
     return PostSensorResponse;

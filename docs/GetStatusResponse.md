@@ -3,11 +3,11 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**anomalyIndexes** | [**Uint16Array**](Uint16Array.md) |  | [optional] 
-**clusterGrowth** | [**Uint64Array**](Uint64Array.md) |  | [optional] 
-**clusterSizes** | [**Uint64Array**](Uint64Array.md) |  | [optional] 
-**distanceIndexes** | [**Uint16Array**](Uint16Array.md) |  | [optional] 
-**frequencyIndexes** | [**Uint16Array**](Uint16Array.md) |  | [optional] 
-**numClusters** | [**NumClusters**](NumClusters.md) |  | [optional] 
-**pca** | [**PCA**](PCA.md) |  | [optional] 
-**totalInferences** | [**TotalInferences**](TotalInferences.md) |  | [optional] 
+**anomalyIndexes** | **[Number]** |  | [optional] 
+**clusterGrowth** | **[Number]** |  | [optional] 
+**clusterSizes** | **[Number]** |  | [optional] 
+**distanceIndexes** | **[Number]** |  | [optional] 
+**frequencyIndexes** | **[Number]** |  | [optional] 
+**numClusters** | **Number** |  | [optional] 
+**pca** | **[[Number]]** | array of pca values | [optional] 
+**totalInferences** | **Number** |  | [optional] 

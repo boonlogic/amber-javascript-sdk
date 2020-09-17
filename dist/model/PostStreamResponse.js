@@ -21,22 +21,6 @@ var _ApiClient = require('../ApiClient');
 
 var _ApiClient2 = _interopRequireDefault(_ApiClient);
 
-var _Float32Array = require('./Float32Array');
-
-var _Float32Array2 = _interopRequireDefault(_Float32Array);
-
-var _StreamStatus = require('./StreamStatus');
-
-var _StreamStatus2 = _interopRequireDefault(_StreamStatus);
-
-var _Uint16Array = require('./Uint16Array');
-
-var _Uint16Array2 = _interopRequireDefault(_Uint16Array);
-
-var _Uint32Array = require('./Uint32Array');
-
-var _Uint32Array2 = _interopRequireDefault(_Uint32Array);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -51,14 +35,6 @@ var PostStreamResponse = function () {
     * Constructs a new <code>PostStreamResponse</code>.
     * @alias module:model/PostStreamResponse
     * @class
-    * @extends module:model/StreamStatus
-    * @param clusterCount {} current cluster count (applies to Learning and Monitoring states)
-    * @param message {} message to accompany the current state
-    * @param progress {} completion percentage (applies to Buffering and Autotuning states)
-    * @param retryCount {} number of restarts that have happened during autotuning
-    * @param state {} state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error, Autotuning retry
-    * @param streamingWindowSize {} the current streaming window size that is being used
-    * @param totalInferences {} inferences since the most recent restart
     * @param AD {} 
     * @param AH {} 
     * @param AM {} 
@@ -67,7 +43,7 @@ var PostStreamResponse = function () {
     * @param SI {} 
     */
 
-    function PostStreamResponse(clusterCount, message, progress, retryCount, state, streamingWindowSize, totalInferences, AD, AH, AM, AW, ID, SI) {
+    function PostStreamResponse(AD, AH, AM, AW, ID, SI) {
         _classCallCheck(this, PostStreamResponse);
 
         this['AD'] = undefined;
@@ -77,7 +53,6 @@ var PostStreamResponse = function () {
         this['ID'] = undefined;
         this['SI'] = undefined;
 
-        _StreamStatus2.default.call(this, clusterCount, message, progress, retryCount, state, streamingWindowSize, totalInferences);
 
         this['AD'] = AD;
         this['AH'] = AH;
@@ -102,52 +77,50 @@ var PostStreamResponse = function () {
             if (data) {
                 obj = obj || new PostStreamResponse();
 
-                _StreamStatus2.default.constructFromObject(data, obj);
-
                 if (data.hasOwnProperty('AD')) {
-                    obj['AD'] = _Uint16Array2.default.constructFromObject(data['AD']);
+                    obj['AD'] = _ApiClient2.default.convertToType(data['AD'], ['Number']);
                 }
                 if (data.hasOwnProperty('AH')) {
-                    obj['AH'] = _Uint16Array2.default.constructFromObject(data['AH']);
+                    obj['AH'] = _ApiClient2.default.convertToType(data['AH'], ['Number']);
                 }
                 if (data.hasOwnProperty('AM')) {
-                    obj['AM'] = _Float32Array2.default.constructFromObject(data['AM']);
+                    obj['AM'] = _ApiClient2.default.convertToType(data['AM'], ['Number']);
                 }
                 if (data.hasOwnProperty('AW')) {
-                    obj['AW'] = _Uint16Array2.default.constructFromObject(data['AW']);
+                    obj['AW'] = _ApiClient2.default.convertToType(data['AW'], ['Number']);
                 }
                 if (data.hasOwnProperty('ID')) {
-                    obj['ID'] = _Uint32Array2.default.constructFromObject(data['ID']);
+                    obj['ID'] = _ApiClient2.default.convertToType(data['ID'], ['Number']);
                 }
                 if (data.hasOwnProperty('SI')) {
-                    obj['SI'] = _Uint16Array2.default.constructFromObject(data['SI']);
+                    obj['SI'] = _ApiClient2.default.convertToType(data['SI'], ['Number']);
                 }
             }
             return obj;
         }
 
         /**
-        * @member {module:model/Uint16Array} AD
+        * @member {Array.<Number>} AD
         */
 
         /**
-        * @member {module:model/Uint16Array} AH
+        * @member {Array.<Number>} AH
         */
 
         /**
-        * @member {module:model/Float32Array} AM
+        * @member {Array.<Number>} AM
         */
 
         /**
-        * @member {module:model/Uint16Array} AW
+        * @member {Array.<Number>} AW
         */
 
         /**
-        * @member {module:model/Uint32Array} ID
+        * @member {Array.<Number>} ID
         */
 
         /**
-        * @member {module:model/Uint16Array} SI
+        * @member {Array.<Number>} SI
         */
 
     }]);

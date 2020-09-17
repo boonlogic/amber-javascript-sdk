@@ -21,13 +21,13 @@ var _ApiClient = require('../ApiClient');
 
 var _ApiClient2 = _interopRequireDefault(_ApiClient);
 
-var _EndpointUsageInfo = require('./EndpointUsageInfo');
+var _GetSensorResponseUsageInfoGetConfig = require('./GetSensorResponseUsageInfoGetConfig');
 
-var _EndpointUsageInfo2 = _interopRequireDefault(_EndpointUsageInfo);
+var _GetSensorResponseUsageInfoGetConfig2 = _interopRequireDefault(_GetSensorResponseUsageInfoGetConfig);
 
-var _StreamingEndpointUsageInfo = require('./StreamingEndpointUsageInfo');
+var _GetSensorResponseUsageInfoPostStream = require('./GetSensorResponseUsageInfoPostStream');
 
-var _StreamingEndpointUsageInfo2 = _interopRequireDefault(_StreamingEndpointUsageInfo);
+var _GetSensorResponseUsageInfoPostStream2 = _interopRequireDefault(_GetSensorResponseUsageInfoPostStream);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -72,49 +72,49 @@ var SensorUsageInfo = function () {
                 obj = obj || new SensorUsageInfo();
 
                 if (data.hasOwnProperty('getConfig')) {
-                    obj['getConfig'] = _EndpointUsageInfo2.default.constructFromObject(data['getConfig']);
+                    obj['getConfig'] = _GetSensorResponseUsageInfoGetConfig2.default.constructFromObject(data['getConfig']);
                 }
                 if (data.hasOwnProperty('getSensor')) {
-                    obj['getSensor'] = _EndpointUsageInfo2.default.constructFromObject(data['getSensor']);
+                    obj['getSensor'] = _GetSensorResponseUsageInfoGetConfig2.default.constructFromObject(data['getSensor']);
                 }
                 if (data.hasOwnProperty('getStatus')) {
-                    obj['getStatus'] = _EndpointUsageInfo2.default.constructFromObject(data['getStatus']);
+                    obj['getStatus'] = _GetSensorResponseUsageInfoGetConfig2.default.constructFromObject(data['getStatus']);
                 }
                 if (data.hasOwnProperty('postConfig')) {
-                    obj['postConfig'] = _EndpointUsageInfo2.default.constructFromObject(data['postConfig']);
+                    obj['postConfig'] = _GetSensorResponseUsageInfoGetConfig2.default.constructFromObject(data['postConfig']);
                 }
                 if (data.hasOwnProperty('postStream')) {
-                    obj['postStream'] = _StreamingEndpointUsageInfo2.default.constructFromObject(data['postStream']);
+                    obj['postStream'] = _GetSensorResponseUsageInfoPostStream2.default.constructFromObject(data['postStream']);
                 }
                 if (data.hasOwnProperty('putSensor')) {
-                    obj['putSensor'] = _EndpointUsageInfo2.default.constructFromObject(data['putSensor']);
+                    obj['putSensor'] = _GetSensorResponseUsageInfoGetConfig2.default.constructFromObject(data['putSensor']);
                 }
             }
             return obj;
         }
 
         /**
-        * @member {module:model/EndpointUsageInfo} getConfig
+        * @member {module:model/GetSensorResponseUsageInfoGetConfig} getConfig
         */
 
         /**
-        * @member {module:model/EndpointUsageInfo} getSensor
+        * @member {module:model/GetSensorResponseUsageInfoGetConfig} getSensor
         */
 
         /**
-        * @member {module:model/EndpointUsageInfo} getStatus
+        * @member {module:model/GetSensorResponseUsageInfoGetConfig} getStatus
         */
 
         /**
-        * @member {module:model/EndpointUsageInfo} postConfig
+        * @member {module:model/GetSensorResponseUsageInfoGetConfig} postConfig
         */
 
         /**
-        * @member {module:model/StreamingEndpointUsageInfo} postStream
+        * @member {module:model/GetSensorResponseUsageInfoPostStream} postStream
         */
 
         /**
-        * @member {module:model/EndpointUsageInfo} putSensor
+        * @member {module:model/GetSensorResponseUsageInfoGetConfig} putSensor
         */
 
     }]);

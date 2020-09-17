@@ -12,11 +12,6 @@
  */
 
 import ApiClient from '../ApiClient';
-import NumClusters from './NumClusters';
-import PCA from './PCA';
-import TotalInferences from './TotalInferences';
-import Uint16Array from './Uint16Array';
-import Uint64Array from './Uint64Array';
 
 /**
 * The GetStatusResponse model module.
@@ -49,63 +44,64 @@ export default class GetStatusResponse {
                         
             
             if (data.hasOwnProperty('anomalyIndexes')) {
-                obj['anomalyIndexes'] = Uint16Array.constructFromObject(data['anomalyIndexes']);
+                obj['anomalyIndexes'] = ApiClient.convertToType(data['anomalyIndexes'], ['Number']);
             }
             if (data.hasOwnProperty('clusterGrowth')) {
-                obj['clusterGrowth'] = Uint64Array.constructFromObject(data['clusterGrowth']);
+                obj['clusterGrowth'] = ApiClient.convertToType(data['clusterGrowth'], ['Number']);
             }
             if (data.hasOwnProperty('clusterSizes')) {
-                obj['clusterSizes'] = Uint64Array.constructFromObject(data['clusterSizes']);
+                obj['clusterSizes'] = ApiClient.convertToType(data['clusterSizes'], ['Number']);
             }
             if (data.hasOwnProperty('distanceIndexes')) {
-                obj['distanceIndexes'] = Uint16Array.constructFromObject(data['distanceIndexes']);
+                obj['distanceIndexes'] = ApiClient.convertToType(data['distanceIndexes'], ['Number']);
             }
             if (data.hasOwnProperty('frequencyIndexes')) {
-                obj['frequencyIndexes'] = Uint16Array.constructFromObject(data['frequencyIndexes']);
+                obj['frequencyIndexes'] = ApiClient.convertToType(data['frequencyIndexes'], ['Number']);
             }
             if (data.hasOwnProperty('numClusters')) {
-                obj['numClusters'] = NumClusters.constructFromObject(data['numClusters']);
+                obj['numClusters'] = ApiClient.convertToType(data['numClusters'], 'Number');
             }
             if (data.hasOwnProperty('pca')) {
-                obj['pca'] = PCA.constructFromObject(data['pca']);
+                obj['pca'] = ApiClient.convertToType(data['pca'], [['Number']]);
             }
             if (data.hasOwnProperty('totalInferences')) {
-                obj['totalInferences'] = TotalInferences.constructFromObject(data['totalInferences']);
+                obj['totalInferences'] = ApiClient.convertToType(data['totalInferences'], 'Number');
             }
         }
         return obj;
     }
 
     /**
-    * @member {module:model/Uint16Array} anomalyIndexes
+    * @member {Array.<Number>} anomalyIndexes
     */
     'anomalyIndexes' = undefined;
     /**
-    * @member {module:model/Uint64Array} clusterGrowth
+    * @member {Array.<Number>} clusterGrowth
     */
     'clusterGrowth' = undefined;
     /**
-    * @member {module:model/Uint64Array} clusterSizes
+    * @member {Array.<Number>} clusterSizes
     */
     'clusterSizes' = undefined;
     /**
-    * @member {module:model/Uint16Array} distanceIndexes
+    * @member {Array.<Number>} distanceIndexes
     */
     'distanceIndexes' = undefined;
     /**
-    * @member {module:model/Uint16Array} frequencyIndexes
+    * @member {Array.<Number>} frequencyIndexes
     */
     'frequencyIndexes' = undefined;
     /**
-    * @member {module:model/NumClusters} numClusters
+    * @member {Number} numClusters
     */
     'numClusters' = undefined;
     /**
-    * @member {module:model/PCA} pca
+    * array of pca values
+    * @member {Array.<Array.<Number>>} pca
     */
     'pca' = undefined;
     /**
-    * @member {module:model/TotalInferences} totalInferences
+    * @member {Number} totalInferences
     */
     'totalInferences' = undefined;
 

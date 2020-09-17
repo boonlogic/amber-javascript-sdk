@@ -21,9 +21,9 @@ var _ApiClient = require('../ApiClient');
 
 var _ApiClient2 = _interopRequireDefault(_ApiClient);
 
-var _SensorUsageInfo = require('./SensorUsageInfo');
+var _GetSensorResponseUsageInfo = require('./GetSensorResponseUsageInfo');
 
-var _SensorUsageInfo2 = _interopRequireDefault(_SensorUsageInfo);
+var _GetSensorResponseUsageInfo2 = _interopRequireDefault(_GetSensorResponseUsageInfo);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -75,7 +75,7 @@ var SensorInstanceFull = function () {
                     obj['tenantId'] = _ApiClient2.default.convertToType(data['tenantId'], 'String');
                 }
                 if (data.hasOwnProperty('usageInfo')) {
-                    obj['usageInfo'] = _SensorUsageInfo2.default.constructFromObject(data['usageInfo']);
+                    obj['usageInfo'] = _GetSensorResponseUsageInfo2.default.constructFromObject(data['usageInfo']);
                 }
             }
             return obj;
@@ -97,7 +97,7 @@ var SensorInstanceFull = function () {
         */
 
         /**
-        * @member {module:model/SensorUsageInfo} usageInfo
+        * @member {module:model/GetSensorResponseUsageInfo} usageInfo
         */
 
     }]);

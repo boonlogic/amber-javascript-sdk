@@ -21,13 +21,9 @@ var _ApiClient = require('../ApiClient');
 
 var _ApiClient2 = _interopRequireDefault(_ApiClient);
 
-var _FeatureConfig = require('./FeatureConfig');
+var _GetConfigResponseFeatures = require('./GetConfigResponseFeatures');
 
-var _FeatureConfig2 = _interopRequireDefault(_FeatureConfig);
-
-var _PostConfigRequest = require('./PostConfigRequest');
-
-var _PostConfigRequest2 = _interopRequireDefault(_PostConfigRequest);
+var _GetConfigResponseFeatures2 = _interopRequireDefault(_GetConfigResponseFeatures);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -43,18 +39,13 @@ var GetConfigResponse = function () {
     * Constructs a new <code>GetConfigResponse</code>.
     * @alias module:model/GetConfigResponse
     * @class
-    * @extends module:model/PostConfigRequest
-    * @param featureCount {} number of features per sample
-    * @param streamingWindowSize {} streaming window size
     */
 
-    function GetConfigResponse(featureCount, streamingWindowSize) {
+    function GetConfigResponse() {
         _classCallCheck(this, GetConfigResponse);
 
         this['features'] = undefined;
         this['percentVariation'] = undefined;
-
-        _PostConfigRequest2.default.call(this, featureCount, streamingWindowSize);
     }
 
     /**
@@ -72,10 +63,8 @@ var GetConfigResponse = function () {
             if (data) {
                 obj = obj || new GetConfigResponse();
 
-                _PostConfigRequest2.default.constructFromObject(data, obj);
-
                 if (data.hasOwnProperty('features')) {
-                    obj['features'] = _ApiClient2.default.convertToType(data['features'], [_FeatureConfig2.default]);
+                    obj['features'] = _ApiClient2.default.convertToType(data['features'], [_GetConfigResponseFeatures2.default]);
                 }
                 if (data.hasOwnProperty('percentVariation')) {
                     obj['percentVariation'] = _ApiClient2.default.convertToType(data['percentVariation'], 'Number');
@@ -85,7 +74,7 @@ var GetConfigResponse = function () {
         }
 
         /**
-        * @member {Array.<module:model/FeatureConfig>} features
+        * @member {Array.<module:model/GetConfigResponseFeatures>} features
         */
 
         /**
