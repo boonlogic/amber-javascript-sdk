@@ -176,7 +176,7 @@ var _DefaultApi2 = _interopRequireDefault(_DefaultApi);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
-* Boon_Logic_Amber_API_Server.<br>
+* Boon_Logic_Amber_SDK.<br>
 * The <code>index</code> module provides access to constructors for all the classes which comprise the public API.
 * <p>
 * An AMD (recommended!) or CommonJS application will generally do something equivalent to the following:

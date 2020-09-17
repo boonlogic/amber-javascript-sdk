@@ -55,7 +55,7 @@ import Uint64Array from './model/Uint64Array';
 import DefaultApi from './api/DefaultApi';
 
 /**
-* Boon_Logic_Amber_API_Server.<br>
+* Boon_Logic_Amber_SDK.<br>
 * The <code>index</code> module provides access to constructors for all the classes which comprise the public API.
 * <p>
 * An AMD (recommended!) or CommonJS application will generally do something equivalent to the following:
