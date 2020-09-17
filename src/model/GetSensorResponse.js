@@ -12,6 +12,7 @@
  */
 
 import ApiClient from '../ApiClient';
+import SensorInstanceFull from './SensorInstanceFull';
 import SensorUsageInfo from './SensorUsageInfo';
 
 /**
@@ -24,10 +25,11 @@ export default class GetSensorResponse {
     * Constructs a new <code>GetSensorResponse</code>.
     * @alias module:model/GetSensorResponse
     * @class
+    * @extends module:model/SensorInstanceFull
     */
 
     constructor() {
-        
+        SensorInstanceFull.call(this);
         
         
     }
@@ -42,43 +44,13 @@ export default class GetSensorResponse {
     static constructFromObject(data, obj) {
         if (data) {
             obj = obj || new GetSensorResponse();
-                        
             
-            if (data.hasOwnProperty('label')) {
-                obj['label'] = ApiClient.convertToType(data['label'], 'String');
-            }
-            if (data.hasOwnProperty('sensorId')) {
-                obj['sensorId'] = ApiClient.convertToType(data['sensorId'], 'String');
-            }
-            if (data.hasOwnProperty('tenantId')) {
-                obj['tenantId'] = ApiClient.convertToType(data['tenantId'], 'String');
-            }
-            if (data.hasOwnProperty('usageInfo')) {
-                obj['usageInfo'] = SensorUsageInfo.constructFromObject(data['usageInfo']);
-            }
+            SensorInstanceFull.constructFromObject(data, obj);
+            
         }
         return obj;
     }
 
-    /**
-    * Additional label to be assigned for sensor
-    * @member {String} label
-    */
-    'label' = undefined;
-    /**
-    * Unique identifier for sensor
-    * @member {String} sensorId
-    */
-    'sensorId' = undefined;
-    /**
-    * Tenant identifier of caller
-    * @member {String} tenantId
-    */
-    'tenantId' = undefined;
-    /**
-    * @member {module:model/SensorUsageInfo} usageInfo
-    */
-    'usageInfo' = undefined;
 
 
 

@@ -21,6 +21,10 @@ var _ApiClient = require('../ApiClient');
 
 var _ApiClient2 = _interopRequireDefault(_ApiClient);
 
+var _SensorInstanceFull = require('./SensorInstanceFull');
+
+var _SensorInstanceFull2 = _interopRequireDefault(_SensorInstanceFull);
+
 var _SensorUsageInfo = require('./SensorUsageInfo');
 
 var _SensorUsageInfo2 = _interopRequireDefault(_SensorUsageInfo);
@@ -39,15 +43,13 @@ var GetSensorResponse = function () {
     * Constructs a new <code>GetSensorResponse</code>.
     * @alias module:model/GetSensorResponse
     * @class
+    * @extends module:model/SensorInstanceFull
     */
 
     function GetSensorResponse() {
         _classCallCheck(this, GetSensorResponse);
 
-        this['label'] = undefined;
-        this['sensorId'] = undefined;
-        this['tenantId'] = undefined;
-        this['usageInfo'] = undefined;
+        _SensorInstanceFull2.default.call(this);
     }
 
     /**
@@ -65,41 +67,10 @@ var GetSensorResponse = function () {
             if (data) {
                 obj = obj || new GetSensorResponse();
 
-                if (data.hasOwnProperty('label')) {
-                    obj['label'] = _ApiClient2.default.convertToType(data['label'], 'String');
-                }
-                if (data.hasOwnProperty('sensorId')) {
-                    obj['sensorId'] = _ApiClient2.default.convertToType(data['sensorId'], 'String');
-                }
-                if (data.hasOwnProperty('tenantId')) {
-                    obj['tenantId'] = _ApiClient2.default.convertToType(data['tenantId'], 'String');
-                }
-                if (data.hasOwnProperty('usageInfo')) {
-                    obj['usageInfo'] = _SensorUsageInfo2.default.constructFromObject(data['usageInfo']);
-                }
+                _SensorInstanceFull2.default.constructFromObject(data, obj);
             }
             return obj;
         }
-
-        /**
-        * Additional label to be assigned for sensor
-        * @member {String} label
-        */
-
-        /**
-        * Unique identifier for sensor
-        * @member {String} sensorId
-        */
-
-        /**
-        * Tenant identifier of caller
-        * @member {String} tenantId
-        */
-
-        /**
-        * @member {module:model/SensorUsageInfo} usageInfo
-        */
-
     }]);
 
     return GetSensorResponse;

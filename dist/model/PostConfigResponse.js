@@ -21,6 +21,10 @@ var _ApiClient = require('../ApiClient');
 
 var _ApiClient2 = _interopRequireDefault(_ApiClient);
 
+var _PostConfigRequest = require('./PostConfigRequest');
+
+var _PostConfigRequest2 = _interopRequireDefault(_PostConfigRequest);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35,24 +39,15 @@ var PostConfigResponse = function () {
     * Constructs a new <code>PostConfigResponse</code>.
     * @alias module:model/PostConfigResponse
     * @class
-    * @param featureCount {Number} number of features per sample
-    * @param streamingWindowSize {Number} streaming window size
+    * @extends module:model/PostConfigRequest
+    * @param featureCount {} number of features per sample
+    * @param streamingWindowSize {} streaming window size
     */
 
     function PostConfigResponse(featureCount, streamingWindowSize) {
         _classCallCheck(this, PostConfigResponse);
 
-        this['featureCount'] = undefined;
-        this['streamingWindowSize'] = undefined;
-        this['samplesToBuffer'] = undefined;
-        this['learningRateNumerator'] = undefined;
-        this['learningRateDenominator'] = undefined;
-        this['learningMaxClusters'] = undefined;
-        this['learningMaxSamples'] = undefined;
-
-
-        this['featureCount'] = featureCount;
-        this['streamingWindowSize'] = streamingWindowSize;
+        _PostConfigRequest2.default.call(this, featureCount, streamingWindowSize);
     }
 
     /**
@@ -70,66 +65,10 @@ var PostConfigResponse = function () {
             if (data) {
                 obj = obj || new PostConfigResponse();
 
-                if (data.hasOwnProperty('featureCount')) {
-                    obj['featureCount'] = _ApiClient2.default.convertToType(data['featureCount'], 'Number');
-                }
-                if (data.hasOwnProperty('streamingWindowSize')) {
-                    obj['streamingWindowSize'] = _ApiClient2.default.convertToType(data['streamingWindowSize'], 'Number');
-                }
-                if (data.hasOwnProperty('samplesToBuffer')) {
-                    obj['samplesToBuffer'] = _ApiClient2.default.convertToType(data['samplesToBuffer'], 'Number');
-                }
-                if (data.hasOwnProperty('learningRateNumerator')) {
-                    obj['learningRateNumerator'] = _ApiClient2.default.convertToType(data['learningRateNumerator'], 'Number');
-                }
-                if (data.hasOwnProperty('learningRateDenominator')) {
-                    obj['learningRateDenominator'] = _ApiClient2.default.convertToType(data['learningRateDenominator'], 'Number');
-                }
-                if (data.hasOwnProperty('learningMaxClusters')) {
-                    obj['learningMaxClusters'] = _ApiClient2.default.convertToType(data['learningMaxClusters'], 'Number');
-                }
-                if (data.hasOwnProperty('learningMaxSamples')) {
-                    obj['learningMaxSamples'] = _ApiClient2.default.convertToType(data['learningMaxSamples'], 'Number');
-                }
+                _PostConfigRequest2.default.constructFromObject(data, obj);
             }
             return obj;
         }
-
-        /**
-        * number of features per sample
-        * @member {Number} featureCount
-        */
-
-        /**
-        * streaming window size
-        * @member {Number} streamingWindowSize
-        */
-
-        /**
-        * the number of samples to be applied before autotuning begins
-        * @member {Number} samplesToBuffer
-        */
-
-        /**
-        * enables graduation requirements for learning
-        * @member {Number} learningRateNumerator
-        */
-
-        /**
-        * enables graduation requirements for learning
-        * @member {Number} learningRateDenominator
-        */
-
-        /**
-        * learning graduation requirement for stopping learning upon reaching this cluster count
-        * @member {Number} learningMaxClusters
-        */
-
-        /**
-        * learning graduation requirement for stopping learning after acquiring this many samples
-        * @member {Number} learningMaxSamples
-        */
-
     }]);
 
     return PostConfigResponse;

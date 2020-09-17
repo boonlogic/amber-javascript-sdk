@@ -21,6 +21,10 @@ var _ApiClient = require('../ApiClient');
 
 var _ApiClient2 = _interopRequireDefault(_ApiClient);
 
+var _PostSensorResponse = require('./PostSensorResponse');
+
+var _PostSensorResponse2 = _interopRequireDefault(_PostSensorResponse);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35,10 +39,13 @@ var PutSensorResponse = function () {
     * Constructs a new <code>PutSensorResponse</code>.
     * @alias module:model/PutSensorResponse
     * @class
+    * @extends module:model/PostSensorResponse
     */
 
     function PutSensorResponse() {
         _classCallCheck(this, PutSensorResponse);
+
+        _PostSensorResponse2.default.call(this);
     }
 
     /**
@@ -55,6 +62,8 @@ var PutSensorResponse = function () {
         value: function constructFromObject(data, obj) {
             if (data) {
                 obj = obj || new PutSensorResponse();
+
+                _PostSensorResponse2.default.constructFromObject(data, obj);
             }
             return obj;
         }
