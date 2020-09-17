@@ -53,14 +53,14 @@
       //expect(instance).to.be.a(AmberApiServer.FeatureConfig);
     });
 
-    it('should have the property minVal (base name: "minVal")', function() {
-      // uncomment below and update the code to test the property minVal
+    it('should have the property maxVal (base name: "maxVal")', function() {
+      // uncomment below and update the code to test the property maxVal
       //var instane = new AmberApiServer.FeatureConfig();
       //expect(instance).to.be();
     });
 
-    it('should have the property maxVal (base name: "maxVal")', function() {
-      // uncomment below and update the code to test the property maxVal
+    it('should have the property minVal (base name: "minVal")', function() {
+      // uncomment below and update the code to test the property minVal
       //var instane = new AmberApiServer.FeatureConfig();
       //expect(instance).to.be();
     });

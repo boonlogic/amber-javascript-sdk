@@ -59,20 +59,14 @@
       //expect(instance).to.be();
     });
 
-    it('should have the property streamingWindowSize (base name: "streamingWindowSize")', function() {
-      // uncomment below and update the code to test the property streamingWindowSize
+    it('should have the property learningMaxClusters (base name: "learningMaxClusters")', function() {
+      // uncomment below and update the code to test the property learningMaxClusters
       //var instane = new AmberApiServer.PostConfigRequest();
       //expect(instance).to.be();
     });
 
-    it('should have the property samplesToBuffer (base name: "samplesToBuffer")', function() {
-      // uncomment below and update the code to test the property samplesToBuffer
-      //var instane = new AmberApiServer.PostConfigRequest();
-      //expect(instance).to.be();
-    });
-
-    it('should have the property learningRateNumerator (base name: "learningRateNumerator")', function() {
-      // uncomment below and update the code to test the property learningRateNumerator
+    it('should have the property learningMaxSamples (base name: "learningMaxSamples")', function() {
+      // uncomment below and update the code to test the property learningMaxSamples
       //var instane = new AmberApiServer.PostConfigRequest();
       //expect(instance).to.be();
     });
@@ -83,14 +77,20 @@
       //expect(instance).to.be();
     });
 
-    it('should have the property learningMaxClusters (base name: "learningMaxClusters")', function() {
-      // uncomment below and update the code to test the property learningMaxClusters
+    it('should have the property learningRateNumerator (base name: "learningRateNumerator")', function() {
+      // uncomment below and update the code to test the property learningRateNumerator
       //var instane = new AmberApiServer.PostConfigRequest();
       //expect(instance).to.be();
     });
 
-    it('should have the property learningMaxSamples (base name: "learningMaxSamples")', function() {
-      // uncomment below and update the code to test the property learningMaxSamples
+    it('should have the property samplesToBuffer (base name: "samplesToBuffer")', function() {
+      // uncomment below and update the code to test the property samplesToBuffer
+      //var instane = new AmberApiServer.PostConfigRequest();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property streamingWindowSize (base name: "streamingWindowSize")', function() {
+      // uncomment below and update the code to test the property streamingWindowSize
       //var instane = new AmberApiServer.PostConfigRequest();
       //expect(instance).to.be();
     });

@@ -53,6 +53,48 @@
       //expect(instance).to.be.a(AmberApiServer.PostConfigResponse);
     });
 
+    it('should have the property featureCount (base name: "featureCount")', function() {
+      // uncomment below and update the code to test the property featureCount
+      //var instane = new AmberApiServer.PostConfigResponse();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property learningMaxClusters (base name: "learningMaxClusters")', function() {
+      // uncomment below and update the code to test the property learningMaxClusters
+      //var instane = new AmberApiServer.PostConfigResponse();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property learningMaxSamples (base name: "learningMaxSamples")', function() {
+      // uncomment below and update the code to test the property learningMaxSamples
+      //var instane = new AmberApiServer.PostConfigResponse();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property learningRateDenominator (base name: "learningRateDenominator")', function() {
+      // uncomment below and update the code to test the property learningRateDenominator
+      //var instane = new AmberApiServer.PostConfigResponse();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property learningRateNumerator (base name: "learningRateNumerator")', function() {
+      // uncomment below and update the code to test the property learningRateNumerator
+      //var instane = new AmberApiServer.PostConfigResponse();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property samplesToBuffer (base name: "samplesToBuffer")', function() {
+      // uncomment below and update the code to test the property samplesToBuffer
+      //var instane = new AmberApiServer.PostConfigResponse();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property streamingWindowSize (base name: "streamingWindowSize")', function() {
+      // uncomment below and update the code to test the property streamingWindowSize
+      //var instane = new AmberApiServer.PostConfigResponse();
+      //expect(instance).to.be();
+    });
+
   });
 
 }));

@@ -53,8 +53,8 @@
       //expect(instance).to.be.a(AmberApiServer.StreamStatus);
     });
 
-    it('should have the property state (base name: "state")', function() {
-      // uncomment below and update the code to test the property state
+    it('should have the property clusterCount (base name: "clusterCount")', function() {
+      // uncomment below and update the code to test the property clusterCount
       //var instane = new AmberApiServer.StreamStatus();
       //expect(instance).to.be();
     });
@@ -71,14 +71,14 @@
       //expect(instance).to.be();
     });
 
-    it('should have the property clusterCount (base name: "clusterCount")', function() {
-      // uncomment below and update the code to test the property clusterCount
+    it('should have the property retryCount (base name: "retryCount")', function() {
+      // uncomment below and update the code to test the property retryCount
       //var instane = new AmberApiServer.StreamStatus();
       //expect(instance).to.be();
     });
 
-    it('should have the property retryCount (base name: "retryCount")', function() {
-      // uncomment below and update the code to test the property retryCount
+    it('should have the property state (base name: "state")', function() {
+      // uncomment below and update the code to test the property state
       //var instane = new AmberApiServer.StreamStatus();
       //expect(instance).to.be();
     });

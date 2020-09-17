@@ -53,12 +53,6 @@
       //expect(instance).to.be.a(AmberApiServer.PostStreamResponse);
     });
 
-    it('should have the property SI (base name: "SI")', function() {
-      // uncomment below and update the code to test the property SI
-      //var instane = new AmberApiServer.PostStreamResponse();
-      //expect(instance).to.be();
-    });
-
     it('should have the property AD (base name: "AD")', function() {
       // uncomment below and update the code to test the property AD
       //var instane = new AmberApiServer.PostStreamResponse();
@@ -85,6 +79,12 @@
 
     it('should have the property ID (base name: "ID")', function() {
       // uncomment below and update the code to test the property ID
+      //var instane = new AmberApiServer.PostStreamResponse();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property SI (base name: "SI")', function() {
+      // uncomment below and update the code to test the property SI
       //var instane = new AmberApiServer.PostStreamResponse();
       //expect(instance).to.be();
     });

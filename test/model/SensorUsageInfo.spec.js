@@ -53,6 +53,24 @@
       //expect(instance).to.be.a(AmberApiServer.SensorUsageInfo);
     });
 
+    it('should have the property getConfig (base name: "getConfig")', function() {
+      // uncomment below and update the code to test the property getConfig
+      //var instane = new AmberApiServer.SensorUsageInfo();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property getSensor (base name: "getSensor")', function() {
+      // uncomment below and update the code to test the property getSensor
+      //var instane = new AmberApiServer.SensorUsageInfo();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property getStatus (base name: "getStatus")', function() {
+      // uncomment below and update the code to test the property getStatus
+      //var instane = new AmberApiServer.SensorUsageInfo();
+      //expect(instance).to.be();
+    });
+
     it('should have the property postConfig (base name: "postConfig")', function() {
       // uncomment below and update the code to test the property postConfig
       //var instane = new AmberApiServer.SensorUsageInfo();
@@ -67,24 +85,6 @@
 
     it('should have the property putSensor (base name: "putSensor")', function() {
       // uncomment below and update the code to test the property putSensor
-      //var instane = new AmberApiServer.SensorUsageInfo();
-      //expect(instance).to.be();
-    });
-
-    it('should have the property getSensor (base name: "getSensor")', function() {
-      // uncomment below and update the code to test the property getSensor
-      //var instane = new AmberApiServer.SensorUsageInfo();
-      //expect(instance).to.be();
-    });
-
-    it('should have the property getConfig (base name: "getConfig")', function() {
-      // uncomment below and update the code to test the property getConfig
-      //var instane = new AmberApiServer.SensorUsageInfo();
-      //expect(instance).to.be();
-    });
-
-    it('should have the property getStatus (base name: "getStatus")', function() {
-      // uncomment below and update the code to test the property getStatus
       //var instane = new AmberApiServer.SensorUsageInfo();
       //expect(instance).to.be();
     });

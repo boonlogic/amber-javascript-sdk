@@ -53,6 +53,24 @@
       //expect(instance).to.be.a(AmberApiServer.PutSensorResponse);
     });
 
+    it('should have the property label (base name: "label")', function() {
+      // uncomment below and update the code to test the property label
+      //var instane = new AmberApiServer.PutSensorResponse();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property sensorId (base name: "sensorId")', function() {
+      // uncomment below and update the code to test the property sensorId
+      //var instane = new AmberApiServer.PutSensorResponse();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property tenantId (base name: "tenantId")', function() {
+      // uncomment below and update the code to test the property tenantId
+      //var instane = new AmberApiServer.PutSensorResponse();
+      //expect(instance).to.be();
+    });
+
   });
 
 }));

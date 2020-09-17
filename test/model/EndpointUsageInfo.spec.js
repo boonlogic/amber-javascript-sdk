@@ -53,14 +53,14 @@
       //expect(instance).to.be.a(AmberApiServer.EndpointUsageInfo);
     });
 
-    it('should have the property callsTotal (base name: "callsTotal")', function() {
-      // uncomment below and update the code to test the property callsTotal
+    it('should have the property callsThisPeriod (base name: "callsThisPeriod")', function() {
+      // uncomment below and update the code to test the property callsThisPeriod
       //var instane = new AmberApiServer.EndpointUsageInfo();
       //expect(instance).to.be();
     });
 
-    it('should have the property callsThisPeriod (base name: "callsThisPeriod")', function() {
-      // uncomment below and update the code to test the property callsThisPeriod
+    it('should have the property callsTotal (base name: "callsTotal")', function() {
+      // uncomment below and update the code to test the property callsTotal
       //var instane = new AmberApiServer.EndpointUsageInfo();
       //expect(instance).to.be();
     });

@@ -53,20 +53,20 @@
       //expect(instance).to.be.a(AmberApiServer.StreamingEndpointUsageInfo);
     });
 
-    it('should have the property callsTotal (base name: "callsTotal")', function() {
-      // uncomment below and update the code to test the property callsTotal
-      //var instane = new AmberApiServer.StreamingEndpointUsageInfo();
-      //expect(instance).to.be();
-    });
-
     it('should have the property callsThisPeriod (base name: "callsThisPeriod")', function() {
       // uncomment below and update the code to test the property callsThisPeriod
       //var instane = new AmberApiServer.StreamingEndpointUsageInfo();
       //expect(instance).to.be();
     });
 
-    it('should have the property samplesTotal (base name: "samplesTotal")', function() {
-      // uncomment below and update the code to test the property samplesTotal
+    it('should have the property callsTotal (base name: "callsTotal")', function() {
+      // uncomment below and update the code to test the property callsTotal
+      //var instane = new AmberApiServer.StreamingEndpointUsageInfo();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property lastCalled (base name: "lastCalled")', function() {
+      // uncomment below and update the code to test the property lastCalled
       //var instane = new AmberApiServer.StreamingEndpointUsageInfo();
       //expect(instance).to.be();
     });
@@ -77,8 +77,8 @@
       //expect(instance).to.be();
     });
 
-    it('should have the property lastCalled (base name: "lastCalled")', function() {
-      // uncomment below and update the code to test the property lastCalled
+    it('should have the property samplesTotal (base name: "samplesTotal")', function() {
+      // uncomment below and update the code to test the property samplesTotal
       //var instane = new AmberApiServer.StreamingEndpointUsageInfo();
       //expect(instance).to.be();
     });

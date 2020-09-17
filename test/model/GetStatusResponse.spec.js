@@ -53,8 +53,8 @@
       //expect(instance).to.be.a(AmberApiServer.GetStatusResponse);
     });
 
-    it('should have the property pca (base name: "pca")', function() {
-      // uncomment below and update the code to test the property pca
+    it('should have the property anomalyIndexes (base name: "anomalyIndexes")', function() {
+      // uncomment below and update the code to test the property anomalyIndexes
       //var instane = new AmberApiServer.GetStatusResponse();
       //expect(instance).to.be();
     });
@@ -71,8 +71,8 @@
       //expect(instance).to.be();
     });
 
-    it('should have the property anomalyIndexes (base name: "anomalyIndexes")', function() {
-      // uncomment below and update the code to test the property anomalyIndexes
+    it('should have the property distanceIndexes (base name: "distanceIndexes")', function() {
+      // uncomment below and update the code to test the property distanceIndexes
       //var instane = new AmberApiServer.GetStatusResponse();
       //expect(instance).to.be();
     });
@@ -83,20 +83,20 @@
       //expect(instance).to.be();
     });
 
-    it('should have the property distanceIndexes (base name: "distanceIndexes")', function() {
-      // uncomment below and update the code to test the property distanceIndexes
+    it('should have the property numClusters (base name: "numClusters")', function() {
+      // uncomment below and update the code to test the property numClusters
+      //var instane = new AmberApiServer.GetStatusResponse();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property pca (base name: "pca")', function() {
+      // uncomment below and update the code to test the property pca
       //var instane = new AmberApiServer.GetStatusResponse();
       //expect(instance).to.be();
     });
 
     it('should have the property totalInferences (base name: "totalInferences")', function() {
       // uncomment below and update the code to test the property totalInferences
-      //var instane = new AmberApiServer.GetStatusResponse();
-      //expect(instance).to.be();
-    });
-
-    it('should have the property numClusters (base name: "numClusters")', function() {
-      // uncomment below and update the code to test the property numClusters
       //var instane = new AmberApiServer.GetStatusResponse();
       //expect(instance).to.be();
     });

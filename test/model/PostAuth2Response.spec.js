@@ -53,6 +53,12 @@
       //expect(instance).to.be.a(AmberApiServer.PostAuth2Response);
     });
 
+    it('should have the property expiresIn (base name: "expiresIn")', function() {
+      // uncomment below and update the code to test the property expiresIn
+      //var instane = new AmberApiServer.PostAuth2Response();
+      //expect(instance).to.be();
+    });
+
     it('should have the property idToken (base name: "idToken")', function() {
       // uncomment below and update the code to test the property idToken
       //var instane = new AmberApiServer.PostAuth2Response();
@@ -61,12 +67,6 @@
 
     it('should have the property refreshToken (base name: "refreshToken")', function() {
       // uncomment below and update the code to test the property refreshToken
-      //var instane = new AmberApiServer.PostAuth2Response();
-      //expect(instance).to.be();
-    });
-
-    it('should have the property expiresIn (base name: "expiresIn")', function() {
-      // uncomment below and update the code to test the property expiresIn
       //var instane = new AmberApiServer.PostAuth2Response();
       //expect(instance).to.be();
     });
