@@ -398,7 +398,7 @@ export default class DefaultApi {
      * @param {module:api/DefaultApi~putSensorCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/PutSensorResponse}
      */
-    putSensor(body, callback) {
+    putSensor(body, sensorId, callback) {
       let postBody = body;
 
       let pathParams = {
@@ -406,6 +406,7 @@ export default class DefaultApi {
       let queryParams = {
       };
       let headerParams = {
+        'sensorId': sensorId
       };
       let formParams = {
       };

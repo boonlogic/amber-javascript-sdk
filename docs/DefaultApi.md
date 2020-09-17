@@ -459,7 +459,7 @@ Name | Type | Description  | Notes
 
 <a name="putSensor"></a>
 # **putSensor**
-> PutSensorResponse putSensor(body)
+> PutSensorResponse putSensor(bodysensorId)
 
 Update label for a sensor instance
 
@@ -478,8 +478,9 @@ authorize-amber-pool.apiKey = 'YOUR API KEY';
 
 let apiInstance = new AmberApiServer.DefaultApi();
 let body = new AmberApiServer.PutSensorRequest(); // PutSensorRequest | New label to apply to sensor instance
+let sensorId = "sensorId_example"; // String | Unique identifier for sensor
 
-apiInstance.putSensor(body, (error, data, response) => {
+apiInstance.putSensor(bodysensorId, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -493,6 +494,7 @@ apiInstance.putSensor(body, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**PutSensorRequest**](PutSensorRequest.md)| New label to apply to sensor instance | 
+ **sensorId** | **String**| Unique identifier for sensor | 
 
 ### Return type
 
