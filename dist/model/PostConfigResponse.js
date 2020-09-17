@@ -35,10 +35,24 @@ var PostConfigResponse = function () {
     * Constructs a new <code>PostConfigResponse</code>.
     * @alias module:model/PostConfigResponse
     * @class
+    * @param featureCount {Number} number of features per sample
+    * @param streamingWindowSize {Number} streaming window size
     */
 
-    function PostConfigResponse() {
+    function PostConfigResponse(featureCount, streamingWindowSize) {
         _classCallCheck(this, PostConfigResponse);
+
+        this['featureCount'] = undefined;
+        this['streamingWindowSize'] = undefined;
+        this['samplesToBuffer'] = undefined;
+        this['learningRateNumerator'] = undefined;
+        this['learningRateDenominator'] = undefined;
+        this['learningMaxClusters'] = undefined;
+        this['learningMaxSamples'] = undefined;
+
+
+        this['featureCount'] = featureCount;
+        this['streamingWindowSize'] = streamingWindowSize;
     }
 
     /**
@@ -55,9 +69,67 @@ var PostConfigResponse = function () {
         value: function constructFromObject(data, obj) {
             if (data) {
                 obj = obj || new PostConfigResponse();
+
+                if (data.hasOwnProperty('featureCount')) {
+                    obj['featureCount'] = _ApiClient2.default.convertToType(data['featureCount'], 'Number');
+                }
+                if (data.hasOwnProperty('streamingWindowSize')) {
+                    obj['streamingWindowSize'] = _ApiClient2.default.convertToType(data['streamingWindowSize'], 'Number');
+                }
+                if (data.hasOwnProperty('samplesToBuffer')) {
+                    obj['samplesToBuffer'] = _ApiClient2.default.convertToType(data['samplesToBuffer'], 'Number');
+                }
+                if (data.hasOwnProperty('learningRateNumerator')) {
+                    obj['learningRateNumerator'] = _ApiClient2.default.convertToType(data['learningRateNumerator'], 'Number');
+                }
+                if (data.hasOwnProperty('learningRateDenominator')) {
+                    obj['learningRateDenominator'] = _ApiClient2.default.convertToType(data['learningRateDenominator'], 'Number');
+                }
+                if (data.hasOwnProperty('learningMaxClusters')) {
+                    obj['learningMaxClusters'] = _ApiClient2.default.convertToType(data['learningMaxClusters'], 'Number');
+                }
+                if (data.hasOwnProperty('learningMaxSamples')) {
+                    obj['learningMaxSamples'] = _ApiClient2.default.convertToType(data['learningMaxSamples'], 'Number');
+                }
             }
             return obj;
         }
+
+        /**
+        * number of features per sample
+        * @member {Number} featureCount
+        */
+
+        /**
+        * streaming window size
+        * @member {Number} streamingWindowSize
+        */
+
+        /**
+        * the number of samples to be applied before autotuning begins
+        * @member {Number} samplesToBuffer
+        */
+
+        /**
+        * enables graduation requirements for learning
+        * @member {Number} learningRateNumerator
+        */
+
+        /**
+        * enables graduation requirements for learning
+        * @member {Number} learningRateDenominator
+        */
+
+        /**
+        * learning graduation requirement for stopping learning upon reaching this cluster count
+        * @member {Number} learningMaxClusters
+        */
+
+        /**
+        * learning graduation requirement for stopping learning after acquiring this many samples
+        * @member {Number} learningMaxSamples
+        */
+
     }]);
 
     return PostConfigResponse;
