@@ -7,7 +7,7 @@
   "scripts": {
     "package": "rm -rf dist && mkdir dist && babel ./src -d dist --copy-files",
     "test": "mocha --compilers js:babel-core/register --recursive",
-    "generate": "cp package.json package.json.backup && swagger-codegen generate -DprojectName=amber-javascript-sdk -DprojectDescription='Boon_Logic_Amber_SDK' -i swagger.json -l javascript -o . && mv package.json.backup package.json"
+    "generate": "cp package.json package.json.backup && swagger-codegen generate -DprojectDescription='Boon_Logic_Amber_SDK' -i swagger.json -l javascript -o . && mv package.json.backup package.json"
   },
   "browser": {
     "fs": false
