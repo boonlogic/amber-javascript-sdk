@@ -1,3 +1,7 @@
+const readline = require('readline');
+const fs = require('fs');
+
+
 let AmberApiServer = require('amber_javascript_sdk');
 
 // create oauth2 token using credentials
@@ -34,30 +38,6 @@ function auth2Request(username, password) {
     })
 }
 
-function getSensorsRequest() {
-    return new Promise((resolve, reject) => {
-        apiInstance.getSensors((error, data, response) => {
-            if (error) {
-                reject(error)
-            } else {
-                resolve(data)
-            }
-        });
-    })
-}
-
-function getSensorRequest(sensorId) {
-    return new Promise((resolve, reject) => {
-        apiInstance.getSensor(sensorId, (error, data, response) => {
-            if (error) {
-                reject(error)
-            } else {
-                resolve({sensorId: sensorId, response: data})
-            }
-        });
-    })
-}
-
 function postSensorRequest(label = undefined) {
     return new Promise((resolve, reject) => {
         let postRequest = new AmberApiServer.PostSensorRequest(label)
@@ -69,19 +49,6 @@ function postSensorRequest(label = undefined) {
                 reject(error)
             } else {
                 resolve(data)
-            }
-        });
-    })
-}
-
-function putSensorRequest(sensorId, label) {
-    return new Promise((resolve, reject) => {
-        let putRequest = new AmberApiServer.PutSensorRequest(label)
-        apiInstance.putSensor(putRequest, sensorId, (error, data, response) => {
-            if (error) {
-                reject(error)
-            } else {
-                resolve({sensorId: sensorId, response: data})
             }
         });
     })
@@ -108,30 +75,6 @@ function postConfigRequest(sensorId, featureCount = 1, streamingWindowSize = 25,
     })
 }
 
-function getConfigRequest(sensorId) {
-    return new Promise((resolve, reject) => {
-        apiInstance.getSensor(sensorId, (error, data, response) => {
-            if (error) {
-                reject(error)
-            } else {
-                resolve({sensorId: sensorId, response: data})
-            }
-        });
-    })
-}
-
-function deleteSensorRequest(sensorId) {
-    return new Promise((resolve, reject) => {
-        apiInstance.deleteSensor(sensorId, (error, data, response) => {
-            if (error) {
-                reject(error)
-            } else {
-                resolve({sensorId: sensorId, response: JSON.parse(response.text)})
-            }
-        });
-    })
-}
-
 function postStreamRequest(sensorId, csv) {
     return new Promise((resolve, reject) => {
         let body = new AmberApiServer.PostStreamRequest(csv);
@@ -145,47 +88,22 @@ function postStreamRequest(sensorId, csv) {
     })
 }
 
-function getStatusRequest(sensorId) {
-    return new Promise((resolve, reject) => {
-        apiInstance.getStatus(sensorId, (error, data, response) => {
-            if (error) {
-                reject(error)
-            } else {
-                resolve({sensorId: sensorId, response: data})
-            }
-        });
-    })
-}
-
-// basic walkthrough of available api calls
-auth2Request(username, password).then(function (data, msg) {  // authenticate
+auth2Request(username, password).then(function (data) {  // authenticate
     console.log("auth2Response: %o", data)
-    return postSensorRequest("Sensor-1-4002") // create new sensor
+    return postSensorRequest("Sensor-1-999") // create new sensor
 }).then(function (data) {
     console.log("postSensorResponse: %o", data)
-    return getSensorsRequest()  // get list of sensors
-}).then(function (data) {
-    console.log("getSensorsResponse: %o", data)
-    return getSensorRequest(data[0].sensorId) // get sensor details
-}).then(function (data) {
-    console.log("getSensorResponse: %o", data.response)
-    return putSensorRequest(data.sensorId, "newLabel") // update sensor label
-}).then(function (data) {
-    console.log("putSensorResponse: %o", data.response)
     return postConfigRequest(data.sensorId, 1, 25) // configure sensor
 }).then(function (data) {
     console.log("postConfigResponse: %o", data.response)
-    return getConfigRequest(data.sensorId) // get sensor configuration
-}).then(function (data) {
-    console.log("getConfigResponse: %o", data.response)
-    return postStreamRequest(data.sensorId, "0.05,1.0,2.5,0.9") // post streaming data
-}).then(function (data) {
-    console.log("postStreamResponse: %o", data.response)
-    return getStatusRequest(data.sensorId) // get sensor analytic status
-}).then(function (data) {
-    console.log("getStatusResponse: %o", data.response)
-    return deleteSensorRequest(data.sensorId) // delete sensor
-}).then(function (data) {
-    console.log("deleteSensorResponse: %o", data.response)
-    return data
+    const readInterface = readline.createInterface({
+        input: fs.createReadStream('examples/data.csv'),
+        output: process.stdout,
+        console: false
+    });
+    readInterface.on('line', function (line) {
+        postStreamRequest(data.sensorId, line).then(function (data) {
+            console.log("%o", data.response)
+        })
+    })
 })
