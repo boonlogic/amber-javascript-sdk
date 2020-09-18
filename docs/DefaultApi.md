@@ -25,7 +25,7 @@ Deletes the sensor instance with the specified sensorId.
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import AmberApiServer from 'amber_python_sdk';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -75,7 +75,7 @@ Returns the current configuration of the sensor instance specified.
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import AmberApiServer from 'amber_python_sdk';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -125,7 +125,7 @@ Returns basic information about an existing sensor instance.
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import AmberApiServer from 'amber_python_sdk';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -175,7 +175,7 @@ Returns a list of all current sensor instances for this user.
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import AmberApiServer from 'amber_python_sdk';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -220,7 +220,7 @@ Returns analytic information derived from data processed by a sensor thus far.
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import AmberApiServer from 'amber_python_sdk';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -270,7 +270,7 @@ Applies the provided configuration to the sensor instance specified.
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import AmberApiServer from 'amber_python_sdk';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -322,7 +322,7 @@ Requests a bearer token using Amber account credentials. The requested bearer to
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import AmberApiServer from 'amber_python_sdk';
 
 let apiInstance = new AmberApiServer.DefaultApi();
 let body = new AmberApiServer.Body1(); // Body1 | Account credentials to be used for authentication
@@ -365,7 +365,7 @@ Spawns a new sensor instance, returning its unique sensorId.
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import AmberApiServer from 'amber_python_sdk';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -415,7 +415,7 @@ Sends data to a sensor. Ingoing data should be formatted as a simple string of c
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import AmberApiServer from 'amber_python_sdk';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -467,7 +467,7 @@ Changes the label of an existing sensor instance to the new label specified.
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import AmberApiServer from 'amber_python_sdk';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
