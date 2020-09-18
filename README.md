@@ -1,4 +1,4 @@
-# amber_javascript_sdk
+# amber-javascript-sdk
 
 # Boon Amber Javascript SDK
 
@@ -30,7 +30,7 @@ The following javascript provides a basic proof-of-connectivity:
 [connect-example.js](examples/connect-example.js)
 
 ```
-let AmberApiServer = require('amber_javascript_sdk');
+let AmberApiServer = require('amber-javascript-sdk');
 
 // create oauth2 token using credentials
 let apiInstance = new AmberApiServer.DefaultApi();
@@ -71,7 +71,7 @@ The following javascript will demonstrate each API call in the Amber Javascript 
 [full-example.js](examples/full-example.js)
 
 ```
-let AmberApiServer = require('amber_javascript_sdk');
+let AmberApiServer = require('amber-javascript-sdk');
 
 // create oauth2 token using credentials
 let apiInstance = new AmberApiServer.DefaultApi();
@@ -277,7 +277,7 @@ const readline = require('readline');
 const fs = require('fs');
 
 
-let AmberApiServer = require('amber_javascript_sdk');
+let AmberApiServer = require('amber-javascript-sdk');
 
 // create oauth2 token using credentials
 let apiInstance = new AmberApiServer.DefaultApi();

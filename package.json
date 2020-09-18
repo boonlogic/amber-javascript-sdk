@@ -1,5 +1,5 @@
 {
-  "name": "amber_javascript_sdk",
+  "name": "amber-javascript-sdk",
   "version": "1.0.3",
   "description": "Boon_Logic_Amber_SDK",
   "license": "Unlicense",
@@ -7,7 +7,7 @@
   "scripts": {
     "package": "rm -rf dist && mkdir dist && babel ./src -d dist --copy-files",
     "test": "mocha --compilers js:babel-core/register --recursive",
-    "generate": "cp package.json package.json.backup && swagger-codegen generate -DmoduleName=amber_javascript_sdk -DpackageName=amber_javascript_sdk -DprojectDescription='Boon_Logic_Amber_SDK' -i swagger.json -l javascript -o . && mv package.json.backup package.json"
+    "generate": "cp package.json package.json.backup && swagger-codegen generate -DmoduleName=amber-javascript-sdk -DpackageName=amber-javascript-sdk -DprojectDescription='Boon_Logic_Amber_SDK' -i swagger.json -l javascript -o . && mv package.json.backup package.json"
   },
   "browser": {
     "fs": false

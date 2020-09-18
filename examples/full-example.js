@@ -1,4 +1,4 @@
-let AmberApiServer = require('amber_javascript_sdk');
+let AmberApiServer = require('amber-javascript-sdk');
 
 // create oauth2 token using credentials
 let apiInstance = new AmberApiServer.DefaultApi();
