@@ -6,7 +6,7 @@ An SDK for Boon Amber sensor analytics
 
 - __Website__: [boonlogic.com](https://boonlogic.com)
 - __Documentation__: [Boon Docs Main Page](https://docs.boonlogic.com)
-- __SDK Functional Breakdown__: [amber-javascript-sdk methods and models](https://boonlogic.github.io/amber-javascript-sdk/docs/FunctionalBreakdown.md)
+- __SDK Functional Breakdown__: [amber-javascript-sdk methods and models](https://boonlogic.github.io/amber-javascript-sdk/FunctionalBreakdown.md)
 
 ## Installation
 
