@@ -4,8 +4,8 @@ let AmberApiServer = require('amber_javascript_sdk');
 let apiInstance = new AmberApiServer.DefaultApi();
 
 // let body = new AmberApiServer.PostAuth2Request();
-username = "jim-prod";
-password = ":Csc39);J'<:-%*";
+username = "your-username";
+password = "your-password";
 
 let defaultClient = AmberApiServer.ApiClient.instance;
 let authorize_amber_pool = defaultClient.authentications['authorize-amber-pool'];
