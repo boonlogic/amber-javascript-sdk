@@ -17,6 +17,9 @@
     "babel-cli": "^6.26.0",
     "superagent": "3.7.0"
   },
+  "repository": {
+    "url": "git+ssh://git@github.com/boonlogic/amber-javascript-sdk.git"
+  },
   "devDependencies": {
     "babel-core": "6.26.0",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
