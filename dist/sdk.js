@@ -1,11 +1,16 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var process = require('process');
 var expandHomeDir = require('expand-home-dir');
+var fs = require('fs');
 
 var AmberClient = function () {
     function AmberClient() {
@@ -46,7 +51,7 @@ var AmberClient = function () {
         var licenseData = {};
         var licensePath = expandHomeDir(localLicenseFile);
         try {
-            fileData = require(licensePath);
+            var licenseJson = JSON.parse(fs.readFileSync(licensePath).toString('utf-8'));
         } catch (err) {
             // license file does not exist
             console.error(err);
@@ -54,7 +59,7 @@ var AmberClient = function () {
         }
 
         try {
-            licenseData = fileData[localLicenseId];
+            licenseData = licenseJson[localLicenseId];
         } catch (err) {
             // license id not found
             console.error(err);
@@ -62,10 +67,11 @@ var AmberClient = function () {
         }
 
         // load the username, password and server, still giving precedence to environment
+        this.auth2RequestBody = new this.AmberApiServer.PostAuth2Request();
         try {
-            this.username = envUserName;
-            if (!this.username) {
-                this.username = licenseData['username'];
+            this.auth2RequestBody.username = envUserName;
+            if (!this.auth2RequestBody.username) {
+                this.auth2RequestBody.username = licenseData['username'];
             }
         } catch (err) {
             // username not found
@@ -73,9 +79,9 @@ var AmberClient = function () {
             return;
         }
         try {
-            this.password = envPassword;
-            if (!this.password) {
-                this.password = licenseData['password'];
+            this.auth2RequestBody.password = envPassword;
+            if (!this.auth2RequestBody.password) {
+                this.auth2RequestBody.password = licenseData['password'];
             }
         } catch (err) {
             // password not found
@@ -83,9 +89,9 @@ var AmberClient = function () {
             return;
         }
         try {
-            this.server = envServer;
+            this.defaultClient.basePath = envServer;
             if (!this.server) {
-                this.server = licenseData['server'];
+                this.defaultClient.basePath = licenseData['server'];
             }
         } catch (err) {
             // server not found
@@ -95,10 +101,11 @@ var AmberClient = function () {
     }
 
     _createClass(AmberClient, [{
-        key: 'authenticate',
-        value: function authenticate() {
+        key: '_authenticate',
+        value: function _authenticate() {
             var _this = this;
 
+            // check for initial auth or re-auth scenario
             return new Promise(function (resolve, reject) {
                 _this.apiInstance.postOauth2(_this.auth2RequestBody, function (error, data, response) {
                     if (error) {
@@ -115,13 +122,15 @@ var AmberClient = function () {
         value: function getSensorsRequest() {
             var _this2 = this;
 
-            return new Promise(function (resolve, reject) {
-                _this2.apiInstance.getSensors(function (error, data, response) {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve(data);
-                    }
+            return this._authenticate().then(function (data) {
+                return new Promise(function (resolve, reject) {
+                    _this2.apiInstance.getSensors(function (error, data, response) {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve(data);
+                        }
+                    });
                 });
             });
         }
@@ -130,13 +139,15 @@ var AmberClient = function () {
         value: function getSensorRequest(sensorId) {
             var _this3 = this;
 
-            return new Promise(function (resolve, reject) {
-                _this3.apiInstance.getSensor(sensorId, function (error, data, response) {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve({ sensorId: sensorId, response: data });
-                    }
+            return this._authenticate().then(function (data) {
+                return new Promise(function (resolve, reject) {
+                    _this3.apiInstance.getSensor(sensorId, function (error, data, response) {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve({ sensorId: sensorId, response: data });
+                        }
+                    });
                 });
             });
         }
@@ -147,17 +158,19 @@ var AmberClient = function () {
 
             var label = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
 
-            return new Promise(function (resolve, reject) {
-                var postRequest = new AmberApiServer.PostSensorRequest(label);
-                if (label) {
-                    postRequest.label = label;
-                }
-                _this4.apiInstance.postSensor(postRequest, function (error, data, response) {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve(data);
+            return this._authenticate().then(function (data) {
+                return new Promise(function (resolve, reject) {
+                    var postRequest = new _this4.AmberApiServer.PostSensorRequest(label);
+                    if (label) {
+                        postRequest.label = label;
                     }
+                    _this4.apiInstance.postSensor(postRequest, function (error, data, response) {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve(data);
+                        }
+                    });
                 });
             });
         }
@@ -166,14 +179,16 @@ var AmberClient = function () {
         value: function putSensorRequest(sensorId, label) {
             var _this5 = this;
 
-            return new Promise(function (resolve, reject) {
-                var putRequest = new AmberApiServer.PutSensorRequest(label);
-                _this5.apiInstance.putSensor(putRequest, sensorId, function (error, data, response) {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve({ sensorId: sensorId, response: data });
-                    }
+            return this._authenticate().then(function (data) {
+                return new Promise(function (resolve, reject) {
+                    var putRequest = new _this5.AmberApiServer.PutSensorRequest(label);
+                    _this5.apiInstance.putSensor(putRequest, sensorId, function (error, data, response) {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve({ sensorId: sensorId, response: data });
+                        }
+                    });
                 });
             });
         }
@@ -191,19 +206,21 @@ var AmberClient = function () {
             var learningMaxClusters = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : 1000;
             var learningMaxSamples = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : 1000000;
 
-            return new Promise(function (resolve, reject) {
-                var body = new AmberApiServer.PostConfigRequest(featureCount, streamingWindowSize);
-                body.samplesToBuffer = samplesToBuffer;
-                body.learningRateNumerator = learningRateNumerator;
-                body.learningRateDenominator = learningRateDenominator;
-                body.learningMaxClusters = learningMaxClusters;
-                body.learningMaxSamples = learningMaxSamples;
-                _this6.apiInstance.postConfig(body, sensorId, function (error, data, response) {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve({ sensorId: sensorId, response: data });
-                    }
+            return this._authenticate().then(function (data) {
+                return new Promise(function (resolve, reject) {
+                    var body = new _this6.AmberApiServer.PostConfigRequest(featureCount, streamingWindowSize);
+                    body.samplesToBuffer = samplesToBuffer;
+                    body.learningRateNumerator = learningRateNumerator;
+                    body.learningRateDenominator = learningRateDenominator;
+                    body.learningMaxClusters = learningMaxClusters;
+                    body.learningMaxSamples = learningMaxSamples;
+                    _this6.apiInstance.postConfig(body, sensorId, function (error, data, response) {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve({ sensorId: sensorId, response: data });
+                        }
+                    });
                 });
             });
         }
@@ -212,13 +229,15 @@ var AmberClient = function () {
         value: function getConfigRequest(sensorId) {
             var _this7 = this;
 
-            return new Promise(function (resolve, reject) {
-                _this7.apiInstance.getSensor(sensorId, function (error, data, response) {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve({ sensorId: sensorId, response: data });
-                    }
+            return this._authenticate().then(function (data) {
+                return new Promise(function (resolve, reject) {
+                    _this7.apiInstance.getSensor(sensorId, function (error, data, response) {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve({ sensorId: sensorId, response: data });
+                        }
+                    });
                 });
             });
         }
@@ -227,13 +246,15 @@ var AmberClient = function () {
         value: function deleteSensorRequest(sensorId) {
             var _this8 = this;
 
-            return new Promise(function (resolve, reject) {
-                _this8.apiInstance.deleteSensor(sensorId, function (error, data, response) {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve({ sensorId: sensorId, response: JSON.parse(response.text) });
-                    }
+            return this._authenticate().then(function (data) {
+                return new Promise(function (resolve, reject) {
+                    _this8.apiInstance.deleteSensor(sensorId, function (error, data, response) {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve({ sensorId: sensorId, response: JSON.parse(response.text) });
+                        }
+                    });
                 });
             });
         }
@@ -242,14 +263,16 @@ var AmberClient = function () {
         value: function postStreamRequest(sensorId, csv) {
             var _this9 = this;
 
-            return new Promise(function (resolve, reject) {
-                var body = new AmberApiServer.PostStreamRequest(csv);
-                _this9.apiInstance.postStream(body, sensorId, function (error, data, response) {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve({ sensorId: sensorId, response: data });
-                    }
+            return this._authenticate().then(function (data) {
+                return new Promise(function (resolve, reject) {
+                    var body = new _this9.AmberApiServer.PostStreamRequest(csv);
+                    _this9.apiInstance.postStream(body, sensorId, function (error, data, response) {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve({ sensorId: sensorId, response: data });
+                        }
+                    });
                 });
             });
         }
@@ -258,13 +281,15 @@ var AmberClient = function () {
         value: function getStatusRequest(sensorId) {
             var _this10 = this;
 
-            return new Promise(function (resolve, reject) {
-                _this10.apiInstance.getStatus(sensorId, function (error, data, response) {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve({ sensorId: sensorId, response: data });
-                    }
+            return this._authenticate().then(function (data) {
+                return new Promise(function (resolve, reject) {
+                    _this10.apiInstance.getStatus(sensorId, function (error, data, response) {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve({ sensorId: sensorId, response: data });
+                        }
+                    });
                 });
             });
         }
@@ -272,3 +297,5 @@ var AmberClient = function () {
 
     return AmberClient;
 }();
+
+exports.AmberClient = AmberClient;
