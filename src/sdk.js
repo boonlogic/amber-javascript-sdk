@@ -5,6 +5,7 @@ const fs = require('fs')
 class AmberClient {
     constructor(licenseId = 'default', licenseFile = "~/.Amber.license") {
 
+        this.reauthTime = Math.floor(Date.now() / 1000) - 1  // init re-auth in the past
         this.AmberApiServer = require('./index.js')
         this.apiInstance = new this.AmberApiServer.DefaultApi()
         this.defaultClient = this.AmberApiServer.ApiClient.instance
@@ -33,11 +34,11 @@ class AmberClient {
             localLicenseId = licenseId
         }
 
-        let fileData = {}
         let licenseData = {}
-        let licensePath = expandHomeDir(localLicenseFile)
+        let licenseJson = undefined
         try {
-            var licenseJson = JSON.parse(fs.readFileSync(licensePath).toString('utf-8'))
+            let licensePath = expandHomeDir(localLicenseFile)
+            licenseJson = JSON.parse(fs.readFileSync(licensePath).toString('utf-8'))
         } catch (err) {
             // license file does not exist
             console.error(err)
@@ -87,16 +88,23 @@ class AmberClient {
     }
 
     _authenticate() {
-        // check for initial auth or re-auth scenario
+
         return new Promise((resolve, reject) => {
-            this.apiInstance.postOauth2(this.auth2RequestBody, (error, data, response) => {
-                if (error) {
-                    reject(error)
-                } else {
-                    this.authorize_amber_pool.apiKey = data.idToken
-                    resolve(data)
-                }
-            })
+            let _tsIn = Math.floor(Date.now() / 1000)
+            // check for initial auth or re-auth scenario
+            if (_tsIn > this.reauthTime) {
+                this.apiInstance.postOauth2(this.auth2RequestBody, (error, data, response) => {
+                    if (error) {
+                        console.error(error)
+                    } else {
+                        this.authorize_amber_pool.apiKey = data.idToken
+                        this.reauthTime = _tsIn + parseInt(data.expiresIn) - 60
+                        resolve(this.reauthTime - _tsIn)
+                    }
+                })
+            } else {
+                resolve(this.reauthTime - _tsIn)
+            }
         })
     }
 

@@ -19,6 +19,7 @@ var AmberClient = function () {
 
         _classCallCheck(this, AmberClient);
 
+        this.reauthTime = Math.floor(Date.now() / 1000) - 1; // init re-auth in the past
         this.AmberApiServer = require('./index.js');
         this.apiInstance = new this.AmberApiServer.DefaultApi();
         this.defaultClient = this.AmberApiServer.ApiClient.instance;
@@ -47,11 +48,11 @@ var AmberClient = function () {
             localLicenseId = licenseId;
         }
 
-        var fileData = {};
         var licenseData = {};
-        var licensePath = expandHomeDir(localLicenseFile);
+        var licenseJson = undefined;
         try {
-            var licenseJson = JSON.parse(fs.readFileSync(licensePath).toString('utf-8'));
+            var licensePath = expandHomeDir(localLicenseFile);
+            licenseJson = JSON.parse(fs.readFileSync(licensePath).toString('utf-8'));
         } catch (err) {
             // license file does not exist
             console.error(err);
@@ -105,16 +106,22 @@ var AmberClient = function () {
         value: function _authenticate() {
             var _this = this;
 
-            // check for initial auth or re-auth scenario
             return new Promise(function (resolve, reject) {
-                _this.apiInstance.postOauth2(_this.auth2RequestBody, function (error, data, response) {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        _this.authorize_amber_pool.apiKey = data.idToken;
-                        resolve(data);
-                    }
-                });
+                var _tsIn = Math.floor(Date.now() / 1000);
+                // check for initial auth or re-auth scenario
+                if (_tsIn > _this.reauthTime) {
+                    _this.apiInstance.postOauth2(_this.auth2RequestBody, function (error, data, response) {
+                        if (error) {
+                            console.error(error);
+                        } else {
+                            _this.authorize_amber_pool.apiKey = data.idToken;
+                            _this.reauthTime = _tsIn + parseInt(data.expiresIn) - 60;
+                            resolve(_this.reauthTime - _tsIn);
+                        }
+                    });
+                } else {
+                    resolve(_this.reauthTime - _tsIn);
+                }
             });
         }
     }, {
