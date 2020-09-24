@@ -4,30 +4,30 @@ let MyClient = require('amber-javascript-sdk')
 let amberInstance = new MyClient.AmberClient()
 
 // basic walkthrough of available api calls
-amberInstance.postSensorRequest("Sensor-1-4002").then(function (data) { // create new sensor
-    console.log("postSensorResponse: %o", data)
-    return amberInstance.getSensorsRequest()  // get list of sensors
+amberInstance.createSensor("Sensor-1-4002").then(function (data) { // create new sensor
+    console.log("createSensorResponse: %o", data)
+    return amberInstance.listSensors()  // get list of sensors
 }).then(function (data) {
-    console.log("getSensorsResponse: %o", data)
-    return amberInstance.getSensorRequest(data[0].sensorId) // get sensor details
+    console.log("listSensorsResponse: %o", data)
+    return amberInstance.getSensor(data[0].sensorId) // get sensor details
 }).then(function (data) {
     console.log("getSensorResponse: %o", data.response)
-    return amberInstance.putSensorRequest(data.sensorId, "newLabel") // update sensor label
+    return amberInstance.updateLabel(data.sensorId, "newLabel") // update sensor label
 }).then(function (data) {
-    console.log("putSensorResponse: %o", data.response)
-    return amberInstance.postConfigRequest(data.sensorId, 1, 25) // configure sensor
+    console.log("updateLabelResponse: %o", data.response)
+    return amberInstance.configureSensor(data.sensorId, 1, 25) // configure sensor
 }).then(function (data) {
-    console.log("postConfigResponse: %o", data.response)
-    return amberInstance.getConfigRequest(data.sensorId) // get sensor configuration
+    console.log("configureSensorResponse: %o", data.response)
+    return amberInstance.getConfig(data.sensorId) // get sensor configuration
 }).then(function (data) {
     console.log("getConfigResponse: %o", data.response)
-    return amberInstance.postStreamRequest(data.sensorId, "0.05,1.0,2.5,0.9") // post streaming data
+    return amberInstance.streamSensor(data.sensorId, "0.05,1.0,2.5,0.9") // post streaming data
 }).then(function (data) {
-    console.log("postStreamResponse: %o", data.response)
-    return amberInstance.getStatusRequest(data.sensorId) // get sensor analytic status
+    console.log("streamSensorResponse: %o", data.response)
+    return amberInstance.getStatus(data.sensorId) // get sensor analytic status
 }).then(function (data) {
     console.log("getStatusResponse: %o", data.response)
-    return amberInstance.deleteSensorRequest(data.sensorId) // delete sensor
+    return amberInstance.deleteSensor(data.sensorId) // delete sensor
 }).then(function (data) {
     console.log("deleteSensorResponse: %o", data.response)
     return data

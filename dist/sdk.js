@@ -8,11 +8,35 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+/**
+ * Amber Javascript SDK
+ * @module amber-javascript-sdk
+ */
+
 var process = require('process');
 var expandHomeDir = require('expand-home-dir');
 var fs = require('fs');
 
+/** AmberClient */
+
 var AmberClient = function () {
+
+    /**
+     * AmberClient constructor. Main client which interfaces with the Amber cloud. Amber account
+     * credentials are discovered within a .Amber.license file located in the
+     * home directory, or optionally overridden using environment variables.
+     *
+     * @licenseId  {[string]} config [license identifier label found within .Amber.license file]
+     * @licenseFile {[string]} config [path to .Amber.license file (default='~/Amber.license')
+     *
+     * Environment:
+     *
+     *     `AMBER_LICENSE_FILE`: sets license_file path
+     *     `AMBER_LICENSE_ID`: sets license_id
+     *     `AMBER_USERNAME`: overrides the username as found in .Amber.license file
+     *     `AMBER_PASSWORD`: overrides the password as found in .Amber.license file
+     *     `AMBER_SERVER`: overrides the server as found in .Amber.license file
+     */
     function AmberClient() {
         var licenseId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'default';
         var licenseFile = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "~/.Amber.license";
@@ -101,6 +125,15 @@ var AmberClient = function () {
         }
     }
 
+    /**
+     * Authenticate client for the next hour using the credentials given at
+     * initialization. This acquires and stores an oauth2 token which remains
+     * valid for one hour and is used to authenticate all other API requests.
+     * @returns {Promise<unknown>}
+     * @private
+     */
+
+
     _createClass(AmberClient, [{
         key: '_authenticate',
         value: function _authenticate() {
@@ -124,9 +157,15 @@ var AmberClient = function () {
                 }
             });
         }
+
+        /**
+         * List all sensor instances currently associated with Amber account
+         * @returns {Promise<unknown>}
+         */
+
     }, {
-        key: 'getSensorsRequest',
-        value: function getSensorsRequest() {
+        key: 'listSensors',
+        value: function listSensors() {
             var _this2 = this;
 
             return this._authenticate().then(function (data) {
@@ -141,9 +180,16 @@ var AmberClient = function () {
                 });
             });
         }
+
+        /**
+         * Get info about a sensor
+         * @param sensorId
+         * @returns {Promise<unknown>}
+         */
+
     }, {
-        key: 'getSensorRequest',
-        value: function getSensorRequest(sensorId) {
+        key: 'getSensor',
+        value: function getSensor(sensorId) {
             var _this3 = this;
 
             return this._authenticate().then(function (data) {
@@ -158,9 +204,16 @@ var AmberClient = function () {
                 });
             });
         }
+
+        /**
+         * Create a new sensor instance
+         * @param label
+         * @returns {Promise<unknown>}
+         */
+
     }, {
-        key: 'postSensorRequest',
-        value: function postSensorRequest() {
+        key: 'createSensor',
+        value: function createSensor() {
             var _this4 = this;
 
             var label = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
@@ -181,9 +234,17 @@ var AmberClient = function () {
                 });
             });
         }
+
+        /**
+         * Update the label of a sensor instance
+         * @param sensorId sensor identifier
+         * @param label new label to assign to sensor
+         * @returns {Promise<unknown>}
+         */
+
     }, {
-        key: 'putSensorRequest',
-        value: function putSensorRequest(sensorId, label) {
+        key: 'updateLabel',
+        value: function updateLabel(sensorId, label) {
             var _this5 = this;
 
             return this._authenticate().then(function (data) {
@@ -199,9 +260,23 @@ var AmberClient = function () {
                 });
             });
         }
+
+        /**
+         * Configure an amber sensor instance
+         * @param sensorId
+         * @param featureCount
+         * @param streamingWindowSize
+         * @param samplesToBuffer
+         * @param learningRateNumerator
+         * @param learningRateDenominator
+         * @param learningMaxClusters
+         * @param learningMaxSamples
+         * @returns {Promise<unknown>}
+         */
+
     }, {
-        key: 'postConfigRequest',
-        value: function postConfigRequest(sensorId) {
+        key: 'configureSensor',
+        value: function configureSensor(sensorId) {
             var featureCount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
             var streamingWindowSize = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 25;
             var samplesToBuffer = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 10000;
@@ -231,9 +306,16 @@ var AmberClient = function () {
                 });
             });
         }
+
+        /**
+         * Get current sensor configuration
+         * @param sensorId
+         * @returns {Promise<unknown>}
+         */
+
     }, {
-        key: 'getConfigRequest',
-        value: function getConfigRequest(sensorId) {
+        key: 'getConfig',
+        value: function getConfig(sensorId) {
             var _this7 = this;
 
             return this._authenticate().then(function (data) {
@@ -248,9 +330,16 @@ var AmberClient = function () {
                 });
             });
         }
+
+        /**
+         * Delete an amber sensor instance
+         * @param sensorId
+         * @returns {Promise<unknown>}
+         */
+
     }, {
-        key: 'deleteSensorRequest',
-        value: function deleteSensorRequest(sensorId) {
+        key: 'deleteSensor',
+        value: function deleteSensor(sensorId) {
             var _this8 = this;
 
             return this._authenticate().then(function (data) {
@@ -265,9 +354,17 @@ var AmberClient = function () {
                 });
             });
         }
+
+        /**
+         * Stream data to an amber sensor and return the inference result
+         * @param sensorId
+         * @param csv
+         * @returns {Promise<unknown>}
+         */
+
     }, {
-        key: 'postStreamRequest',
-        value: function postStreamRequest(sensorId, csv) {
+        key: 'streamSensor',
+        value: function streamSensor(sensorId, csv) {
             var _this9 = this;
 
             return this._authenticate().then(function (data) {
@@ -283,9 +380,16 @@ var AmberClient = function () {
                 });
             });
         }
+
+        /**
+         * Get sensor status
+         * @param sensorId
+         * @returns {Promise<unknown>}
+         */
+
     }, {
-        key: 'getStatusRequest',
-        value: function getStatusRequest(sensorId) {
+        key: 'getStatus',
+        value: function getStatus(sensorId) {
             var _this10 = this;
 
             return this._authenticate().then(function (data) {

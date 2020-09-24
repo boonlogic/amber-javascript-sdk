@@ -1,8 +1,31 @@
+/**
+ * Amber Javascript SDK
+ * @module amber-javascript-sdk
+ */
+
 const process = require('process')
 const expandHomeDir = require('expand-home-dir')
 const fs = require('fs')
 
+/** AmberClient */
 class AmberClient {
+
+    /**
+     * AmberClient constructor. Main client which interfaces with the Amber cloud. Amber account
+     * credentials are discovered within a .Amber.license file located in the
+     * home directory, or optionally overridden using environment variables.
+     *
+     * @licenseId  {[string]} config [license identifier label found within .Amber.license file]
+     * @licenseFile {[string]} config [path to .Amber.license file (default='~/Amber.license')
+     *
+     * Environment:
+     *
+     *     `AMBER_LICENSE_FILE`: sets license_file path
+     *     `AMBER_LICENSE_ID`: sets license_id
+     *     `AMBER_USERNAME`: overrides the username as found in .Amber.license file
+     *     `AMBER_PASSWORD`: overrides the password as found in .Amber.license file
+     *     `AMBER_SERVER`: overrides the server as found in .Amber.license file
+     */
     constructor(licenseId = 'default', licenseFile = "~/.Amber.license") {
 
         this.reauthTime = Math.floor(Date.now() / 1000) - 1  // init re-auth in the past
@@ -87,8 +110,14 @@ class AmberClient {
         }
     }
 
+    /**
+     * Authenticate client for the next hour using the credentials given at
+     * initialization. This acquires and stores an oauth2 token which remains
+     * valid for one hour and is used to authenticate all other API requests.
+     * @returns {Promise<unknown>}
+     * @private
+     */
     _authenticate() {
-
         return new Promise((resolve, reject) => {
             let _tsIn = Math.floor(Date.now() / 1000)
             // check for initial auth or re-auth scenario
@@ -108,7 +137,11 @@ class AmberClient {
         })
     }
 
-    getSensorsRequest() {
+    /**
+     * List all sensor instances currently associated with Amber account
+     * @returns {Promise<unknown>}
+     */
+    listSensors() {
         return this._authenticate().then((data) => {
             return new Promise((resolve, reject) => {
                 this.apiInstance.getSensors((error, data, response) => {
@@ -122,7 +155,12 @@ class AmberClient {
         })
     }
 
-    getSensorRequest(sensorId) {
+    /**
+     * Get info about a sensor
+     * @param sensorId
+     * @returns {Promise<unknown>}
+     */
+    getSensor(sensorId) {
         return this._authenticate().then((data) => {
             return new Promise((resolve, reject) => {
                 this.apiInstance.getSensor(sensorId, (error, data, response) => {
@@ -136,7 +174,12 @@ class AmberClient {
         })
     }
 
-    postSensorRequest(label = undefined) {
+    /**
+     * Create a new sensor instance
+     * @param label
+     * @returns {Promise<unknown>}
+     */
+    createSensor(label = undefined) {
         return this._authenticate().then((data) => {
             return new Promise((resolve, reject) => {
                 let postRequest = new this.AmberApiServer.PostSensorRequest(label)
@@ -154,7 +197,13 @@ class AmberClient {
         })
     }
 
-    putSensorRequest(sensorId, label) {
+    /**
+     * Update the label of a sensor instance
+     * @param sensorId sensor identifier
+     * @param label new label to assign to sensor
+     * @returns {Promise<unknown>}
+     */
+    updateLabel(sensorId, label) {
         return this._authenticate().then((data) => {
             return new Promise((resolve, reject) => {
                 let putRequest = new this.AmberApiServer.PutSensorRequest(label)
@@ -169,7 +218,19 @@ class AmberClient {
         })
     }
 
-    postConfigRequest(sensorId, featureCount = 1, streamingWindowSize = 25,
+    /**
+     * Configure an amber sensor instance
+     * @param sensorId
+     * @param featureCount
+     * @param streamingWindowSize
+     * @param samplesToBuffer
+     * @param learningRateNumerator
+     * @param learningRateDenominator
+     * @param learningMaxClusters
+     * @param learningMaxSamples
+     * @returns {Promise<unknown>}
+     */
+    configureSensor(sensorId, featureCount = 1, streamingWindowSize = 25,
                       samplesToBuffer = 10000, learningRateNumerator = 10,
                       learningRateDenominator = 10000, learningMaxClusters = 1000,
                       learningMaxSamples = 1000000) {
@@ -192,7 +253,12 @@ class AmberClient {
         })
     }
 
-    getConfigRequest(sensorId) {
+    /**
+     * Get current sensor configuration
+     * @param sensorId
+     * @returns {Promise<unknown>}
+     */
+    getConfig(sensorId) {
         return this._authenticate().then((data) => {
             return new Promise((resolve, reject) => {
                 this.apiInstance.getSensor(sensorId, (error, data, response) => {
@@ -206,7 +272,12 @@ class AmberClient {
         })
     }
 
-    deleteSensorRequest(sensorId) {
+    /**
+     * Delete an amber sensor instance
+     * @param sensorId
+     * @returns {Promise<unknown>}
+     */
+    deleteSensor(sensorId) {
         return this._authenticate().then((data) => {
             return new Promise((resolve, reject) => {
                 this.apiInstance.deleteSensor(sensorId, (error, data, response) => {
@@ -220,7 +291,13 @@ class AmberClient {
         })
     }
 
-    postStreamRequest(sensorId, csv) {
+    /**
+     * Stream data to an amber sensor and return the inference result
+     * @param sensorId
+     * @param csv
+     * @returns {Promise<unknown>}
+     */
+    streamSensor(sensorId, csv) {
         return this._authenticate().then((data) => {
             return new Promise((resolve, reject) => {
                 let body = new this.AmberApiServer.PostStreamRequest(csv)
@@ -235,7 +312,12 @@ class AmberClient {
         })
     }
 
-    getStatusRequest(sensorId) {
+    /**
+     * Get sensor status
+     * @param sensorId
+     * @returns {Promise<unknown>}
+     */
+    getStatus(sensorId) {
         return this._authenticate().then((data) => {
             return new Promise((resolve, reject) => {
                 this.apiInstance.getStatus(sensorId, (error, data, response) => {
