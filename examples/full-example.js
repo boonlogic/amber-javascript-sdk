@@ -1,4 +1,4 @@
-let MyClient = require('amber-javascript-sdk')
+const MyClient = require('amber-javascript-sdk')
 
 // create amber instance
 let amberInstance = new MyClient.AmberClient()
@@ -31,4 +31,6 @@ amberInstance.createSensor("Sensor-1-4002").then(function (data) { // create new
 }).then(function (data) {
     console.log("deleteSensorResponse: %o", data.response)
     return data
+}).catch(error => {
+    console.error(error)
 })

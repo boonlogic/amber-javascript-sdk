@@ -1,4 +1,4 @@
-let MyClient = require('amber-javascript-sdk')
+const MyClient = require('amber-javascript-sdk')
 
 // create amber instance
 let amberInstance = new MyClient.AmberClient()
