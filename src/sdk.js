@@ -15,11 +15,10 @@ class AmberClient {
      * credentials are discovered within a .Amber.license file located in the
      * home directory, or optionally overridden using environment variables.
      *
-     * @licenseId  {[string]} config [license identifier label found within .Amber.license file]
-     * @licenseFile {[string]} config [path to .Amber.license file (default='~/Amber.license')
+     * @licenseId  {string} [input='default'] config license identifier label found within .Amber.license file
+     * @licenseFile {string} [input='~/Amber.license'] config path to .Amber.license file
      *
      * Environment:
-     *
      *     `AMBER_LICENSE_FILE`: sets license_file path
      *     `AMBER_LICENSE_ID`: sets license_id
      *     `AMBER_USERNAME`: overrides the username as found in .Amber.license file
