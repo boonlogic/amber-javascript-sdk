@@ -50,9 +50,6 @@ export default class GetSensorResponse {
             if (data.hasOwnProperty('sensorId')) {
                 obj['sensorId'] = ApiClient.convertToType(data['sensorId'], 'String');
             }
-            if (data.hasOwnProperty('tenantId')) {
-                obj['tenantId'] = ApiClient.convertToType(data['tenantId'], 'String');
-            }
             if (data.hasOwnProperty('usageInfo')) {
                 obj['usageInfo'] = GetSensorResponseUsageInfo.constructFromObject(data['usageInfo']);
             }
@@ -70,11 +67,6 @@ export default class GetSensorResponse {
     * @member {String} sensorId
     */
     'sensorId' = undefined;
-    /**
-    * Tenant identifier of caller
-    * @member {String} tenantId
-    */
-    'tenantId' = undefined;
     /**
     * @member {module:model/GetSensorResponseUsageInfo} usageInfo
     */

@@ -46,7 +46,6 @@ var SensorInstanceFull = function () {
 
         this['label'] = undefined;
         this['sensorId'] = undefined;
-        this['tenantId'] = undefined;
         this['usageInfo'] = undefined;
     }
 
@@ -71,9 +70,6 @@ var SensorInstanceFull = function () {
                 if (data.hasOwnProperty('sensorId')) {
                     obj['sensorId'] = _ApiClient2.default.convertToType(data['sensorId'], 'String');
                 }
-                if (data.hasOwnProperty('tenantId')) {
-                    obj['tenantId'] = _ApiClient2.default.convertToType(data['tenantId'], 'String');
-                }
                 if (data.hasOwnProperty('usageInfo')) {
                     obj['usageInfo'] = _GetSensorResponseUsageInfo2.default.constructFromObject(data['usageInfo']);
                 }
@@ -89,11 +85,6 @@ var SensorInstanceFull = function () {
         /**
         * Unique identifier for sensor
         * @member {String} sensorId
-        */
-
-        /**
-        * Tenant identifier of caller
-        * @member {String} tenantId
         */
 
         /**
