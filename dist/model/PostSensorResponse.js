@@ -42,7 +42,6 @@ var PostSensorResponse = function () {
 
         this['label'] = undefined;
         this['sensorId'] = undefined;
-        this['tenantId'] = undefined;
     }
 
     /**
@@ -66,9 +65,6 @@ var PostSensorResponse = function () {
                 if (data.hasOwnProperty('sensorId')) {
                     obj['sensorId'] = _ApiClient2.default.convertToType(data['sensorId'], 'String');
                 }
-                if (data.hasOwnProperty('tenantId')) {
-                    obj['tenantId'] = _ApiClient2.default.convertToType(data['tenantId'], 'String');
-                }
             }
             return obj;
         }
@@ -81,11 +77,6 @@ var PostSensorResponse = function () {
         /**
         * Unique identifier for sensor
         * @member {String} sensorId
-        */
-
-        /**
-        * Tenant identifier of caller
-        * @member {String} tenantId
         */
 
     }]);

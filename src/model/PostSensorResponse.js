@@ -49,9 +49,6 @@ export default class PostSensorResponse {
             if (data.hasOwnProperty('sensorId')) {
                 obj['sensorId'] = ApiClient.convertToType(data['sensorId'], 'String');
             }
-            if (data.hasOwnProperty('tenantId')) {
-                obj['tenantId'] = ApiClient.convertToType(data['tenantId'], 'String');
-            }
         }
         return obj;
     }
@@ -66,11 +63,6 @@ export default class PostSensorResponse {
     * @member {String} sensorId
     */
     'sensorId' = undefined;
-    /**
-    * Tenant identifier of caller
-    * @member {String} tenantId
-    */
-    'tenantId' = undefined;
 
 
 
