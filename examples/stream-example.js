@@ -1,12 +1,8 @@
 const fs = require('fs')
 const MyClient = require('amber-javascript-sdk')
 
+// create amber instance
 
-//
-// amber-javascript-sdk example
-//
-// demonstrate reading csv data from a file and streaming
-//
 async function streaming() {
     try {
         let amberInstance = new MyClient.AmberClient()

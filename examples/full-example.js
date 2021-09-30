@@ -1,10 +1,5 @@
 const MyClient = require('amber-javascript-sdk')
 
-//
-// amber-javascript-sdk example
-//
-// walk through all of the available amber endpoints
-//
 async function walkthrough() {
     try {
         let amberInstance = new MyClient.AmberClient()

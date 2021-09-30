@@ -1,10 +1,5 @@
 const MyClient = require('amber-javascript-sdk')
 
-//
-// amber-javascript-sdk example
-//
-// show list of sensors
-//
 async function list() {
     let amberInstance = new MyClient.AmberClient()
     try {
