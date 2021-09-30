@@ -50,23 +50,26 @@ export default class PostConfigRequest {
             if (data.hasOwnProperty('featureCount')) {
                 obj['featureCount'] = ApiClient.convertToType(data['featureCount'], 'Number');
             }
+            if (data.hasOwnProperty('streamingWindowSize')) {
+                obj['streamingWindowSize'] = ApiClient.convertToType(data['streamingWindowSize'], 'Number');
+            }
+            if (data.hasOwnProperty('samplesToBuffer')) {
+                obj['samplesToBuffer'] = ApiClient.convertToType(data['samplesToBuffer'], 'Number');
+            }
+            if (data.hasOwnProperty('anomalyHistoryWindow')) {
+                obj['anomalyHistoryWindow'] = ApiClient.convertToType(data['anomalyHistoryWindow'], 'Number');
+            }
+            if (data.hasOwnProperty('learningRateNumerator')) {
+                obj['learningRateNumerator'] = ApiClient.convertToType(data['learningRateNumerator'], 'Number');
+            }
+            if (data.hasOwnProperty('learningRateDenominator')) {
+                obj['learningRateDenominator'] = ApiClient.convertToType(data['learningRateDenominator'], 'Number');
+            }
             if (data.hasOwnProperty('learningMaxClusters')) {
                 obj['learningMaxClusters'] = ApiClient.convertToType(data['learningMaxClusters'], 'Number');
             }
             if (data.hasOwnProperty('learningMaxSamples')) {
                 obj['learningMaxSamples'] = ApiClient.convertToType(data['learningMaxSamples'], 'Number');
-            }
-            if (data.hasOwnProperty('learningRateDenominator')) {
-                obj['learningRateDenominator'] = ApiClient.convertToType(data['learningRateDenominator'], 'Number');
-            }
-            if (data.hasOwnProperty('learningRateNumerator')) {
-                obj['learningRateNumerator'] = ApiClient.convertToType(data['learningRateNumerator'], 'Number');
-            }
-            if (data.hasOwnProperty('samplesToBuffer')) {
-                obj['samplesToBuffer'] = ApiClient.convertToType(data['samplesToBuffer'], 'Number');
-            }
-            if (data.hasOwnProperty('streamingWindowSize')) {
-                obj['streamingWindowSize'] = ApiClient.convertToType(data['streamingWindowSize'], 'Number');
             }
         }
         return obj;
@@ -78,6 +81,31 @@ export default class PostConfigRequest {
     */
     'featureCount' = undefined;
     /**
+    * streaming window size
+    * @member {Number} streamingWindowSize
+    */
+    'streamingWindowSize' = undefined;
+    /**
+    * the number of samples to be applied before autotuning begins
+    * @member {Number} samplesToBuffer
+    */
+    'samplesToBuffer' = undefined;
+    /**
+    * the number of samples to use when calculating AH
+    * @member {Number} anomalyHistoryWindow
+    */
+    'anomalyHistoryWindow' = undefined;
+    /**
+    * enables graduation requirements for learning
+    * @member {Number} learningRateNumerator
+    */
+    'learningRateNumerator' = undefined;
+    /**
+    * enables graduation requirements for learning
+    * @member {Number} learningRateDenominator
+    */
+    'learningRateDenominator' = undefined;
+    /**
     * learning graduation requirement for stopping learning upon reaching this cluster count
     * @member {Number} learningMaxClusters
     */
@@ -87,26 +115,6 @@ export default class PostConfigRequest {
     * @member {Number} learningMaxSamples
     */
     'learningMaxSamples' = undefined;
-    /**
-    * enables graduation requirements for learning
-    * @member {Number} learningRateDenominator
-    */
-    'learningRateDenominator' = undefined;
-    /**
-    * enables graduation requirements for learning
-    * @member {Number} learningRateNumerator
-    */
-    'learningRateNumerator' = undefined;
-    /**
-    * the number of samples to be applied before autotuning begins
-    * @member {Number} samplesToBuffer
-    */
-    'samplesToBuffer' = undefined;
-    /**
-    * streaming window size
-    * @member {Number} streamingWindowSize
-    */
-    'streamingWindowSize' = undefined;
 
 
 

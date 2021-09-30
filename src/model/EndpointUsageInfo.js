@@ -23,11 +23,17 @@ export default class EndpointUsageInfo {
     * Constructs a new <code>EndpointUsageInfo</code>.
     * @alias module:model/EndpointUsageInfo
     * @class
+    * @param callsTotal {Number} total number of calls to this endpoint
+    * @param callsThisPeriod {Number} number of calls to this endpoint during the current billing period
+    * @param lastCalled {String} ISO formatted time of last call to this endpoint
     */
 
-    constructor() {
+    constructor(callsTotal, callsThisPeriod, lastCalled) {
         
         
+        this['callsTotal'] = callsTotal;
+        this['callsThisPeriod'] = callsThisPeriod;
+        this['lastCalled'] = lastCalled;
         
     }
 
@@ -43,11 +49,11 @@ export default class EndpointUsageInfo {
             obj = obj || new EndpointUsageInfo();
                         
             
-            if (data.hasOwnProperty('callsThisPeriod')) {
-                obj['callsThisPeriod'] = ApiClient.convertToType(data['callsThisPeriod'], 'Number');
-            }
             if (data.hasOwnProperty('callsTotal')) {
                 obj['callsTotal'] = ApiClient.convertToType(data['callsTotal'], 'Number');
+            }
+            if (data.hasOwnProperty('callsThisPeriod')) {
+                obj['callsThisPeriod'] = ApiClient.convertToType(data['callsThisPeriod'], 'Number');
             }
             if (data.hasOwnProperty('lastCalled')) {
                 obj['lastCalled'] = ApiClient.convertToType(data['lastCalled'], 'String');
@@ -57,15 +63,15 @@ export default class EndpointUsageInfo {
     }
 
     /**
-    * number of calls to this endpoint during the current billing period
-    * @member {Number} callsThisPeriod
-    */
-    'callsThisPeriod' = undefined;
-    /**
     * total number of calls to this endpoint
     * @member {Number} callsTotal
     */
     'callsTotal' = undefined;
+    /**
+    * number of calls to this endpoint during the current billing period
+    * @member {Number} callsThisPeriod
+    */
+    'callsThisPeriod' = undefined;
     /**
     * ISO formatted time of last call to this endpoint
     * @member {String} lastCalled

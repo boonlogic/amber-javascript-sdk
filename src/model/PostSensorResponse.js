@@ -43,26 +43,10 @@ export default class PostSensorResponse {
             obj = obj || new PostSensorResponse();
                         
             
-            if (data.hasOwnProperty('label')) {
-                obj['label'] = ApiClient.convertToType(data['label'], 'String');
-            }
-            if (data.hasOwnProperty('sensorId')) {
-                obj['sensorId'] = ApiClient.convertToType(data['sensorId'], 'String');
-            }
         }
         return obj;
     }
 
-    /**
-    * Additional label to be assigned for sensor
-    * @member {String} label
-    */
-    'label' = undefined;
-    /**
-    * Unique identifier for sensor
-    * @member {String} sensorId
-    */
-    'sensorId' = undefined;
 
 
 

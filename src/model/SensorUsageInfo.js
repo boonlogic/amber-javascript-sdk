@@ -12,8 +12,8 @@
  */
 
 import ApiClient from '../ApiClient';
-import GetSensorResponseUsageInfoGetConfig from './GetSensorResponseUsageInfoGetConfig';
-import GetSensorResponseUsageInfoPostStream from './GetSensorResponseUsageInfoPostStream';
+import EndpointUsageInfo from './EndpointUsageInfo';
+import StreamingEndpointUsageInfo from './StreamingEndpointUsageInfo';
 
 /**
 * The SensorUsageInfo model module.
@@ -25,11 +25,31 @@ export default class SensorUsageInfo {
     * Constructs a new <code>SensorUsageInfo</code>.
     * @alias module:model/SensorUsageInfo
     * @class
+    * @param postConfig {module:model/EndpointUsageInfo} 
+    * @param postStream {module:model/StreamingEndpointUsageInfo} 
+    * @param putSensor {module:model/EndpointUsageInfo} 
+    * @param getSensor {module:model/EndpointUsageInfo} 
+    * @param getConfig {module:model/EndpointUsageInfo} 
+    * @param getStatus {module:model/EndpointUsageInfo} 
+    * @param getRootCause {module:model/EndpointUsageInfo} 
+    * @param getAmberSummary {module:model/EndpointUsageInfo} 
+    * @param postPretrain {module:model/EndpointUsageInfo} 
+    * @param getPretrain {module:model/EndpointUsageInfo} 
     */
 
-    constructor() {
+    constructor(postConfig, postStream, putSensor, getSensor, getConfig, getStatus, getRootCause, getAmberSummary, postPretrain, getPretrain) {
         
         
+        this['postConfig'] = postConfig;
+        this['postStream'] = postStream;
+        this['putSensor'] = putSensor;
+        this['getSensor'] = getSensor;
+        this['getConfig'] = getConfig;
+        this['getStatus'] = getStatus;
+        this['getRootCause'] = getRootCause;
+        this['getAmberSummary'] = getAmberSummary;
+        this['postPretrain'] = postPretrain;
+        this['getPretrain'] = getPretrain;
         
     }
 
@@ -45,52 +65,80 @@ export default class SensorUsageInfo {
             obj = obj || new SensorUsageInfo();
                         
             
-            if (data.hasOwnProperty('getConfig')) {
-                obj['getConfig'] = GetSensorResponseUsageInfoGetConfig.constructFromObject(data['getConfig']);
-            }
-            if (data.hasOwnProperty('getSensor')) {
-                obj['getSensor'] = GetSensorResponseUsageInfoGetConfig.constructFromObject(data['getSensor']);
-            }
-            if (data.hasOwnProperty('getStatus')) {
-                obj['getStatus'] = GetSensorResponseUsageInfoGetConfig.constructFromObject(data['getStatus']);
-            }
             if (data.hasOwnProperty('postConfig')) {
-                obj['postConfig'] = GetSensorResponseUsageInfoGetConfig.constructFromObject(data['postConfig']);
+                obj['postConfig'] = EndpointUsageInfo.constructFromObject(data['postConfig']);
             }
             if (data.hasOwnProperty('postStream')) {
-                obj['postStream'] = GetSensorResponseUsageInfoPostStream.constructFromObject(data['postStream']);
+                obj['postStream'] = StreamingEndpointUsageInfo.constructFromObject(data['postStream']);
             }
             if (data.hasOwnProperty('putSensor')) {
-                obj['putSensor'] = GetSensorResponseUsageInfoGetConfig.constructFromObject(data['putSensor']);
+                obj['putSensor'] = EndpointUsageInfo.constructFromObject(data['putSensor']);
+            }
+            if (data.hasOwnProperty('getSensor')) {
+                obj['getSensor'] = EndpointUsageInfo.constructFromObject(data['getSensor']);
+            }
+            if (data.hasOwnProperty('getConfig')) {
+                obj['getConfig'] = EndpointUsageInfo.constructFromObject(data['getConfig']);
+            }
+            if (data.hasOwnProperty('getStatus')) {
+                obj['getStatus'] = EndpointUsageInfo.constructFromObject(data['getStatus']);
+            }
+            if (data.hasOwnProperty('getRootCause')) {
+                obj['getRootCause'] = EndpointUsageInfo.constructFromObject(data['getRootCause']);
+            }
+            if (data.hasOwnProperty('getAmberSummary')) {
+                obj['getAmberSummary'] = EndpointUsageInfo.constructFromObject(data['getAmberSummary']);
+            }
+            if (data.hasOwnProperty('postPretrain')) {
+                obj['postPretrain'] = EndpointUsageInfo.constructFromObject(data['postPretrain']);
+            }
+            if (data.hasOwnProperty('getPretrain')) {
+                obj['getPretrain'] = EndpointUsageInfo.constructFromObject(data['getPretrain']);
             }
         }
         return obj;
     }
 
     /**
-    * @member {module:model/GetSensorResponseUsageInfoGetConfig} getConfig
-    */
-    'getConfig' = undefined;
-    /**
-    * @member {module:model/GetSensorResponseUsageInfoGetConfig} getSensor
-    */
-    'getSensor' = undefined;
-    /**
-    * @member {module:model/GetSensorResponseUsageInfoGetConfig} getStatus
-    */
-    'getStatus' = undefined;
-    /**
-    * @member {module:model/GetSensorResponseUsageInfoGetConfig} postConfig
+    * @member {module:model/EndpointUsageInfo} postConfig
     */
     'postConfig' = undefined;
     /**
-    * @member {module:model/GetSensorResponseUsageInfoPostStream} postStream
+    * @member {module:model/StreamingEndpointUsageInfo} postStream
     */
     'postStream' = undefined;
     /**
-    * @member {module:model/GetSensorResponseUsageInfoGetConfig} putSensor
+    * @member {module:model/EndpointUsageInfo} putSensor
     */
     'putSensor' = undefined;
+    /**
+    * @member {module:model/EndpointUsageInfo} getSensor
+    */
+    'getSensor' = undefined;
+    /**
+    * @member {module:model/EndpointUsageInfo} getConfig
+    */
+    'getConfig' = undefined;
+    /**
+    * @member {module:model/EndpointUsageInfo} getStatus
+    */
+    'getStatus' = undefined;
+    /**
+    * @member {module:model/EndpointUsageInfo} getRootCause
+    */
+    'getRootCause' = undefined;
+    /**
+    * @member {module:model/EndpointUsageInfo} getAmberSummary
+    */
+    'getAmberSummary' = undefined;
+    /**
+    * @member {module:model/EndpointUsageInfo} postPretrain
+    */
+    'postPretrain' = undefined;
+    /**
+    * @member {module:model/EndpointUsageInfo} getPretrain
+    */
+    'getPretrain' = undefined;
 
 
 

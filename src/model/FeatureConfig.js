@@ -12,6 +12,7 @@
  */
 
 import ApiClient from '../ApiClient';
+import VersionNumber from './VersionNumber';
 
 /**
 * The FeatureConfig model module.
@@ -23,15 +24,15 @@ export default class FeatureConfig {
     * Constructs a new <code>FeatureConfig</code>.
     * @alias module:model/FeatureConfig
     * @class
-    * @param maxVal {Number} corresponding maximum value
     * @param minVal {Number} the value that should be considered the minimum value for this feature. This can be set to a value larger than the actual min if you want to treat all value less than that as the same (for instance, to keep a noise spike from having undue influence in the clustering
+    * @param maxVal {Number} corresponding maximum value
     */
 
-    constructor(maxVal, minVal) {
+    constructor(minVal, maxVal) {
         
         
-        this['maxVal'] = maxVal;
         this['minVal'] = minVal;
+        this['maxVal'] = maxVal;
         
     }
 
@@ -47,26 +48,41 @@ export default class FeatureConfig {
             obj = obj || new FeatureConfig();
                         
             
-            if (data.hasOwnProperty('maxVal')) {
-                obj['maxVal'] = ApiClient.convertToType(data['maxVal'], 'Number');
+            if (data.hasOwnProperty('VersionNumber')) {
+                obj['VersionNumber'] = VersionNumber.constructFromObject(data['VersionNumber']);
             }
             if (data.hasOwnProperty('minVal')) {
                 obj['minVal'] = ApiClient.convertToType(data['minVal'], 'Number');
+            }
+            if (data.hasOwnProperty('maxVal')) {
+                obj['maxVal'] = ApiClient.convertToType(data['maxVal'], 'Number');
+            }
+            if (data.hasOwnProperty('weight')) {
+                obj['weight'] = ApiClient.convertToType(data['weight'], 'Number');
             }
         }
         return obj;
     }
 
     /**
-    * corresponding maximum value
-    * @member {Number} maxVal
+    * @member {module:model/VersionNumber} VersionNumber
     */
-    'maxVal' = undefined;
+    'VersionNumber' = undefined;
     /**
     * the value that should be considered the minimum value for this feature. This can be set to a value larger than the actual min if you want to treat all value less than that as the same (for instance, to keep a noise spike from having undue influence in the clustering
     * @member {Number} minVal
     */
     'minVal' = undefined;
+    /**
+    * corresponding maximum value
+    * @member {Number} maxVal
+    */
+    'maxVal' = undefined;
+    /**
+    * corresponding weight
+    * @member {Number} weight
+    */
+    'weight' = undefined;
 
 
 

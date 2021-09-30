@@ -12,46 +12,59 @@
  */
 
 import ApiClient from './ApiClient';
-import Body from './model/Body';
-import Body1 from './model/Body1';
-import Body2 from './model/Body2';
-import Body3 from './model/Body3';
-import Body4 from './model/Body4';
 import EndpointUsageInfo from './model/EndpointUsageInfo';
 import Error from './model/Error';
 import FeatureConfig from './model/FeatureConfig';
 import Float32Array from './model/Float32Array';
 import GetConfigResponse from './model/GetConfigResponse';
-import GetConfigResponseFeatures from './model/GetConfigResponseFeatures';
+import GetPretrainResponse from './model/GetPretrainResponse';
 import GetSensorResponse from './model/GetSensorResponse';
-import GetSensorResponseUsageInfo from './model/GetSensorResponseUsageInfo';
-import GetSensorResponseUsageInfoGetConfig from './model/GetSensorResponseUsageInfoGetConfig';
-import GetSensorResponseUsageInfoPostStream from './model/GetSensorResponseUsageInfoPostStream';
 import GetSensorsResponse from './model/GetSensorsResponse';
 import GetStatusResponse from './model/GetStatusResponse';
-import InlineResponse200 from './model/InlineResponse200';
-import InlineResponse400 from './model/InlineResponse400';
-import NumClusters from './model/NumClusters';
+import GetSummaryResponse from './model/GetSummaryResponse';
+import Int32Array from './model/Int32Array';
+import MAP from './model/MAP';
+import MAmberStatus from './model/MAmberStatus';
+import MAutotune from './model/MAutotune';
+import MBufferStats from './model/MBufferStats';
+import MNCP from './model/MNCP';
+import MNano from './model/MNano';
+import MNanoBackend from './model/MNanoBackend';
+import MNanoConfig from './model/MNanoConfig';
+import MPatternMemory from './model/MPatternMemory';
+import MRecentAMs from './model/MRecentAMs';
+import MRecentAnalytics from './model/MRecentAnalytics';
+import MRecentFloats from './model/MRecentFloats';
+import MRecentIDs from './model/MRecentIDs';
+import MRecentSamples from './model/MRecentSamples';
+import MRecentTimes from './model/MRecentTimes';
+import MStreamingParameters from './model/MStreamingParameters';
+import MTraining from './model/MTraining';
+import MagicNumber from './model/MagicNumber';
 import PCA from './model/PCA';
 import PostAuth2Request from './model/PostAuth2Request';
 import PostAuth2Response from './model/PostAuth2Response';
 import PostConfigRequest from './model/PostConfigRequest';
 import PostConfigResponse from './model/PostConfigResponse';
+import PostPretrainRequest from './model/PostPretrainRequest';
+import PostPretrainResponse from './model/PostPretrainResponse';
 import PostSensorRequest from './model/PostSensorRequest';
 import PostSensorResponse from './model/PostSensorResponse';
 import PostStreamRequest from './model/PostStreamRequest';
 import PostStreamResponse from './model/PostStreamResponse';
 import PutSensorRequest from './model/PutSensorRequest';
 import PutSensorResponse from './model/PutSensorResponse';
+import RootCauseResponse from './model/RootCauseResponse';
 import SensorInstance from './model/SensorInstance';
 import SensorInstanceFull from './model/SensorInstanceFull';
 import SensorUsageInfo from './model/SensorUsageInfo';
 import StreamStatus from './model/StreamStatus';
 import StreamingEndpointUsageInfo from './model/StreamingEndpointUsageInfo';
-import TotalInferences from './model/TotalInferences';
 import Uint16Array from './model/Uint16Array';
 import Uint32Array from './model/Uint32Array';
 import Uint64Array from './model/Uint64Array';
+import Version from './model/Version';
+import VersionNumber from './model/VersionNumber';
 import DefaultApi from './api/DefaultApi';
 
 /**
@@ -93,36 +106,6 @@ export {
     ApiClient,
 
     /**
-     * The Body model constructor.
-     * @property {module:model/Body}
-     */
-    Body,
-
-    /**
-     * The Body1 model constructor.
-     * @property {module:model/Body1}
-     */
-    Body1,
-
-    /**
-     * The Body2 model constructor.
-     * @property {module:model/Body2}
-     */
-    Body2,
-
-    /**
-     * The Body3 model constructor.
-     * @property {module:model/Body3}
-     */
-    Body3,
-
-    /**
-     * The Body4 model constructor.
-     * @property {module:model/Body4}
-     */
-    Body4,
-
-    /**
      * The EndpointUsageInfo model constructor.
      * @property {module:model/EndpointUsageInfo}
      */
@@ -153,34 +136,16 @@ export {
     GetConfigResponse,
 
     /**
-     * The GetConfigResponseFeatures model constructor.
-     * @property {module:model/GetConfigResponseFeatures}
+     * The GetPretrainResponse model constructor.
+     * @property {module:model/GetPretrainResponse}
      */
-    GetConfigResponseFeatures,
+    GetPretrainResponse,
 
     /**
      * The GetSensorResponse model constructor.
      * @property {module:model/GetSensorResponse}
      */
     GetSensorResponse,
-
-    /**
-     * The GetSensorResponseUsageInfo model constructor.
-     * @property {module:model/GetSensorResponseUsageInfo}
-     */
-    GetSensorResponseUsageInfo,
-
-    /**
-     * The GetSensorResponseUsageInfoGetConfig model constructor.
-     * @property {module:model/GetSensorResponseUsageInfoGetConfig}
-     */
-    GetSensorResponseUsageInfoGetConfig,
-
-    /**
-     * The GetSensorResponseUsageInfoPostStream model constructor.
-     * @property {module:model/GetSensorResponseUsageInfoPostStream}
-     */
-    GetSensorResponseUsageInfoPostStream,
 
     /**
      * The GetSensorsResponse model constructor.
@@ -195,22 +160,124 @@ export {
     GetStatusResponse,
 
     /**
-     * The InlineResponse200 model constructor.
-     * @property {module:model/InlineResponse200}
+     * The GetSummaryResponse model constructor.
+     * @property {module:model/GetSummaryResponse}
      */
-    InlineResponse200,
+    GetSummaryResponse,
 
     /**
-     * The InlineResponse400 model constructor.
-     * @property {module:model/InlineResponse400}
+     * The Int32Array model constructor.
+     * @property {module:model/Int32Array}
      */
-    InlineResponse400,
+    Int32Array,
 
     /**
-     * The NumClusters model constructor.
-     * @property {module:model/NumClusters}
+     * The MAP model constructor.
+     * @property {module:model/MAP}
      */
-    NumClusters,
+    MAP,
+
+    /**
+     * The MAmberStatus model constructor.
+     * @property {module:model/MAmberStatus}
+     */
+    MAmberStatus,
+
+    /**
+     * The MAutotune model constructor.
+     * @property {module:model/MAutotune}
+     */
+    MAutotune,
+
+    /**
+     * The MBufferStats model constructor.
+     * @property {module:model/MBufferStats}
+     */
+    MBufferStats,
+
+    /**
+     * The MNCP model constructor.
+     * @property {module:model/MNCP}
+     */
+    MNCP,
+
+    /**
+     * The MNano model constructor.
+     * @property {module:model/MNano}
+     */
+    MNano,
+
+    /**
+     * The MNanoBackend model constructor.
+     * @property {module:model/MNanoBackend}
+     */
+    MNanoBackend,
+
+    /**
+     * The MNanoConfig model constructor.
+     * @property {module:model/MNanoConfig}
+     */
+    MNanoConfig,
+
+    /**
+     * The MPatternMemory model constructor.
+     * @property {module:model/MPatternMemory}
+     */
+    MPatternMemory,
+
+    /**
+     * The MRecentAMs model constructor.
+     * @property {module:model/MRecentAMs}
+     */
+    MRecentAMs,
+
+    /**
+     * The MRecentAnalytics model constructor.
+     * @property {module:model/MRecentAnalytics}
+     */
+    MRecentAnalytics,
+
+    /**
+     * The MRecentFloats model constructor.
+     * @property {module:model/MRecentFloats}
+     */
+    MRecentFloats,
+
+    /**
+     * The MRecentIDs model constructor.
+     * @property {module:model/MRecentIDs}
+     */
+    MRecentIDs,
+
+    /**
+     * The MRecentSamples model constructor.
+     * @property {module:model/MRecentSamples}
+     */
+    MRecentSamples,
+
+    /**
+     * The MRecentTimes model constructor.
+     * @property {module:model/MRecentTimes}
+     */
+    MRecentTimes,
+
+    /**
+     * The MStreamingParameters model constructor.
+     * @property {module:model/MStreamingParameters}
+     */
+    MStreamingParameters,
+
+    /**
+     * The MTraining model constructor.
+     * @property {module:model/MTraining}
+     */
+    MTraining,
+
+    /**
+     * The MagicNumber model constructor.
+     * @property {module:model/MagicNumber}
+     */
+    MagicNumber,
 
     /**
      * The PCA model constructor.
@@ -241,6 +308,18 @@ export {
      * @property {module:model/PostConfigResponse}
      */
     PostConfigResponse,
+
+    /**
+     * The PostPretrainRequest model constructor.
+     * @property {module:model/PostPretrainRequest}
+     */
+    PostPretrainRequest,
+
+    /**
+     * The PostPretrainResponse model constructor.
+     * @property {module:model/PostPretrainResponse}
+     */
+    PostPretrainResponse,
 
     /**
      * The PostSensorRequest model constructor.
@@ -279,6 +358,12 @@ export {
     PutSensorResponse,
 
     /**
+     * The RootCauseResponse model constructor.
+     * @property {module:model/RootCauseResponse}
+     */
+    RootCauseResponse,
+
+    /**
      * The SensorInstance model constructor.
      * @property {module:model/SensorInstance}
      */
@@ -309,12 +394,6 @@ export {
     StreamingEndpointUsageInfo,
 
     /**
-     * The TotalInferences model constructor.
-     * @property {module:model/TotalInferences}
-     */
-    TotalInferences,
-
-    /**
      * The Uint16Array model constructor.
      * @property {module:model/Uint16Array}
      */
@@ -331,6 +410,18 @@ export {
      * @property {module:model/Uint64Array}
      */
     Uint64Array,
+
+    /**
+     * The Version model constructor.
+     * @property {module:model/Version}
+     */
+    Version,
+
+    /**
+     * The VersionNumber model constructor.
+     * @property {module:model/VersionNumber}
+     */
+    VersionNumber,
 
     /**
     * The DefaultApi service constructor.

@@ -12,7 +12,7 @@
  */
 
 import ApiClient from '../ApiClient';
-import GetConfigResponseFeatures from './GetConfigResponseFeatures';
+import FeatureConfig from './FeatureConfig';
 
 /**
 * The GetConfigResponse model module.
@@ -24,11 +24,31 @@ export default class GetConfigResponse {
     * Constructs a new <code>GetConfigResponse</code>.
     * @alias module:model/GetConfigResponse
     * @class
+    * @param featureCount {Number} number of features per sample
+    * @param streamingWindowSize {Number} streaming window size
+    * @param samplesToBuffer {Number} the number of samples to be applied before autotuning begins
+    * @param anomalyHistoryWindow {Number} the number of samples to use when calculating AH
+    * @param learningRateNumerator {Number} enables graduation requirements for learning
+    * @param learningRateDenominator {Number} enables graduation requirements for learning
+    * @param learningMaxClusters {Number} learning graduation requirement for stopping learning upon reaching this cluster count
+    * @param learningMaxSamples {Number} learning graduation requirement for stopping learning after acquiring this many samples
+    * @param features {Array.<module:model/FeatureConfig>} 
+    * @param percentVariation {Number} the percent variation (for instance, 0.025 gives 2.5% variation) used for clustering
     */
 
-    constructor() {
+    constructor(featureCount, streamingWindowSize, samplesToBuffer, anomalyHistoryWindow, learningRateNumerator, learningRateDenominator, learningMaxClusters, learningMaxSamples, features, percentVariation) {
         
         
+        this['featureCount'] = featureCount;
+        this['streamingWindowSize'] = streamingWindowSize;
+        this['samplesToBuffer'] = samplesToBuffer;
+        this['anomalyHistoryWindow'] = anomalyHistoryWindow;
+        this['learningRateNumerator'] = learningRateNumerator;
+        this['learningRateDenominator'] = learningRateDenominator;
+        this['learningMaxClusters'] = learningMaxClusters;
+        this['learningMaxSamples'] = learningMaxSamples;
+        this['features'] = features;
+        this['percentVariation'] = percentVariation;
         
     }
 
@@ -44,8 +64,32 @@ export default class GetConfigResponse {
             obj = obj || new GetConfigResponse();
                         
             
+            if (data.hasOwnProperty('featureCount')) {
+                obj['featureCount'] = ApiClient.convertToType(data['featureCount'], 'Number');
+            }
+            if (data.hasOwnProperty('streamingWindowSize')) {
+                obj['streamingWindowSize'] = ApiClient.convertToType(data['streamingWindowSize'], 'Number');
+            }
+            if (data.hasOwnProperty('samplesToBuffer')) {
+                obj['samplesToBuffer'] = ApiClient.convertToType(data['samplesToBuffer'], 'Number');
+            }
+            if (data.hasOwnProperty('anomalyHistoryWindow')) {
+                obj['anomalyHistoryWindow'] = ApiClient.convertToType(data['anomalyHistoryWindow'], 'Number');
+            }
+            if (data.hasOwnProperty('learningRateNumerator')) {
+                obj['learningRateNumerator'] = ApiClient.convertToType(data['learningRateNumerator'], 'Number');
+            }
+            if (data.hasOwnProperty('learningRateDenominator')) {
+                obj['learningRateDenominator'] = ApiClient.convertToType(data['learningRateDenominator'], 'Number');
+            }
+            if (data.hasOwnProperty('learningMaxClusters')) {
+                obj['learningMaxClusters'] = ApiClient.convertToType(data['learningMaxClusters'], 'Number');
+            }
+            if (data.hasOwnProperty('learningMaxSamples')) {
+                obj['learningMaxSamples'] = ApiClient.convertToType(data['learningMaxSamples'], 'Number');
+            }
             if (data.hasOwnProperty('features')) {
-                obj['features'] = ApiClient.convertToType(data['features'], [GetConfigResponseFeatures]);
+                obj['features'] = ApiClient.convertToType(data['features'], [FeatureConfig]);
             }
             if (data.hasOwnProperty('percentVariation')) {
                 obj['percentVariation'] = ApiClient.convertToType(data['percentVariation'], 'Number');
@@ -55,7 +99,47 @@ export default class GetConfigResponse {
     }
 
     /**
-    * @member {Array.<module:model/GetConfigResponseFeatures>} features
+    * number of features per sample
+    * @member {Number} featureCount
+    */
+    'featureCount' = undefined;
+    /**
+    * streaming window size
+    * @member {Number} streamingWindowSize
+    */
+    'streamingWindowSize' = undefined;
+    /**
+    * the number of samples to be applied before autotuning begins
+    * @member {Number} samplesToBuffer
+    */
+    'samplesToBuffer' = undefined;
+    /**
+    * the number of samples to use when calculating AH
+    * @member {Number} anomalyHistoryWindow
+    */
+    'anomalyHistoryWindow' = undefined;
+    /**
+    * enables graduation requirements for learning
+    * @member {Number} learningRateNumerator
+    */
+    'learningRateNumerator' = undefined;
+    /**
+    * enables graduation requirements for learning
+    * @member {Number} learningRateDenominator
+    */
+    'learningRateDenominator' = undefined;
+    /**
+    * learning graduation requirement for stopping learning upon reaching this cluster count
+    * @member {Number} learningMaxClusters
+    */
+    'learningMaxClusters' = undefined;
+    /**
+    * learning graduation requirement for stopping learning after acquiring this many samples
+    * @member {Number} learningMaxSamples
+    */
+    'learningMaxSamples' = undefined;
+    /**
+    * @member {Array.<module:model/FeatureConfig>} features
     */
     'features' = undefined;
     /**

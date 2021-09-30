@@ -12,7 +12,7 @@
  */
 
 import ApiClient from '../ApiClient';
-import InlineResponse200 from './InlineResponse200';
+import SensorInstance from './SensorInstance';
 
 /**
 * The GetSensorsResponse model module.
@@ -44,7 +44,7 @@ export default class GetSensorsResponse extends Array {
     static constructFromObject(data, obj) {
         if (data) {
             obj = obj || new GetSensorsResponse();
-            ApiClient.constructFromObject(data, obj, 'InlineResponse200');
+            ApiClient.constructFromObject(data, obj, 'SensorInstance');
             
             
         }

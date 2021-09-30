@@ -23,11 +23,21 @@ export default class StreamingEndpointUsageInfo {
     * Constructs a new <code>StreamingEndpointUsageInfo</code>.
     * @alias module:model/StreamingEndpointUsageInfo
     * @class
+    * @param callsTotal {Number} total number of calls to this endpoint
+    * @param callsThisPeriod {Number} number of calls to this endpoint during the current billing period
+    * @param samplesTotal {Number} total number of samples processed
+    * @param samplesThisPeriod {Number} number of samples processed during the current billing period
+    * @param lastCalled {String} ISO formatted time of last call to this endpoint
     */
 
-    constructor() {
+    constructor(callsTotal, callsThisPeriod, samplesTotal, samplesThisPeriod, lastCalled) {
         
         
+        this['callsTotal'] = callsTotal;
+        this['callsThisPeriod'] = callsThisPeriod;
+        this['samplesTotal'] = samplesTotal;
+        this['samplesThisPeriod'] = samplesThisPeriod;
+        this['lastCalled'] = lastCalled;
         
     }
 
@@ -43,50 +53,50 @@ export default class StreamingEndpointUsageInfo {
             obj = obj || new StreamingEndpointUsageInfo();
                         
             
-            if (data.hasOwnProperty('callsThisPeriod')) {
-                obj['callsThisPeriod'] = ApiClient.convertToType(data['callsThisPeriod'], 'Number');
-            }
             if (data.hasOwnProperty('callsTotal')) {
                 obj['callsTotal'] = ApiClient.convertToType(data['callsTotal'], 'Number');
             }
-            if (data.hasOwnProperty('lastCalled')) {
-                obj['lastCalled'] = ApiClient.convertToType(data['lastCalled'], 'String');
+            if (data.hasOwnProperty('callsThisPeriod')) {
+                obj['callsThisPeriod'] = ApiClient.convertToType(data['callsThisPeriod'], 'Number');
+            }
+            if (data.hasOwnProperty('samplesTotal')) {
+                obj['samplesTotal'] = ApiClient.convertToType(data['samplesTotal'], 'Number');
             }
             if (data.hasOwnProperty('samplesThisPeriod')) {
                 obj['samplesThisPeriod'] = ApiClient.convertToType(data['samplesThisPeriod'], 'Number');
             }
-            if (data.hasOwnProperty('samplesTotal')) {
-                obj['samplesTotal'] = ApiClient.convertToType(data['samplesTotal'], 'Number');
+            if (data.hasOwnProperty('lastCalled')) {
+                obj['lastCalled'] = ApiClient.convertToType(data['lastCalled'], 'String');
             }
         }
         return obj;
     }
 
     /**
-    * number of calls to this endpoint during the current billing period
-    * @member {Number} callsThisPeriod
-    */
-    'callsThisPeriod' = undefined;
-    /**
     * total number of calls to this endpoint
     * @member {Number} callsTotal
     */
     'callsTotal' = undefined;
     /**
-    * ISO formatted time of last call to this endpoint
-    * @member {String} lastCalled
+    * number of calls to this endpoint during the current billing period
+    * @member {Number} callsThisPeriod
     */
-    'lastCalled' = undefined;
+    'callsThisPeriod' = undefined;
+    /**
+    * total number of samples processed
+    * @member {Number} samplesTotal
+    */
+    'samplesTotal' = undefined;
     /**
     * number of samples processed during the current billing period
     * @member {Number} samplesThisPeriod
     */
     'samplesThisPeriod' = undefined;
     /**
-    * total number of samples processed
-    * @member {Number} samplesTotal
+    * ISO formatted time of last call to this endpoint
+    * @member {String} lastCalled
     */
-    'samplesTotal' = undefined;
+    'lastCalled' = undefined;
 
 
 

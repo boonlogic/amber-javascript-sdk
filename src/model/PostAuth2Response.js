@@ -23,18 +23,18 @@ export default class PostAuth2Response {
     * Constructs a new <code>PostAuth2Response</code>.
     * @alias module:model/PostAuth2Response
     * @class
-    * @param expiresIn {Number} Amount of time before token expires
     * @param idToken {String} Identifier token to be used as Bearer token
     * @param refreshToken {String} Refresh token identifier
+    * @param expiresIn {String} Amount of time before token expires
     * @param tokenType {String} Type of authentication token
     */
 
-    constructor(expiresIn, idToken, refreshToken, tokenType) {
+    constructor(idToken, refreshToken, expiresIn, tokenType) {
         
         
-        this['expiresIn'] = expiresIn;
         this['idToken'] = idToken;
         this['refreshToken'] = refreshToken;
+        this['expiresIn'] = expiresIn;
         this['tokenType'] = tokenType;
         
     }
@@ -51,14 +51,14 @@ export default class PostAuth2Response {
             obj = obj || new PostAuth2Response();
                         
             
-            if (data.hasOwnProperty('expiresIn')) {
-                obj['expiresIn'] = ApiClient.convertToType(data['expiresIn'], 'Number');
-            }
             if (data.hasOwnProperty('idToken')) {
                 obj['idToken'] = ApiClient.convertToType(data['idToken'], 'String');
             }
             if (data.hasOwnProperty('refreshToken')) {
                 obj['refreshToken'] = ApiClient.convertToType(data['refreshToken'], 'String');
+            }
+            if (data.hasOwnProperty('expiresIn')) {
+                obj['expiresIn'] = ApiClient.convertToType(data['expiresIn'], 'String');
             }
             if (data.hasOwnProperty('tokenType')) {
                 obj['tokenType'] = ApiClient.convertToType(data['tokenType'], 'String');
@@ -67,11 +67,6 @@ export default class PostAuth2Response {
         return obj;
     }
 
-    /**
-    * Amount of time before token expires
-    * @member {Number} expiresIn
-    */
-    'expiresIn' = undefined;
     /**
     * Identifier token to be used as Bearer token
     * @member {String} idToken
@@ -82,6 +77,11 @@ export default class PostAuth2Response {
     * @member {String} refreshToken
     */
     'refreshToken' = undefined;
+    /**
+    * Amount of time before token expires
+    * @member {String} expiresIn
+    */
+    'expiresIn' = undefined;
     /**
     * Type of authentication token
     * @member {String} tokenType

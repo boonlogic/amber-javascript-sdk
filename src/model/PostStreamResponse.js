@@ -12,6 +12,10 @@
  */
 
 import ApiClient from '../ApiClient';
+import Float32Array from './Float32Array';
+import Int32Array from './Int32Array';
+import StreamStatus from './StreamStatus';
+import Uint16Array from './Uint16Array';
 
 /**
 * The PostStreamResponse model module.
@@ -23,23 +27,33 @@ export default class PostStreamResponse {
     * Constructs a new <code>PostStreamResponse</code>.
     * @alias module:model/PostStreamResponse
     * @class
+    * @extends module:model/StreamStatus
+    * @param state {} state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error, Autotuning retry
+    * @param message {} message to accompany the current state
+    * @param progress {} completion percentage (applies to Buffering and Autotuning states)
+    * @param clusterCount {} current cluster count (applies to Learning and Monitoring states)
+    * @param retryCount {} number of restarts that have happened during autotuning
+    * @param streamingWindowSize {} the current streaming window size that is being used
+    * @param totalInferences {} inferences since the most recent restart
+    * @param RI {} 
+    * @param SI {} 
     * @param AD {} 
     * @param AH {} 
     * @param AM {} 
     * @param AW {} 
     * @param ID {} 
-    * @param SI {} 
     */
 
-    constructor(AD, AH, AM, AW, ID, SI) {
+    constructor(state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences, RI, SI, AD, AH, AM, AW, ID) {
+        StreamStatus.call(this, state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences);
         
-        
+        this['RI'] = RI;
+        this['SI'] = SI;
         this['AD'] = AD;
         this['AH'] = AH;
         this['AM'] = AM;
         this['AW'] = AW;
         this['ID'] = ID;
-        this['SI'] = SI;
         
     }
 
@@ -53,54 +67,62 @@ export default class PostStreamResponse {
     static constructFromObject(data, obj) {
         if (data) {
             obj = obj || new PostStreamResponse();
-                        
             
-            if (data.hasOwnProperty('AD')) {
-                obj['AD'] = ApiClient.convertToType(data['AD'], ['Number']);
-            }
-            if (data.hasOwnProperty('AH')) {
-                obj['AH'] = ApiClient.convertToType(data['AH'], ['Number']);
-            }
-            if (data.hasOwnProperty('AM')) {
-                obj['AM'] = ApiClient.convertToType(data['AM'], ['Number']);
-            }
-            if (data.hasOwnProperty('AW')) {
-                obj['AW'] = ApiClient.convertToType(data['AW'], ['Number']);
-            }
-            if (data.hasOwnProperty('ID')) {
-                obj['ID'] = ApiClient.convertToType(data['ID'], ['Number']);
+            StreamStatus.constructFromObject(data, obj);
+            
+            if (data.hasOwnProperty('RI')) {
+                obj['RI'] = Uint16Array.constructFromObject(data['RI']);
             }
             if (data.hasOwnProperty('SI')) {
-                obj['SI'] = ApiClient.convertToType(data['SI'], ['Number']);
+                obj['SI'] = Uint16Array.constructFromObject(data['SI']);
+            }
+            if (data.hasOwnProperty('AD')) {
+                obj['AD'] = Uint16Array.constructFromObject(data['AD']);
+            }
+            if (data.hasOwnProperty('AH')) {
+                obj['AH'] = Uint16Array.constructFromObject(data['AH']);
+            }
+            if (data.hasOwnProperty('AM')) {
+                obj['AM'] = Float32Array.constructFromObject(data['AM']);
+            }
+            if (data.hasOwnProperty('AW')) {
+                obj['AW'] = Uint16Array.constructFromObject(data['AW']);
+            }
+            if (data.hasOwnProperty('ID')) {
+                obj['ID'] = Int32Array.constructFromObject(data['ID']);
             }
         }
         return obj;
     }
 
     /**
-    * @member {Array.<Number>} AD
+    * @member {module:model/Uint16Array} RI
+    */
+    'RI' = undefined;
+    /**
+    * @member {module:model/Uint16Array} SI
+    */
+    'SI' = undefined;
+    /**
+    * @member {module:model/Uint16Array} AD
     */
     'AD' = undefined;
     /**
-    * @member {Array.<Number>} AH
+    * @member {module:model/Uint16Array} AH
     */
     'AH' = undefined;
     /**
-    * @member {Array.<Number>} AM
+    * @member {module:model/Float32Array} AM
     */
     'AM' = undefined;
     /**
-    * @member {Array.<Number>} AW
+    * @member {module:model/Uint16Array} AW
     */
     'AW' = undefined;
     /**
-    * @member {Array.<Number>} ID
+    * @member {module:model/Int32Array} ID
     */
     'ID' = undefined;
-    /**
-    * @member {Array.<Number>} SI
-    */
-    'SI' = undefined;
 
 
 

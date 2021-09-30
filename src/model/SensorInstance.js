@@ -23,11 +23,15 @@ export default class SensorInstance {
     * Constructs a new <code>SensorInstance</code>.
     * @alias module:model/SensorInstance
     * @class
+    * @param label {String} Additional label to be assigned for sensor
+    * @param sensorId {String} Unique identifier for sensor
     */
 
-    constructor() {
+    constructor(label, sensorId) {
         
         
+        this['label'] = label;
+        this['sensorId'] = sensorId;
         
     }
 

@@ -12,6 +12,9 @@
  */
 
 import ApiClient from '../ApiClient';
+import PCA from './PCA';
+import Uint16Array from './Uint16Array';
+import Uint64Array from './Uint64Array';
 
 /**
 * The GetStatusResponse model module.
@@ -23,11 +26,31 @@ export default class GetStatusResponse {
     * Constructs a new <code>GetStatusResponse</code>.
     * @alias module:model/GetStatusResponse
     * @class
+    * @param pca {module:model/PCA} 
+    * @param clusterGrowth {module:model/Uint64Array} 
+    * @param clusterSizes {module:model/Uint64Array} 
+    * @param anomalyIndexes {module:model/Uint16Array} 
+    * @param frequencyIndexes {module:model/Uint16Array} 
+    * @param distanceIndexes {module:model/Uint16Array} 
+    * @param totalInferences {Number} inferences since the most recent restart
+    * @param numClusters {Number} 
+    * @param anomalyThreshold {Number} 
+    * @param state {String} state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error, Autotuning retry
     */
 
-    constructor() {
+    constructor(pca, clusterGrowth, clusterSizes, anomalyIndexes, frequencyIndexes, distanceIndexes, totalInferences, numClusters, anomalyThreshold, state) {
         
         
+        this['pca'] = pca;
+        this['clusterGrowth'] = clusterGrowth;
+        this['clusterSizes'] = clusterSizes;
+        this['anomalyIndexes'] = anomalyIndexes;
+        this['frequencyIndexes'] = frequencyIndexes;
+        this['distanceIndexes'] = distanceIndexes;
+        this['totalInferences'] = totalInferences;
+        this['numClusters'] = numClusters;
+        this['anomalyThreshold'] = anomalyThreshold;
+        this['state'] = state;
         
     }
 
@@ -43,67 +66,82 @@ export default class GetStatusResponse {
             obj = obj || new GetStatusResponse();
                         
             
-            if (data.hasOwnProperty('anomalyIndexes')) {
-                obj['anomalyIndexes'] = ApiClient.convertToType(data['anomalyIndexes'], ['Number']);
+            if (data.hasOwnProperty('pca')) {
+                obj['pca'] = PCA.constructFromObject(data['pca']);
             }
             if (data.hasOwnProperty('clusterGrowth')) {
-                obj['clusterGrowth'] = ApiClient.convertToType(data['clusterGrowth'], ['Number']);
+                obj['clusterGrowth'] = Uint64Array.constructFromObject(data['clusterGrowth']);
             }
             if (data.hasOwnProperty('clusterSizes')) {
-                obj['clusterSizes'] = ApiClient.convertToType(data['clusterSizes'], ['Number']);
+                obj['clusterSizes'] = Uint64Array.constructFromObject(data['clusterSizes']);
             }
-            if (data.hasOwnProperty('distanceIndexes')) {
-                obj['distanceIndexes'] = ApiClient.convertToType(data['distanceIndexes'], ['Number']);
+            if (data.hasOwnProperty('anomalyIndexes')) {
+                obj['anomalyIndexes'] = Uint16Array.constructFromObject(data['anomalyIndexes']);
             }
             if (data.hasOwnProperty('frequencyIndexes')) {
-                obj['frequencyIndexes'] = ApiClient.convertToType(data['frequencyIndexes'], ['Number']);
+                obj['frequencyIndexes'] = Uint16Array.constructFromObject(data['frequencyIndexes']);
+            }
+            if (data.hasOwnProperty('distanceIndexes')) {
+                obj['distanceIndexes'] = Uint16Array.constructFromObject(data['distanceIndexes']);
+            }
+            if (data.hasOwnProperty('totalInferences')) {
+                obj['totalInferences'] = ApiClient.convertToType(data['totalInferences'], 'Number');
             }
             if (data.hasOwnProperty('numClusters')) {
                 obj['numClusters'] = ApiClient.convertToType(data['numClusters'], 'Number');
             }
-            if (data.hasOwnProperty('pca')) {
-                obj['pca'] = ApiClient.convertToType(data['pca'], [['Number']]);
+            if (data.hasOwnProperty('anomalyThreshold')) {
+                obj['anomalyThreshold'] = ApiClient.convertToType(data['anomalyThreshold'], 'Number');
             }
-            if (data.hasOwnProperty('totalInferences')) {
-                obj['totalInferences'] = ApiClient.convertToType(data['totalInferences'], 'Number');
+            if (data.hasOwnProperty('state')) {
+                obj['state'] = ApiClient.convertToType(data['state'], 'String');
             }
         }
         return obj;
     }
 
     /**
-    * @member {Array.<Number>} anomalyIndexes
+    * @member {module:model/PCA} pca
     */
-    'anomalyIndexes' = undefined;
+    'pca' = undefined;
     /**
-    * @member {Array.<Number>} clusterGrowth
+    * @member {module:model/Uint64Array} clusterGrowth
     */
     'clusterGrowth' = undefined;
     /**
-    * @member {Array.<Number>} clusterSizes
+    * @member {module:model/Uint64Array} clusterSizes
     */
     'clusterSizes' = undefined;
     /**
-    * @member {Array.<Number>} distanceIndexes
+    * @member {module:model/Uint16Array} anomalyIndexes
+    */
+    'anomalyIndexes' = undefined;
+    /**
+    * @member {module:model/Uint16Array} frequencyIndexes
+    */
+    'frequencyIndexes' = undefined;
+    /**
+    * @member {module:model/Uint16Array} distanceIndexes
     */
     'distanceIndexes' = undefined;
     /**
-    * @member {Array.<Number>} frequencyIndexes
+    * inferences since the most recent restart
+    * @member {Number} totalInferences
     */
-    'frequencyIndexes' = undefined;
+    'totalInferences' = undefined;
     /**
     * @member {Number} numClusters
     */
     'numClusters' = undefined;
     /**
-    * array of pca values
-    * @member {Array.<Array.<Number>>} pca
+    * @member {Number} anomalyThreshold
     */
-    'pca' = undefined;
+    'anomalyThreshold' = undefined;
     /**
-    * @member {Number} totalInferences
+    * state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error, Autotuning retry
+    * @member {String} state
     */
-    'totalInferences' = undefined;
+    'state' = undefined;
 
 
 

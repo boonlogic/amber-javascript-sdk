@@ -25,13 +25,25 @@ export default class PostConfigResponse {
     * @class
     * @param featureCount {Number} number of features per sample
     * @param streamingWindowSize {Number} streaming window size
+    * @param samplesToBuffer {Number} the number of samples to be applied before autotuning begins
+    * @param anomalyHistoryWindow {Number} the number of samples to use when calculating AH
+    * @param learningRateNumerator {Number} enables graduation requirements for learning
+    * @param learningRateDenominator {Number} enables graduation requirements for learning
+    * @param learningMaxClusters {Number} learning graduation requirement for stopping learning upon reaching this cluster count
+    * @param learningMaxSamples {Number} learning graduation requirement for stopping learning after acquiring this many samples
     */
 
-    constructor(featureCount, streamingWindowSize) {
+    constructor(featureCount, streamingWindowSize, samplesToBuffer, anomalyHistoryWindow, learningRateNumerator, learningRateDenominator, learningMaxClusters, learningMaxSamples) {
         
         
         this['featureCount'] = featureCount;
         this['streamingWindowSize'] = streamingWindowSize;
+        this['samplesToBuffer'] = samplesToBuffer;
+        this['anomalyHistoryWindow'] = anomalyHistoryWindow;
+        this['learningRateNumerator'] = learningRateNumerator;
+        this['learningRateDenominator'] = learningRateDenominator;
+        this['learningMaxClusters'] = learningMaxClusters;
+        this['learningMaxSamples'] = learningMaxSamples;
         
     }
 
@@ -50,23 +62,26 @@ export default class PostConfigResponse {
             if (data.hasOwnProperty('featureCount')) {
                 obj['featureCount'] = ApiClient.convertToType(data['featureCount'], 'Number');
             }
+            if (data.hasOwnProperty('streamingWindowSize')) {
+                obj['streamingWindowSize'] = ApiClient.convertToType(data['streamingWindowSize'], 'Number');
+            }
+            if (data.hasOwnProperty('samplesToBuffer')) {
+                obj['samplesToBuffer'] = ApiClient.convertToType(data['samplesToBuffer'], 'Number');
+            }
+            if (data.hasOwnProperty('anomalyHistoryWindow')) {
+                obj['anomalyHistoryWindow'] = ApiClient.convertToType(data['anomalyHistoryWindow'], 'Number');
+            }
+            if (data.hasOwnProperty('learningRateNumerator')) {
+                obj['learningRateNumerator'] = ApiClient.convertToType(data['learningRateNumerator'], 'Number');
+            }
+            if (data.hasOwnProperty('learningRateDenominator')) {
+                obj['learningRateDenominator'] = ApiClient.convertToType(data['learningRateDenominator'], 'Number');
+            }
             if (data.hasOwnProperty('learningMaxClusters')) {
                 obj['learningMaxClusters'] = ApiClient.convertToType(data['learningMaxClusters'], 'Number');
             }
             if (data.hasOwnProperty('learningMaxSamples')) {
                 obj['learningMaxSamples'] = ApiClient.convertToType(data['learningMaxSamples'], 'Number');
-            }
-            if (data.hasOwnProperty('learningRateDenominator')) {
-                obj['learningRateDenominator'] = ApiClient.convertToType(data['learningRateDenominator'], 'Number');
-            }
-            if (data.hasOwnProperty('learningRateNumerator')) {
-                obj['learningRateNumerator'] = ApiClient.convertToType(data['learningRateNumerator'], 'Number');
-            }
-            if (data.hasOwnProperty('samplesToBuffer')) {
-                obj['samplesToBuffer'] = ApiClient.convertToType(data['samplesToBuffer'], 'Number');
-            }
-            if (data.hasOwnProperty('streamingWindowSize')) {
-                obj['streamingWindowSize'] = ApiClient.convertToType(data['streamingWindowSize'], 'Number');
             }
         }
         return obj;
@@ -78,6 +93,31 @@ export default class PostConfigResponse {
     */
     'featureCount' = undefined;
     /**
+    * streaming window size
+    * @member {Number} streamingWindowSize
+    */
+    'streamingWindowSize' = undefined;
+    /**
+    * the number of samples to be applied before autotuning begins
+    * @member {Number} samplesToBuffer
+    */
+    'samplesToBuffer' = undefined;
+    /**
+    * the number of samples to use when calculating AH
+    * @member {Number} anomalyHistoryWindow
+    */
+    'anomalyHistoryWindow' = undefined;
+    /**
+    * enables graduation requirements for learning
+    * @member {Number} learningRateNumerator
+    */
+    'learningRateNumerator' = undefined;
+    /**
+    * enables graduation requirements for learning
+    * @member {Number} learningRateDenominator
+    */
+    'learningRateDenominator' = undefined;
+    /**
     * learning graduation requirement for stopping learning upon reaching this cluster count
     * @member {Number} learningMaxClusters
     */
@@ -87,26 +127,6 @@ export default class PostConfigResponse {
     * @member {Number} learningMaxSamples
     */
     'learningMaxSamples' = undefined;
-    /**
-    * enables graduation requirements for learning
-    * @member {Number} learningRateDenominator
-    */
-    'learningRateDenominator' = undefined;
-    /**
-    * enables graduation requirements for learning
-    * @member {Number} learningRateNumerator
-    */
-    'learningRateNumerator' = undefined;
-    /**
-    * the number of samples to be applied before autotuning begins
-    * @member {Number} samplesToBuffer
-    */
-    'samplesToBuffer' = undefined;
-    /**
-    * streaming window size
-    * @member {Number} streamingWindowSize
-    */
-    'streamingWindowSize' = undefined;
 
 
 

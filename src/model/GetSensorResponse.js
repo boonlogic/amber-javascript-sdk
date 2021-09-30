@@ -12,7 +12,6 @@
  */
 
 import ApiClient from '../ApiClient';
-import GetSensorResponseUsageInfo from './GetSensorResponseUsageInfo';
 
 /**
 * The GetSensorResponse model module.
@@ -44,33 +43,10 @@ export default class GetSensorResponse {
             obj = obj || new GetSensorResponse();
                         
             
-            if (data.hasOwnProperty('label')) {
-                obj['label'] = ApiClient.convertToType(data['label'], 'String');
-            }
-            if (data.hasOwnProperty('sensorId')) {
-                obj['sensorId'] = ApiClient.convertToType(data['sensorId'], 'String');
-            }
-            if (data.hasOwnProperty('usageInfo')) {
-                obj['usageInfo'] = GetSensorResponseUsageInfo.constructFromObject(data['usageInfo']);
-            }
         }
         return obj;
     }
 
-    /**
-    * Additional label to be assigned for sensor
-    * @member {String} label
-    */
-    'label' = undefined;
-    /**
-    * Unique identifier for sensor
-    * @member {String} sensorId
-    */
-    'sensorId' = undefined;
-    /**
-    * @member {module:model/GetSensorResponseUsageInfo} usageInfo
-    */
-    'usageInfo' = undefined;
 
 
 

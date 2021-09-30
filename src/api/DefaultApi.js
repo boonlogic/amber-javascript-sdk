@@ -12,13 +12,27 @@
  */
 
 import ApiClient from "../ApiClient";
-import Body from '../model/Body';
-import Body1 from '../model/Body1';
-import Body2 from '../model/Body2';
-import Body3 from '../model/Body3';
-import Body4 from '../model/Body4';
-import InlineResponse200 from '../model/InlineResponse200';
-import InlineResponse400 from '../model/InlineResponse400';
+import Error from '../model/Error';
+import GetConfigResponse from '../model/GetConfigResponse';
+import GetPretrainResponse from '../model/GetPretrainResponse';
+import GetSensorResponse from '../model/GetSensorResponse';
+import GetSensorsResponse from '../model/GetSensorsResponse';
+import GetStatusResponse from '../model/GetStatusResponse';
+import GetSummaryResponse from '../model/GetSummaryResponse';
+import PostAuth2Request from '../model/PostAuth2Request';
+import PostAuth2Response from '../model/PostAuth2Response';
+import PostConfigRequest from '../model/PostConfigRequest';
+import PostConfigResponse from '../model/PostConfigResponse';
+import PostPretrainRequest from '../model/PostPretrainRequest';
+import PostPretrainResponse from '../model/PostPretrainResponse';
+import PostSensorRequest from '../model/PostSensorRequest';
+import PostSensorResponse from '../model/PostSensorResponse';
+import PostStreamRequest from '../model/PostStreamRequest';
+import PostStreamResponse from '../model/PostStreamResponse';
+import PutSensorRequest from '../model/PutSensorRequest';
+import PutSensorResponse from '../model/PutSensorResponse';
+import RootCauseResponse from '../model/RootCauseResponse';
+import Version from '../model/Version';
 
 /**
 * Default service.
@@ -42,7 +56,7 @@ export default class DefaultApi {
      * Callback function to receive the result of the deleteSensor operation.
      * @callback module:api/DefaultApi~deleteSensorCallback
      * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
+     * @param {module:model/Error} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -50,6 +64,7 @@ export default class DefaultApi {
      * Delete a sensor instance
      * Deletes the sensor instance with the specified sensorId.
      * @param {module:api/DefaultApi~deleteSensorCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/Error}
      */
     deleteSensor(sensorId, callback) {
       let postBody = null;
@@ -67,7 +82,7 @@ export default class DefaultApi {
       let authNames = ['authorize-amber-pool'];
       let contentTypes = [];
       let accepts = ['application/json'];
-      let returnType = null;
+      let returnType = Error;
 
       return this.apiClient.callApi(
         '/sensor', 'DELETE',
@@ -76,10 +91,48 @@ export default class DefaultApi {
       );
     }
     /**
+     * Callback function to receive the result of the getAmberSummary operation.
+     * @callback module:api/DefaultApi~getAmberSummaryCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/GetSummaryResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Get the JSON block of the amber image
+     * Returns the json block of the amber sensor
+     * @param {module:api/DefaultApi~getAmberSummaryCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/GetSummaryResponse}
+     */
+    getAmberSummary(sensorId, callback) {
+      let postBody = null;
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+        'sensorId': sensorId
+      };
+      let formParams = {
+      };
+
+      let authNames = ['authorize-amber-pool'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = GetSummaryResponse;
+
+      return this.apiClient.callApi(
+        '/__summary', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
      * Callback function to receive the result of the getConfig operation.
      * @callback module:api/DefaultApi~getConfigCallback
      * @param {String} error Error message, if any.
-     * @param {Object} data The data returned by the service call.
+     * @param {module:model/GetConfigResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -87,7 +140,7 @@ export default class DefaultApi {
      * Get the current configuration of a sensor instance
      * Returns the current configuration of the sensor instance specified.
      * @param {module:api/DefaultApi~getConfigCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Object}
+     * data is of type: {@link module:model/GetConfigResponse}
      */
     getConfig(sensorId, callback) {
       let postBody = null;
@@ -105,7 +158,7 @@ export default class DefaultApi {
       let authNames = ['authorize-amber-pool'];
       let contentTypes = [];
       let accepts = ['application/json'];
-      let returnType = Object;
+      let returnType = GetConfigResponse;
 
       return this.apiClient.callApi(
         '/config', 'GET',
@@ -114,10 +167,90 @@ export default class DefaultApi {
       );
     }
     /**
+     * Callback function to receive the result of the getPretrain operation.
+     * @callback module:api/DefaultApi~getPretrainCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/GetPretrainResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Get status of pretrain operation
+     * Get status of a sensor which is currently pretraining.
+     * @param {module:api/DefaultApi~getPretrainCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/GetPretrainResponse}
+     */
+    getPretrain(sensorId, callback) {
+      let postBody = null;
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+        'sensorId': sensorId
+      };
+      let formParams = {
+      };
+
+      let authNames = ['authorize-amber-pool'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = GetPretrainResponse;
+
+      return this.apiClient.callApi(
+        '/pretrain', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the getRootCause operation.
+     * @callback module:api/DefaultApi~getRootCauseCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/RootCauseResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Get root cause analysis information from a sensor
+     * Returns analytic information on the root cause for the clusters provided.
+     * @param {Object} opts Optional parameters
+     * @param {module:api/DefaultApi~getRootCauseCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/RootCauseResponse}
+     */
+    getRootCause(sensorId, opts, callback) {
+      opts = opts || {};
+      let postBody = null;
+
+      let pathParams = {
+      };
+      let queryParams = {
+        'clusterID': opts['clusterID'],
+        'pattern': opts['pattern']
+      };
+      let headerParams = {
+        'sensorId': sensorId
+      };
+      let formParams = {
+      };
+
+      let authNames = ['authorize-amber-pool'];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = RootCauseResponse;
+
+      return this.apiClient.callApi(
+        '/rootCause', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
      * Callback function to receive the result of the getSensor operation.
      * @callback module:api/DefaultApi~getSensorCallback
      * @param {String} error Error message, if any.
-     * @param {Object} data The data returned by the service call.
+     * @param {module:model/GetSensorResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -125,7 +258,7 @@ export default class DefaultApi {
      * Get basic information about a sensor instance
      * Returns basic information about an existing sensor instance.
      * @param {module:api/DefaultApi~getSensorCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Object}
+     * data is of type: {@link module:model/GetSensorResponse}
      */
     getSensor(sensorId, callback) {
       let postBody = null;
@@ -143,7 +276,7 @@ export default class DefaultApi {
       let authNames = ['authorize-amber-pool'];
       let contentTypes = [];
       let accepts = ['application/json'];
-      let returnType = Object;
+      let returnType = GetSensorResponse;
 
       return this.apiClient.callApi(
         '/sensor', 'GET',
@@ -155,7 +288,7 @@ export default class DefaultApi {
      * Callback function to receive the result of the getSensors operation.
      * @callback module:api/DefaultApi~getSensorsCallback
      * @param {String} error Error message, if any.
-     * @param {Array.<module:model/InlineResponse200>} data The data returned by the service call.
+     * @param {module:model/GetSensorsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -163,7 +296,7 @@ export default class DefaultApi {
      * List all sensors for this user
      * Returns a list of all current sensor instances for this user.
      * @param {module:api/DefaultApi~getSensorsCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Array.<module:model/InlineResponse200>}
+     * data is of type: {@link module:model/GetSensorsResponse}
      */
     getSensors(callback) {
       let postBody = null;
@@ -180,7 +313,7 @@ export default class DefaultApi {
       let authNames = ['authorize-amber-pool'];
       let contentTypes = [];
       let accepts = ['application/json'];
-      let returnType = [InlineResponse200];
+      let returnType = GetSensorsResponse;
 
       return this.apiClient.callApi(
         '/sensors', 'GET',
@@ -192,7 +325,7 @@ export default class DefaultApi {
      * Callback function to receive the result of the getStatus operation.
      * @callback module:api/DefaultApi~getStatusCallback
      * @param {String} error Error message, if any.
-     * @param {Object} data The data returned by the service call.
+     * @param {module:model/GetStatusResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -200,7 +333,7 @@ export default class DefaultApi {
      * Get analytic information from a sensor
      * Returns analytic information derived from data processed by a sensor thus far.
      * @param {module:api/DefaultApi~getStatusCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Object}
+     * data is of type: {@link module:model/GetStatusResponse}
      */
     getStatus(sensorId, callback) {
       let postBody = null;
@@ -218,7 +351,7 @@ export default class DefaultApi {
       let authNames = ['authorize-amber-pool'];
       let contentTypes = [];
       let accepts = ['application/json'];
-      let returnType = Object;
+      let returnType = GetStatusResponse;
 
       return this.apiClient.callApi(
         '/status', 'GET',
@@ -227,10 +360,46 @@ export default class DefaultApi {
       );
     }
     /**
+     * Callback function to receive the result of the getVersion operation.
+     * @callback module:api/DefaultApi~getVersionCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/Version} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Retrieves API version information
+     * @param {module:api/DefaultApi~getVersionCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/Version}
+     */
+    getVersion(callback) {
+      let postBody = null;
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = Version;
+
+      return this.apiClient.callApi(
+        '/version', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
      * Callback function to receive the result of the postConfig operation.
      * @callback module:api/DefaultApi~postConfigCallback
      * @param {String} error Error message, if any.
-     * @param {Object} data The data returned by the service call.
+     * @param {module:model/PostConfigResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -238,7 +407,7 @@ export default class DefaultApi {
      * Apply configuration to a sensor instance
      * Applies the provided configuration to the sensor instance specified.
      * @param {module:api/DefaultApi~postConfigCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Object}
+     * data is of type: {@link module:model/PostConfigResponse}
      */
     postConfig(body, sensorId, callback) {
       let postBody = body;
@@ -256,7 +425,7 @@ export default class DefaultApi {
       let authNames = ['authorize-amber-pool'];
       let contentTypes = ['application/json'];
       let accepts = ['application/json'];
-      let returnType = Object;
+      let returnType = PostConfigResponse;
 
       return this.apiClient.callApi(
         '/config', 'POST',
@@ -268,7 +437,7 @@ export default class DefaultApi {
      * Callback function to receive the result of the postOauth2 operation.
      * @callback module:api/DefaultApi~postOauth2Callback
      * @param {String} error Error message, if any.
-     * @param {Object} data The data returned by the service call.
+     * @param {module:model/PostAuth2Response} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -276,7 +445,7 @@ export default class DefaultApi {
      * Request a bearer token using Amber account credentials
      * Requests a bearer token using Amber account credentials. The requested bearer token is returned as the \&quot;id-token\&quot; response attribute. This token is to be used for authenticating API requests throughout a usage session and expires after 60 minutes.
      * @param {module:api/DefaultApi~postOauth2Callback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Object}
+     * data is of type: {@link module:model/PostAuth2Response}
      */
     postOauth2(body, callback) {
       let postBody = body;
@@ -293,7 +462,7 @@ export default class DefaultApi {
       let authNames = [];
       let contentTypes = ['application/json'];
       let accepts = ['application/json'];
-      let returnType = Object;
+      let returnType = PostAuth2Response;
 
       return this.apiClient.callApi(
         '/oauth2', 'POST',
@@ -302,10 +471,48 @@ export default class DefaultApi {
       );
     }
     /**
+     * Callback function to receive the result of the postPretrain operation.
+     * @callback module:api/DefaultApi~postPretrainCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/PostPretrainResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Pretrain a sensor using historical data
+     * Pretrains a sensor. Ingoing data should be formatted as a simple string of comma-separated numbers with no spaces.
+     * @param {module:api/DefaultApi~postPretrainCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/PostPretrainResponse}
+     */
+    postPretrain(body, sensorId, callback) {
+      let postBody = body;
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+        'sensorId': sensorId
+      };
+      let formParams = {
+      };
+
+      let authNames = ['authorize-amber-pool'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = PostPretrainResponse;
+
+      return this.apiClient.callApi(
+        '/pretrain', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
      * Callback function to receive the result of the postSensor operation.
      * @callback module:api/DefaultApi~postSensorCallback
      * @param {String} error Error message, if any.
-     * @param {Object} data The data returned by the service call.
+     * @param {module:model/PostSensorResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -313,7 +520,7 @@ export default class DefaultApi {
      * Create a new a sensor instance
      * Spawns a new sensor instance, returning its unique sensorId.
      * @param {module:api/DefaultApi~postSensorCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Object}
+     * data is of type: {@link module:model/PostSensorResponse}
      */
     postSensor(body, callback) {
       let postBody = body;
@@ -330,7 +537,7 @@ export default class DefaultApi {
       let authNames = ['authorize-amber-pool'];
       let contentTypes = ['application/json'];
       let accepts = ['application/json'];
-      let returnType = Object;
+      let returnType = PostSensorResponse;
 
       return this.apiClient.callApi(
         '/sensor', 'POST',
@@ -342,7 +549,7 @@ export default class DefaultApi {
      * Callback function to receive the result of the postStream operation.
      * @callback module:api/DefaultApi~postStreamCallback
      * @param {String} error Error message, if any.
-     * @param {Object} data The data returned by the service call.
+     * @param {module:model/PostStreamResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -350,7 +557,7 @@ export default class DefaultApi {
      * Stream data to a sensor
      * Sends data to a sensor. Ingoing data should be formatted as a simple string of comma-separated numbers with no spaces.  The following analytic results are returned: - state : sensor state as of this call (one of: \&quot;Buffering\&quot;, \&quot;Autotuning\&quot;, \&quot;Learning\&quot;, \&quot;Monitoring\&quot;, \&quot;Error\&quot;) - ID : array of cluster IDs. These correspond one-to-one with input samples, indicating the cluster to which each input pattern was assigned. - SI : array of smoothed anomaly index values. These values correspond one-to-one with the input samples and range between 0 and 1000. Values closer to 0 represent input patterns which are ordinary given the data seen so far on this sensor. Values closer to 1000 represent novel patterns which are anomalous with respect to data seen before. - AD : array of 0&#x27;s and 1&#x27;s as anomaly detection indicators. These correspond one-to-one with input samples and are produced by thresholding the smoothed anomaly index (SI). The threshold is determined automatically from the SI values. A value of 0 indicates that the SI has not exceeded the anomaly detection threshold. A value of 1 indicates it has, signaling an anomaly at the corresponding input sample. - AH : array of anomaly history values. These values are a moving-window sum of the AD, giving the number of anomaly detections (1&#x27;s) present in the AD signal over a \&quot;recent history\&quot; window whose length is the buffer size. - AM : array of Amber Metric values. These are floating-point values between 0.0 and 1.0 indicating the extent to which the AH contains an unusually high number of anomalies in recent history. The values are derived statistically from a Poisson model, with values close to 0.0 signaling a lower, and values close to 1.0 signaling a higher, frequency of anomalies than usual. - AW : array of Amber Warning Level values. This index is produced by thresholding the Amber Metric (AM) and takes on the values 0, 1 or 2 representing a discrete \&quot;warning level\&quot; for an asset based on the frequency of anomalies within recent history. 0 &#x3D; normal, 1 &#x3D; asset changing, 2 &#x3D; asset critical. The default thresholds for the two warning levels are the standard statistical values of 0.95 (outlier, asset chaing) and 0.997 (extreme outlier, asset critical).
      * @param {module:api/DefaultApi~postStreamCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Object}
+     * data is of type: {@link module:model/PostStreamResponse}
      */
     postStream(body, sensorId, callback) {
       let postBody = body;
@@ -368,7 +575,7 @@ export default class DefaultApi {
       let authNames = ['authorize-amber-pool'];
       let contentTypes = ['application/json'];
       let accepts = ['application/json'];
-      let returnType = Object;
+      let returnType = PostStreamResponse;
 
       return this.apiClient.callApi(
         '/stream', 'POST',
@@ -380,7 +587,7 @@ export default class DefaultApi {
      * Callback function to receive the result of the putSensor operation.
      * @callback module:api/DefaultApi~putSensorCallback
      * @param {String} error Error message, if any.
-     * @param {Object} data The data returned by the service call.
+     * @param {module:model/PutSensorResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -388,7 +595,7 @@ export default class DefaultApi {
      * Update label for a sensor instance
      * Changes the label of an existing sensor instance to the new label specified.
      * @param {module:api/DefaultApi~putSensorCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Object}
+     * data is of type: {@link module:model/PutSensorResponse}
      */
     putSensor(body, sensorId, callback) {
       let postBody = body;
@@ -406,7 +613,7 @@ export default class DefaultApi {
       let authNames = ['authorize-amber-pool'];
       let contentTypes = ['application/json'];
       let accepts = ['application/json'];
-      let returnType = Object;
+      let returnType = PutSensorResponse;
 
       return this.apiClient.callApi(
         '/sensor', 'PUT',
