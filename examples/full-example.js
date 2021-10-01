@@ -2,7 +2,7 @@ const MyClient = require('amber-javascript-sdk')
 
 async function walkthrough() {
     try {
-        let amberInstance = new MyClient.AmberClient()
+        let amberInstance = MyClient()
 
         const listSensorsResponse = await amberInstance.listSensors()
         console.log(`listSensorsResponse: ${JSON.stringify(listSensorsResponse,null,4)}`)
@@ -33,7 +33,10 @@ async function walkthrough() {
         console.log(`deleteSensorResponse = ${JSON.stringify(deleteSensorResponse,null,4)}`)
     }
     catch(error) {
-        console.error(error)
+        let response = error.response
+        let request = response.request
+        console.log(`${request.url}: status=${error.status}`)
+        console.log(`body: ${response.text}`)
     }
 }
 

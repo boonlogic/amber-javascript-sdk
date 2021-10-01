@@ -5,9 +5,9 @@ const MyClient = require('amber-javascript-sdk')
 
 async function streaming() {
     try {
-        let amberInstance = new MyClient.AmberClient()
+        let amberInstance = new MyClient()
 
-        const createSensorResponse = await amberInstance.createSensor("sensor-1-999")
+        let createSensorResponse = await amberInstance.createSensor("sensor-1-999")
         console.log(`createSensorResponse: ${JSON.stringify(createSensorResponse,null,4)}`)
         const mySensor = createSensorResponse.sensorId
 
@@ -27,7 +27,10 @@ async function streaming() {
 
     }
     catch(error) {
-        console.error(error)
+        let response = error.response
+        let request = response.request
+        console.log(`${request.url}: status=${error.status}`)
+        console.log(`body: ${response.text}`)
     }
 }
 
