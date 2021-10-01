@@ -53,22 +53,15 @@ export class DefaultApi {
         this.apiClient = apiClient || ApiClient.instance;
     }
 
-    /**
-     * Callback function to receive the result of the deleteSensor operation.
-     * @callback moduleapi/DefaultApi~deleteSensorCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/Error{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
+
 
     /**
      * Delete a sensor instance
      * Deletes the sensor instance with the specified sensorId.
      * @param {String} sensorId Unique identifier for sensor
-     * @param {module:api/DefaultApi~deleteSensorCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Error} and HTTP response
      */
-    deleteSensor(sensorId, callback) {
+    deleteSensorWithHttpInfo(sensorId) {
       
       let postBody = null;
       // verify the required parameter 'sensorId' is set
@@ -97,25 +90,31 @@ export class DefaultApi {
       return this.apiClient.callApi(
         '/sensor', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
     }
+
     /**
-     * Callback function to receive the result of the getAmberSummary operation.
-     * @callback moduleapi/DefaultApi~getAmberSummaryCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/GetSummaryResponse{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
+     * Delete a sensor instance
+     * Deletes the sensor instance with the specified sensorId.
+     * @param {<&vendorExtensions.x-jsdoc-type>} sensorId Unique identifier for sensor
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Error}
      */
+    deleteSensor(sensorId) {
+      return this.deleteSensorWithHttpInfo(sensorId)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
 
     /**
      * Get the JSON block of the amber image
      * Returns the json block of the amber sensor
      * @param {String} sensorId Unique identifier for sensor
-     * @param {module:api/DefaultApi~getAmberSummaryCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/GetSummaryResponse} and HTTP response
      */
-    getAmberSummary(sensorId, callback) {
+    getAmberSummaryWithHttpInfo(sensorId) {
       
       let postBody = null;
       // verify the required parameter 'sensorId' is set
@@ -144,25 +143,31 @@ export class DefaultApi {
       return this.apiClient.callApi(
         '/__summary', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
     }
+
     /**
-     * Callback function to receive the result of the getConfig operation.
-     * @callback moduleapi/DefaultApi~getConfigCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/GetConfigResponse{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
+     * Get the JSON block of the amber image
+     * Returns the json block of the amber sensor
+     * @param {<&vendorExtensions.x-jsdoc-type>} sensorId Unique identifier for sensor
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/GetSummaryResponse}
      */
+    getAmberSummary(sensorId) {
+      return this.getAmberSummaryWithHttpInfo(sensorId)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
 
     /**
      * Get the current configuration of a sensor instance
      * Returns the current configuration of the sensor instance specified.
      * @param {String} sensorId Unique identifier for sensor
-     * @param {module:api/DefaultApi~getConfigCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/GetConfigResponse} and HTTP response
      */
-    getConfig(sensorId, callback) {
+    getConfigWithHttpInfo(sensorId) {
       
       let postBody = null;
       // verify the required parameter 'sensorId' is set
@@ -191,25 +196,31 @@ export class DefaultApi {
       return this.apiClient.callApi(
         '/config', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
     }
+
     /**
-     * Callback function to receive the result of the getPretrain operation.
-     * @callback moduleapi/DefaultApi~getPretrainCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/GetPretrainResponse{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
+     * Get the current configuration of a sensor instance
+     * Returns the current configuration of the sensor instance specified.
+     * @param {<&vendorExtensions.x-jsdoc-type>} sensorId Unique identifier for sensor
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/GetConfigResponse}
      */
+    getConfig(sensorId) {
+      return this.getConfigWithHttpInfo(sensorId)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
 
     /**
      * Get status of pretrain operation
      * Get status of a sensor which is currently pretraining.
      * @param {String} sensorId Unique identifier for sensor
-     * @param {module:api/DefaultApi~getPretrainCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/GetPretrainResponse} and HTTP response
      */
-    getPretrain(sensorId, callback) {
+    getPretrainWithHttpInfo(sensorId) {
       
       let postBody = null;
       // verify the required parameter 'sensorId' is set
@@ -238,16 +249,23 @@ export class DefaultApi {
       return this.apiClient.callApi(
         '/pretrain', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
     }
+
     /**
-     * Callback function to receive the result of the getRootCause operation.
-     * @callback moduleapi/DefaultApi~getRootCauseCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/RootCauseResponse{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
+     * Get status of pretrain operation
+     * Get status of a sensor which is currently pretraining.
+     * @param {<&vendorExtensions.x-jsdoc-type>} sensorId Unique identifier for sensor
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/GetPretrainResponse}
      */
+    getPretrain(sensorId) {
+      return this.getPretrainWithHttpInfo(sensorId)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
 
     /**
      * Get root cause analysis information from a sensor
@@ -256,10 +274,9 @@ export class DefaultApi {
      * @param {Object} opts Optional parameters
      * @param {String} opts.clusterID An array of cluster IDs
      * @param {String} opts.pattern Patterns to compare to the nano model for the root cause analysis
-     * @param {module:api/DefaultApi~getRootCauseCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/RootCauseResponse} and HTTP response
      */
-    getRootCause(sensorId, opts, callback) {
+    getRootCauseWithHttpInfo(sensorId, opts) {
       opts = opts || {};
       let postBody = null;
       // verify the required parameter 'sensorId' is set
@@ -288,25 +305,34 @@ export class DefaultApi {
       return this.apiClient.callApi(
         '/rootCause', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
     }
+
     /**
-     * Callback function to receive the result of the getSensor operation.
-     * @callback moduleapi/DefaultApi~getSensorCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/GetSensorResponse{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
+     * Get root cause analysis information from a sensor
+     * Returns analytic information on the root cause for the clusters provided.
+     * @param {<&vendorExtensions.x-jsdoc-type>} sensorId Unique identifier for sensor
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.clusterID An array of cluster IDs
+     * @param {String} opts.pattern Patterns to compare to the nano model for the root cause analysis
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/RootCauseResponse}
      */
+    getRootCause(sensorId, opts) {
+      return this.getRootCauseWithHttpInfo(sensorId, opts)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
 
     /**
      * Get basic information about a sensor instance
      * Returns basic information about an existing sensor instance.
      * @param {String} sensorId Unique identifier for sensor
-     * @param {module:api/DefaultApi~getSensorCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/GetSensorResponse} and HTTP response
      */
-    getSensor(sensorId, callback) {
+    getSensorWithHttpInfo(sensorId) {
       
       let postBody = null;
       // verify the required parameter 'sensorId' is set
@@ -335,24 +361,30 @@ export class DefaultApi {
       return this.apiClient.callApi(
         '/sensor', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
     }
+
     /**
-     * Callback function to receive the result of the getSensors operation.
-     * @callback moduleapi/DefaultApi~getSensorsCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/GetSensorsResponse{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
+     * Get basic information about a sensor instance
+     * Returns basic information about an existing sensor instance.
+     * @param {<&vendorExtensions.x-jsdoc-type>} sensorId Unique identifier for sensor
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/GetSensorResponse}
      */
+    getSensor(sensorId) {
+      return this.getSensorWithHttpInfo(sensorId)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
 
     /**
      * List all sensors for this user
      * Returns a list of all current sensor instances for this user.
-     * @param {module:api/DefaultApi~getSensorsCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/GetSensorsResponse} and HTTP response
      */
-    getSensors(callback) {
+    getSensorsWithHttpInfo() {
       
       let postBody = null;
 
@@ -377,25 +409,30 @@ export class DefaultApi {
       return this.apiClient.callApi(
         '/sensors', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
     }
+
     /**
-     * Callback function to receive the result of the getStatus operation.
-     * @callback moduleapi/DefaultApi~getStatusCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/GetStatusResponse{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
+     * List all sensors for this user
+     * Returns a list of all current sensor instances for this user.
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/GetSensorsResponse}
      */
+    getSensors() {
+      return this.getSensorsWithHttpInfo()
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
 
     /**
      * Get analytic information from a sensor
      * Returns analytic information derived from data processed by a sensor thus far.
      * @param {String} sensorId Unique identifier for sensor
-     * @param {module:api/DefaultApi~getStatusCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/GetStatusResponse} and HTTP response
      */
-    getStatus(sensorId, callback) {
+    getStatusWithHttpInfo(sensorId) {
       
       let postBody = null;
       // verify the required parameter 'sensorId' is set
@@ -424,23 +461,29 @@ export class DefaultApi {
       return this.apiClient.callApi(
         '/status', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
     }
+
     /**
-     * Callback function to receive the result of the getVersion operation.
-     * @callback moduleapi/DefaultApi~getVersionCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/Version{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
+     * Get analytic information from a sensor
+     * Returns analytic information derived from data processed by a sensor thus far.
+     * @param {<&vendorExtensions.x-jsdoc-type>} sensorId Unique identifier for sensor
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/GetStatusResponse}
      */
+    getStatus(sensorId) {
+      return this.getStatusWithHttpInfo(sensorId)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
 
     /**
      * Retrieves API version information
-     * @param {module:api/DefaultApi~getVersionCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Version} and HTTP response
      */
-    getVersion(callback) {
+    getVersionWithHttpInfo() {
       
       let postBody = null;
 
@@ -465,26 +508,30 @@ export class DefaultApi {
       return this.apiClient.callApi(
         '/version', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
     }
+
     /**
-     * Callback function to receive the result of the postConfig operation.
-     * @callback moduleapi/DefaultApi~postConfigCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/PostConfigResponse{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
+     * Retrieves API version information
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Version}
      */
+    getVersion() {
+      return this.getVersionWithHttpInfo()
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
 
     /**
      * Apply configuration to a sensor instance
      * Applies the provided configuration to the sensor instance specified.
      * @param {module:model/PostConfigRequest} body Sensor configuration to be applied
      * @param {String} sensorId Unique identifier for sensor
-     * @param {module:api/DefaultApi~postConfigCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/PostConfigResponse} and HTTP response
      */
-    postConfig(body, sensorId, callback) {
+    postConfigWithHttpInfo(body, sensorId) {
       
       let postBody = body;
       // verify the required parameter 'body' is set
@@ -517,25 +564,32 @@ export class DefaultApi {
       return this.apiClient.callApi(
         '/config', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
     }
+
     /**
-     * Callback function to receive the result of the postOauth2 operation.
-     * @callback moduleapi/DefaultApi~postOauth2Callback
-     * @param {String} error Error message, if any.
-     * @param {module:model/PostAuth2Response{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
+     * Apply configuration to a sensor instance
+     * Applies the provided configuration to the sensor instance specified.
+     * @param {<&vendorExtensions.x-jsdoc-type>} body Sensor configuration to be applied
+     * @param {<&vendorExtensions.x-jsdoc-type>} sensorId Unique identifier for sensor
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/PostConfigResponse}
      */
+    postConfig(body, sensorId) {
+      return this.postConfigWithHttpInfo(body, sensorId)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
 
     /**
      * Request a bearer token using Amber account credentials
      * Requests a bearer token using Amber account credentials. The requested bearer token is returned as the \&quot;id-token\&quot; response attribute. This token is to be used for authenticating API requests throughout a usage session and expires after 60 minutes.
      * @param {module:model/PostAuth2Request} body Account credentials to be used for authentication
-     * @param {module:api/DefaultApi~postOauth2Callback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/PostAuth2Response} and HTTP response
      */
-    postOauth2(body, callback) {
+    postOauth2WithHttpInfo(body) {
       
       let postBody = body;
       // verify the required parameter 'body' is set
@@ -564,26 +618,32 @@ export class DefaultApi {
       return this.apiClient.callApi(
         '/oauth2', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
     }
+
     /**
-     * Callback function to receive the result of the postPretrain operation.
-     * @callback moduleapi/DefaultApi~postPretrainCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/PostPretrainResponse{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
+     * Request a bearer token using Amber account credentials
+     * Requests a bearer token using Amber account credentials. The requested bearer token is returned as the \&quot;id-token\&quot; response attribute. This token is to be used for authenticating API requests throughout a usage session and expires after 60 minutes.
+     * @param {<&vendorExtensions.x-jsdoc-type>} body Account credentials to be used for authentication
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/PostAuth2Response}
      */
+    postOauth2(body) {
+      return this.postOauth2WithHttpInfo(body)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
 
     /**
      * Pretrain a sensor using historical data
      * Pretrains a sensor. Ingoing data should be formatted as a simple string of comma-separated numbers with no spaces.
      * @param {module:model/PostPretrainRequest} body Data to be streamed to sensor. Should be formatted as a simple string of comma-separated numbers with no spaces (e.g. &quot;0,0.5,1,1.5,2&quot;).
      * @param {String} sensorId Unique identifier for sensor
-     * @param {module:api/DefaultApi~postPretrainCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/PostPretrainResponse} and HTTP response
      */
-    postPretrain(body, sensorId, callback) {
+    postPretrainWithHttpInfo(body, sensorId) {
       
       let postBody = body;
       // verify the required parameter 'body' is set
@@ -616,25 +676,32 @@ export class DefaultApi {
       return this.apiClient.callApi(
         '/pretrain', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
     }
+
     /**
-     * Callback function to receive the result of the postSensor operation.
-     * @callback moduleapi/DefaultApi~postSensorCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/SensorInstance{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
+     * Pretrain a sensor using historical data
+     * Pretrains a sensor. Ingoing data should be formatted as a simple string of comma-separated numbers with no spaces.
+     * @param {<&vendorExtensions.x-jsdoc-type>} body Data to be streamed to sensor. Should be formatted as a simple string of comma-separated numbers with no spaces (e.g. &quot;0,0.5,1,1.5,2&quot;).
+     * @param {<&vendorExtensions.x-jsdoc-type>} sensorId Unique identifier for sensor
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/PostPretrainResponse}
      */
+    postPretrain(body, sensorId) {
+      return this.postPretrainWithHttpInfo(body, sensorId)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
 
     /**
      * Create a new a sensor instance
      * Spawns a new sensor instance, returning its unique sensorId.
      * @param {module:model/PostSensorRequest} body Label for new sensor instance to be created
-     * @param {module:api/DefaultApi~postSensorCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/SensorInstance} and HTTP response
      */
-    postSensor(body, callback) {
+    postSensorWithHttpInfo(body) {
       
       let postBody = body;
       // verify the required parameter 'body' is set
@@ -663,26 +730,32 @@ export class DefaultApi {
       return this.apiClient.callApi(
         '/sensor', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
     }
+
     /**
-     * Callback function to receive the result of the postStream operation.
-     * @callback moduleapi/DefaultApi~postStreamCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/PostStreamResponse{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
+     * Create a new a sensor instance
+     * Spawns a new sensor instance, returning its unique sensorId.
+     * @param {<&vendorExtensions.x-jsdoc-type>} body Label for new sensor instance to be created
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/SensorInstance}
      */
+    postSensor(body) {
+      return this.postSensorWithHttpInfo(body)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
 
     /**
      * Stream data to a sensor
      * Sends data to a sensor. Ingoing data should be formatted as a simple string of comma-separated numbers with no spaces.  The following analytic results are returned: - state : sensor state as of this call (one of: \&quot;Buffering\&quot;, \&quot;Autotuning\&quot;, \&quot;Learning\&quot;, \&quot;Monitoring\&quot;, \&quot;Error\&quot;) - ID : array of cluster IDs. These correspond one-to-one with input samples, indicating the cluster to which each input pattern was assigned. - SI : array of smoothed anomaly index values. These values correspond one-to-one with the input samples and range between 0 and 1000. Values closer to 0 represent input patterns which are ordinary given the data seen so far on this sensor. Values closer to 1000 represent novel patterns which are anomalous with respect to data seen before. - AD : array of 0&#x27;s and 1&#x27;s as anomaly detection indicators. These correspond one-to-one with input samples and are produced by thresholding the smoothed anomaly index (SI). The threshold is determined automatically from the SI values. A value of 0 indicates that the SI has not exceeded the anomaly detection threshold. A value of 1 indicates it has, signaling an anomaly at the corresponding input sample. - AH : array of anomaly history values. These values are a moving-window sum of the AD, giving the number of anomaly detections (1&#x27;s) present in the AD signal over a \&quot;recent history\&quot; window whose length is the buffer size. - AM : array of Amber Metric values. These are floating-point values between 0.0 and 1.0 indicating the extent to which the AH contains an unusually high number of anomalies in recent history. The values are derived statistically from a Poisson model, with values close to 0.0 signaling a lower, and values close to 1.0 signaling a higher, frequency of anomalies than usual. - AW : array of Amber Warning Level values. This index is produced by thresholding the Amber Metric (AM) and takes on the values 0, 1 or 2 representing a discrete \&quot;warning level\&quot; for an asset based on the frequency of anomalies within recent history. 0 &#x3D; normal, 1 &#x3D; asset changing, 2 &#x3D; asset critical. The default thresholds for the two warning levels are the standard statistical values of 0.95 (outlier, asset chaing) and 0.997 (extreme outlier, asset critical).
      * @param {module:model/PostStreamRequest} body Data to be streamed to sensor. Should be formatted as a simple string of comma-separated numbers with no spaces (e.g. &quot;0,0.5,1,1.5,2&quot;).
      * @param {String} sensorId Unique identifier for sensor
-     * @param {module:api/DefaultApi~postStreamCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/PostStreamResponse} and HTTP response
      */
-    postStream(body, sensorId, callback) {
+    postStreamWithHttpInfo(body, sensorId) {
       
       let postBody = body;
       // verify the required parameter 'body' is set
@@ -715,26 +788,33 @@ export class DefaultApi {
       return this.apiClient.callApi(
         '/stream', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
     }
+
     /**
-     * Callback function to receive the result of the putSensor operation.
-     * @callback moduleapi/DefaultApi~putSensorCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/SensorInstance{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
+     * Stream data to a sensor
+     * Sends data to a sensor. Ingoing data should be formatted as a simple string of comma-separated numbers with no spaces.  The following analytic results are returned: - state : sensor state as of this call (one of: \&quot;Buffering\&quot;, \&quot;Autotuning\&quot;, \&quot;Learning\&quot;, \&quot;Monitoring\&quot;, \&quot;Error\&quot;) - ID : array of cluster IDs. These correspond one-to-one with input samples, indicating the cluster to which each input pattern was assigned. - SI : array of smoothed anomaly index values. These values correspond one-to-one with the input samples and range between 0 and 1000. Values closer to 0 represent input patterns which are ordinary given the data seen so far on this sensor. Values closer to 1000 represent novel patterns which are anomalous with respect to data seen before. - AD : array of 0&#x27;s and 1&#x27;s as anomaly detection indicators. These correspond one-to-one with input samples and are produced by thresholding the smoothed anomaly index (SI). The threshold is determined automatically from the SI values. A value of 0 indicates that the SI has not exceeded the anomaly detection threshold. A value of 1 indicates it has, signaling an anomaly at the corresponding input sample. - AH : array of anomaly history values. These values are a moving-window sum of the AD, giving the number of anomaly detections (1&#x27;s) present in the AD signal over a \&quot;recent history\&quot; window whose length is the buffer size. - AM : array of Amber Metric values. These are floating-point values between 0.0 and 1.0 indicating the extent to which the AH contains an unusually high number of anomalies in recent history. The values are derived statistically from a Poisson model, with values close to 0.0 signaling a lower, and values close to 1.0 signaling a higher, frequency of anomalies than usual. - AW : array of Amber Warning Level values. This index is produced by thresholding the Amber Metric (AM) and takes on the values 0, 1 or 2 representing a discrete \&quot;warning level\&quot; for an asset based on the frequency of anomalies within recent history. 0 &#x3D; normal, 1 &#x3D; asset changing, 2 &#x3D; asset critical. The default thresholds for the two warning levels are the standard statistical values of 0.95 (outlier, asset chaing) and 0.997 (extreme outlier, asset critical).
+     * @param {<&vendorExtensions.x-jsdoc-type>} body Data to be streamed to sensor. Should be formatted as a simple string of comma-separated numbers with no spaces (e.g. &quot;0,0.5,1,1.5,2&quot;).
+     * @param {<&vendorExtensions.x-jsdoc-type>} sensorId Unique identifier for sensor
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/PostStreamResponse}
      */
+    postStream(body, sensorId) {
+      return this.postStreamWithHttpInfo(body, sensorId)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
 
     /**
      * Update label for a sensor instance
      * Changes the label of an existing sensor instance to the new label specified.
      * @param {module:model/PutSensorRequest} body New label to apply to sensor instance
      * @param {String} sensorId Unique identifier for sensor
-     * @param {module:api/DefaultApi~putSensorCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/SensorInstance} and HTTP response
      */
-    putSensor(body, sensorId, callback) {
+    putSensorWithHttpInfo(body, sensorId) {
       
       let postBody = body;
       // verify the required parameter 'body' is set
@@ -767,8 +847,22 @@ export class DefaultApi {
       return this.apiClient.callApi(
         '/sensor', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
+        authNames, contentTypes, accepts, returnType
       );
+    }
+
+    /**
+     * Update label for a sensor instance
+     * Changes the label of an existing sensor instance to the new label specified.
+     * @param {<&vendorExtensions.x-jsdoc-type>} body New label to apply to sensor instance
+     * @param {<&vendorExtensions.x-jsdoc-type>} sensorId Unique identifier for sensor
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/SensorInstance}
+     */
+    putSensor(body, sensorId) {
+      return this.putSensorWithHttpInfo(body, sensorId)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
     }
 
 }

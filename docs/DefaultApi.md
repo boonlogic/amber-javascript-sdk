@@ -42,13 +42,12 @@ authorize-amber-pool.apiKey = 'YOUR API KEY';
 let apiInstance = new AmberApiServer.DefaultApi();
 let sensorId = "sensorId_example"; // String | Unique identifier for sensor
 
-apiInstance.deleteSensor(sensorId, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.deleteSensor(sensorId).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
@@ -92,13 +91,12 @@ authorize-amber-pool.apiKey = 'YOUR API KEY';
 let apiInstance = new AmberApiServer.DefaultApi();
 let sensorId = "sensorId_example"; // String | Unique identifier for sensor
 
-apiInstance.getAmberSummary(sensorId, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.getAmberSummary(sensorId).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
@@ -142,13 +140,12 @@ authorize-amber-pool.apiKey = 'YOUR API KEY';
 let apiInstance = new AmberApiServer.DefaultApi();
 let sensorId = "sensorId_example"; // String | Unique identifier for sensor
 
-apiInstance.getConfig(sensorId, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.getConfig(sensorId).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
@@ -192,13 +189,12 @@ authorize-amber-pool.apiKey = 'YOUR API KEY';
 let apiInstance = new AmberApiServer.DefaultApi();
 let sensorId = "sensorId_example"; // String | Unique identifier for sensor
 
-apiInstance.getPretrain(sensorId, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.getPretrain(sensorId).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
@@ -245,13 +241,12 @@ let opts = {
   'clusterID': "clusterID_example", // String | An array of cluster IDs
   'pattern': "pattern_example" // String | Patterns to compare to the nano model for the root cause analysis
 };
-apiInstance.getRootCause(sensorId, opts, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.getRootCause(sensorId, opts).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
@@ -297,13 +292,12 @@ authorize-amber-pool.apiKey = 'YOUR API KEY';
 let apiInstance = new AmberApiServer.DefaultApi();
 let sensorId = "sensorId_example"; // String | Unique identifier for sensor
 
-apiInstance.getSensor(sensorId, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.getSensor(sensorId).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
@@ -345,13 +339,12 @@ authorize-amber-pool.apiKey = 'YOUR API KEY';
 //authorize-amber-pool.apiKeyPrefix = 'Token';
 
 let apiInstance = new AmberApiServer.DefaultApi();
-apiInstance.getSensors((error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.getSensors().then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
@@ -392,13 +385,12 @@ authorize-amber-pool.apiKey = 'YOUR API KEY';
 let apiInstance = new AmberApiServer.DefaultApi();
 let sensorId = "sensorId_example"; // String | Unique identifier for sensor
 
-apiInstance.getStatus(sensorId, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.getStatus(sensorId).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
@@ -438,13 +430,12 @@ authorize-amber-pool.apiKey = 'YOUR API KEY';
 //authorize-amber-pool.apiKeyPrefix = 'Token';
 
 let apiInstance = new AmberApiServer.DefaultApi();
-apiInstance.getVersion((error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.getVersion().then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
@@ -486,13 +477,12 @@ let apiInstance = new AmberApiServer.DefaultApi();
 let body = new AmberApiServer.PostConfigRequest(); // PostConfigRequest | Sensor configuration to be applied
 let sensorId = "sensorId_example"; // String | Unique identifier for sensor
 
-apiInstance.postConfig(body, sensorId, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.postConfig(body, sensorId).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
@@ -530,13 +520,12 @@ import {AmberApiServer} from 'amber_api_server';
 let apiInstance = new AmberApiServer.DefaultApi();
 let body = new AmberApiServer.PostAuth2Request(); // PostAuth2Request | Account credentials to be used for authentication
 
-apiInstance.postOauth2(body, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.postOauth2(body).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
@@ -581,13 +570,12 @@ let apiInstance = new AmberApiServer.DefaultApi();
 let body = new AmberApiServer.PostPretrainRequest(); // PostPretrainRequest | Data to be streamed to sensor. Should be formatted as a simple string of comma-separated numbers with no spaces (e.g. "0,0.5,1,1.5,2").
 let sensorId = "sensorId_example"; // String | Unique identifier for sensor
 
-apiInstance.postPretrain(body, sensorId, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.postPretrain(body, sensorId).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
@@ -632,13 +620,12 @@ authorize-amber-pool.apiKey = 'YOUR API KEY';
 let apiInstance = new AmberApiServer.DefaultApi();
 let body = new AmberApiServer.PostSensorRequest(); // PostSensorRequest | Label for new sensor instance to be created
 
-apiInstance.postSensor(body, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.postSensor(body).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
@@ -683,13 +670,12 @@ let apiInstance = new AmberApiServer.DefaultApi();
 let body = new AmberApiServer.PostStreamRequest(); // PostStreamRequest | Data to be streamed to sensor. Should be formatted as a simple string of comma-separated numbers with no spaces (e.g. "0,0.5,1,1.5,2").
 let sensorId = "sensorId_example"; // String | Unique identifier for sensor
 
-apiInstance.postStream(body, sensorId, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.postStream(body, sensorId).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters
@@ -735,13 +721,12 @@ let apiInstance = new AmberApiServer.DefaultApi();
 let body = new AmberApiServer.PutSensorRequest(); // PutSensorRequest | New label to apply to sensor instance
 let sensorId = "sensorId_example"; // String | Unique identifier for sensor
 
-apiInstance.putSensor(body, sensorId, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
+apiInstance.putSensor(body, sensorId).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
 });
+
 ```
 
 ### Parameters

@@ -67,7 +67,7 @@ import {VersionNumber} from './model/VersionNumber';
 import {DefaultApi} from './api/DefaultApi';
 
 /**
-* Boon_Logic_Amber_SDK.<br>
+* Boon_Logic_Amber_API_Server.<br>
 * The <code>index</code> module provides access to constructors for all the classes which comprise the public API.
 * <p>
 * An AMD (recommended!) or CommonJS application will generally do something equivalent to the following:

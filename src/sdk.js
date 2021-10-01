@@ -3,6 +3,7 @@
  * @module amber-javascript-sdk
  */
 
+const regeneratorRuntime = require("regenerator-runtime");
 const process = require('process')
 const expandHomeDir = require('expand-home-dir')
 const fs = require('fs')
@@ -122,105 +123,80 @@ class AmberClient {
      * @returns {Promise<unknown>}
      * @private
      */
-    _authenticate() {
-        return new Promise((resolve, reject) => {
+    async _authenticate() {
+        try {
             let _tsIn = Math.floor(Date.now() / 1000)
-            // check for initial auth or re-auth scenario
             if (_tsIn > this.reauthTime) {
-                this.apiInstance.postOauth2(this.auth2RequestBody, (error, data, response) => {
-                    if (error) {
-                        console.error(error)
-                    } else {
-                        this.authorize_amber_pool.apiKey = data.idToken
-                        this.reauthTime = _tsIn + parseInt(data.expiresIn) - 60
-                        resolve(this.reauthTime - _tsIn)
-                    }
-                })
-            } else {
-                resolve(this.reauthTime - _tsIn)
+                let response = await this.apiInstance.postOauth2(this.auth2RequestBody)
+                if (response) {
+                    this.authorize_amber_pool.apiKey = response.idToken
+                    this.reauthTime = _tsIn + parseInt(response.expiresIn) - 60
+                    return true
+                } else {
+                    return false
+                }
             }
-        })
+            return true
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     /**
      * List all sensor instances currently associated with Amber account
-     * @returns {Promise<unknown>}
      */
-    listSensors() {
-        return this._authenticate().then((data) => {
-            return new Promise((resolve, reject) => {
-                this.apiInstance.getSensors((error, data, response) => {
-                    if (error) {
-                        reject(error)
-                    } else {
-                        resolve(data)
-                    }
-                })
-            })
-        })
+    async listSensors() {
+        try {
+            await this._authenticate()
+            return await this.apiInstance.getSensors()
+        } catch {
+            console.error(error)
+        }
     }
 
     /**
      * Get info about a sensor
      * @param sensorId
-     * @returns {Promise<unknown>}
      */
-    getSensor(sensorId) {
-        return this._authenticate().then((data) => {
-            return new Promise((resolve, reject) => {
-                this.apiInstance.getSensor(sensorId, (error, data, response) => {
-                    if (error) {
-                        reject(error)
-                    } else {
-                        resolve({sensorId: sensorId, response: data})
-                    }
-                })
-            })
-        })
+    async getSensor(sensorId) {
+        try {
+            await this._authenticate()
+            return await this.apiInstance.getSensors(sensorId)
+        } catch {
+            console.error(error)
+        }
     }
 
     /**
      * Create a new sensor instance
      * @param label
-     * @returns {Promise<unknown>}
      */
-    createSensor(label = undefined) {
-        return this._authenticate().then((data) => {
-            return new Promise((resolve, reject) => {
-                let postRequest = new this.AmberApiServer.PostSensorRequest(label)
-                if (label) {
-                    postRequest.label = label
-                }
-                this.apiInstance.postSensor(postRequest, (error, data, response) => {
-                    if (error) {
-                        reject(error)
-                    } else {
-                        resolve(data)
-                    }
-                })
-            })
-        })
+    async createSensor(label = undefined) {
+        try {
+            await this._authenticate()
+            let postRequest = new this.AmberApiServer.PostSensorRequest(label)
+            if (label) {
+                postRequest.label = label
+            }
+            return await this.apiInstance.postSensor(postRequest)
+        } catch {
+            console.error(error)
+        }
     }
 
     /**
      * Update the label of a sensor instance
      * @param sensorId sensor identifier
      * @param label new label to assign to sensor
-     * @returns {Promise<unknown>}
      */
-    updateLabel(sensorId, label) {
-        return this._authenticate().then((data) => {
-            return new Promise((resolve, reject) => {
-                let putRequest = new this.AmberApiServer.PutSensorRequest(label)
-                this.apiInstance.putSensor(putRequest, sensorId, (error, data, response) => {
-                    if (error) {
-                        reject(error)
-                    } else {
-                        resolve({sensorId: sensorId, response: data})
-                    }
-                })
-            })
-        })
+    async updateLabel(sensorId, label) {
+        try {
+            await this._authenticate()
+            let putRequest = new this.AmberApiServer.PutSensorRequest(label)
+            return await this.apiInstance.putSensor(putRequest, sensorId)
+        } catch {
+            console.error(error)
+        }
     }
 
     /**
@@ -235,27 +211,22 @@ class AmberClient {
      * @param learningMaxSamples
      * @returns {Promise<unknown>}
      */
-    configureSensor(sensorId, featureCount = 1, streamingWindowSize = 25,
-                      samplesToBuffer = 10000, learningRateNumerator = 10,
-                      learningRateDenominator = 10000, learningMaxClusters = 1000,
-                      learningMaxSamples = 1000000) {
-        return this._authenticate().then((data) => {
-            return new Promise((resolve, reject) => {
-                let body = new this.AmberApiServer.PostConfigRequest(featureCount, streamingWindowSize)
-                body.samplesToBuffer = samplesToBuffer
-                body.learningRateNumerator = learningRateNumerator
-                body.learningRateDenominator = learningRateDenominator
-                body.learningMaxClusters = learningMaxClusters
-                body.learningMaxSamples = learningMaxSamples
-                this.apiInstance.postConfig(body, sensorId, (error, data, response) => {
-                    if (error) {
-                        reject(error)
-                    } else {
-                        resolve({sensorId: sensorId, response: data})
-                    }
-                })
-            })
-        })
+    async configureSensor(sensorId, featureCount = 1, streamingWindowSize = 25,
+                          samplesToBuffer = 10000, learningRateNumerator = 10,
+                          learningRateDenominator = 10000, learningMaxClusters = 1000,
+                          learningMaxSamples = 1000000) {
+        try {
+            await this._authenticate()
+            let body = new this.AmberApiServer.PostConfigRequest(featureCount, streamingWindowSize)
+            body.samplesToBuffer = samplesToBuffer
+            body.learningRateNumerator = learningRateNumerator
+            body.learningRateDenominator = learningRateDenominator
+            body.learningMaxClusters = learningMaxClusters
+            body.learningMaxSamples = learningMaxSamples
+            return await this.apiInstance.postConfig(body, sensorId)
+        } catch {
+            console.error(error)
+        }
     }
 
     /**
@@ -263,18 +234,13 @@ class AmberClient {
      * @param sensorId
      * @returns {Promise<unknown>}
      */
-    getConfig(sensorId) {
-        return this._authenticate().then((data) => {
-            return new Promise((resolve, reject) => {
-                this.apiInstance.getSensor(sensorId, (error, data, response) => {
-                    if (error) {
-                        reject(error)
-                    } else {
-                        resolve({sensorId: sensorId, response: data})
-                    }
-                })
-            })
-        })
+    async getConfig(sensorId) {
+        try {
+            await this._authenticate()
+            return await this.apiInstance.getConfig(sensorId)
+        } catch {
+            console.error(error)
+        }
     }
 
     /**
@@ -282,18 +248,13 @@ class AmberClient {
      * @param sensorId
      * @returns {Promise<unknown>}
      */
-    deleteSensor(sensorId) {
-        return this._authenticate().then((data) => {
-            return new Promise((resolve, reject) => {
-                this.apiInstance.deleteSensor(sensorId, (error, data, response) => {
-                    if (error) {
-                        reject(error)
-                    } else {
-                        resolve({sensorId: sensorId, response: JSON.parse(response.text)})
-                    }
-                })
-            })
-        })
+    async deleteSensor(sensorId) {
+        try {
+            await this._authenticate()
+            return await this.apiInstance.deleteSensor(sensorId)
+        } catch {
+            console.error(error)
+        }
     }
 
     /**
@@ -302,19 +263,14 @@ class AmberClient {
      * @param csv
      * @returns {Promise<unknown>}
      */
-    streamSensor(sensorId, csv) {
-        return this._authenticate().then((data) => {
-            return new Promise((resolve, reject) => {
-                let body = new this.AmberApiServer.PostStreamRequest(csv)
-                this.apiInstance.postStream(body, sensorId, (error, data, response) => {
-                    if (error) {
-                        reject(error)
-                    } else {
-                        resolve({sensorId: sensorId, response: data})
-                    }
-                })
-            })
-        })
+    async streamSensor(sensorId, csv) {
+        try {
+            await this._authenticate()
+            let body = new this.AmberApiServer.PostStreamRequest(csv)
+            return await this.apiInstance.postStream(body, sensorId)
+        } catch {
+            console.error(error)
+        }
     }
 
     /**
@@ -322,18 +278,13 @@ class AmberClient {
      * @param sensorId
      * @returns {Promise<unknown>}
      */
-    getStatus(sensorId) {
-        return this._authenticate().then((data) => {
-            return new Promise((resolve, reject) => {
-                this.apiInstance.getStatus(sensorId, (error, data, response) => {
-                    if (error) {
-                        reject(error)
-                    } else {
-                        resolve({sensorId: sensorId, response: data})
-                    }
-                })
-            })
-        })
+    async getStatus(sensorId) {
+        try {
+            await this._authenticate()
+            return await this.apiInstance.getStatus(sensorId)
+        } catch {
+            console.error(error)
+        }
     }
 
     /**
@@ -342,21 +293,16 @@ class AmberClient {
      * @param csv
      * @returns {Promise<unknown>}
      */
-    pretrainSensor(sensorId, csv, autotuneConfig) {
-        return this._authenticate().then((data) => {
-            return new Promise((resolve, reject) => {
-                let body = new this.AmberApiServer.PostPretrainRequest()
-                body.data = this.AmberApiServer.ApiClient.convertToType(csv, 'String');
-                body.autoTuneConfig = this.AmberApiServer.ApiClient.convertToType(autotuneConfig, 'Boolean');
-                this.apiInstance.postPretrain(body, sensorId, (error, data, response) => {
-                    if (error) {
-                        reject(error)
-                    } else {
-                        resolve({sensorId: sensorId, response: data})
-                    }
-                })
-            })
-        })
+    async pretrainSensor(sensorId, csv, autotuneConfig) {
+        try {
+            await this._authenticate()
+            let body = new this.AmberApiServer.PostPretrainRequest()
+            body.data = this.AmberApiServer.ApiClient.convertToType(csv, 'String');
+            body.autoTuneConfig = this.AmberApiServer.ApiClient.convertToType(autotuneConfig, 'Boolean');
+            return await this.apiInstance.postPretrain(body, sensorId)
+        } catch {
+            console.error(error)
+        }
     }
 
     /**
@@ -364,18 +310,13 @@ class AmberClient {
      * @param sensorId
      * @returns {Promise<unknown>}
      */
-    getPretrainState(sensorId) {
-        return this._authenticate().then((data) => {
-            return new Promise((resolve, reject) => {
-                this.apiInstance.getPretrain(sensorId, (error, data, response) => {
-                    if (error) {
-                        reject(error)
-                    } else {
-                        resolve({sensorId: sensorId, response: data})
-                    }
-                })
-            })
-        })
+    async getPretrainState(sensorId) {
+        try {
+            await this._authenticate()
+            return await this.apiInstance.getPretrain(sensorId)
+        } catch {
+            console.error(error)
+        }
     }
 
     /**
@@ -383,41 +324,29 @@ class AmberClient {
      * @param sensorId
      * @returns {Promise<unknown>}
      */
-    getRootCause(sensorId) {
-        return this._authenticate().then((data) => {
-            return new Promise((resolve, reject) => {
-                this.apiInstance.getRootCause(sensorId, (error, data, response) => {
-                    if (error) {
-                        reject(error)
-                    } else {
-                        resolve({sensorId: sensorId, response: data})
-                    }
-                })
-            })
-        })
+    async getRootCause(sensorId) {
+        try {
+            await this._authenticate()
+            return await this.apiInstance.getRootCause(sensorId)
+        } catch {
+            console.error(error)
+        }
     }
 
     /**
      * Get version information for Amber server
      * @returns {Promise<unknown>}
      */
-    getVersion() {
-        return this._authenticate().then((data) => {
-            return new Promise((resolve, reject) => {
-                this.apiInstance.getVersion((error, data, response) => {
-                    if (error) {
-                        reject(error)
-                    } else {
-                        resolve(data)
-                    }
-                })
-            })
-        })
+    async getVersion() {
+        try {
+            await this._authenticate()
+            return await this.apiInstance.getVersion()
+        } catch {
+            console.error(error)
+        }
     }
 }
 
-module.exports = function(licenseId = 'default', licenseFile = "~/.Amber.license") {
+module.exports = function (licenseId = 'default', licenseFile = "~/.Amber.license") {
     return new AmberClient(licenseId, licenseFile)
 }
-
-

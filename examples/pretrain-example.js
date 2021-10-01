@@ -20,14 +20,14 @@ async function pretraining() {
         // clean cr/nl
         filedata = filedata.replace(/[\r\n\t]/g, "")
 
-        // begin pretraining
-        let pretrainResponse = await amberInstance.pretrainSensor(mySensor, filedata, false)
+        // begin pretraining with autotuneConfig enabled
+        let pretrainResponse = await amberInstance.pretrainSensor(mySensor, filedata, true)
         console.log(`pretrainResponse: ${JSON.stringify(pretrainResponse,null,4)}`)
-        let state = pretrainResponse.response.state
+        let state = pretrainResponse.state
         while (state == "Pretraining") {
             await new Promise(r => setTimeout(r, 5000));
             let pretrainStateResponse = await amberInstance.getPretrainState(mySensor)
-            state = pretrainStateResponse.response.state
+            state = pretrainStateResponse.state
             console.log(`pretrainStateResponse: ${JSON.stringify(pretrainStateResponse,null,4)}`)
         }
     }
