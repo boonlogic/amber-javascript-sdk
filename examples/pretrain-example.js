@@ -3,7 +3,7 @@ const MyClient = require('amber-javascript-sdk')
 
 // pretraining example
 
-async function streaming() {
+async function pretraining() {
     try {
         let amberInstance = MyClient()
 
@@ -39,4 +39,4 @@ async function streaming() {
     }
 }
 
-streaming()
+pretraining()

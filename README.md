@@ -42,14 +42,22 @@ The following javascript provides a basic proof-of-connectivity:
 ```
 const MyClient = require('amber-javascript-sdk')
 
-// create amber instance
-let amberInstance = new MyClient.AmberClient()
+async function version() {
+    let amberInstance = MyClient()
+    try {
+        const data = await amberInstance.getVersion()
+        console.log(`getVersionResponse: ${JSON.stringify(data,null,4)}`)
+    }
+    catch(error) {
+        console.log(error)
+        let response = error.response
+        let request = response.request
+        console.log(`${request.url}: status=${error.status}`)
+        console.log(`body: ${response.text}`)
+    }
+}
 
-amberInstance.listSensors().then(function (data) {
-    console.log("listSensorsResponse: %o", data)
-}).catch(error => {
-    console.error(error)
-})
+version()
 ```
 Running the connect-example.js script should yield output like the following:
 ```
@@ -72,40 +80,47 @@ The following javascript will demonstrate each API call in the Amber Javascript 
 ```
 const MyClient = require('amber-javascript-sdk')
 
-// create amber instance
-let amberInstance = new MyClient.AmberClient()
+async function walkthrough() {
+    try {
+        let amberInstance = MyClient()
 
-// basic walkthrough of available api calls
-amberInstance.createSensor("Sensor-1-4002").then(function (data) { // create new sensor
-    console.log("createSensorResponse: %o", data)
-    return amberInstance.listSensors()  // get list of sensors
-}).then(function (data) {
-    console.log("listSensorsResponse: %o", data)
-    return amberInstance.getSensor(data[0].sensorId) // get sensor details
-}).then(function (data) {
-    console.log("getSensorResponse: %o", data.response)
-    return amberInstance.updateLabel(data.sensorId, "newLabel") // update sensor label
-}).then(function (data) {
-    console.log("updateLabelResponse: %o", data.response)
-    return amberInstance.configureSensor(data.sensorId, 1, 25) // configure sensor
-}).then(function (data) {
-    console.log("configureSensorResponse: %o", data.response)
-    return amberInstance.getConfig(data.sensorId) // get sensor configuration
-}).then(function (data) {
-    console.log("getConfigResponse: %o", data.response)
-    return amberInstance.streamSensor(data.sensorId, "0.05,1.0,2.5,0.9") // post streaming data
-}).then(function (data) {
-    console.log("streamSensorResponse: %o", data.response)
-    return amberInstance.getStatus(data.sensorId) // get sensor analytic status
-}).then(function (data) {
-    console.log("getStatusResponse: %o", data.response)
-    return amberInstance.deleteSensor(data.sensorId) // delete sensor
-}).then(function (data) {
-    console.log("deleteSensorResponse: %o", data.response)
-    return data
-}).catch(error => {
-    console.error(error)
-})
+        const listSensorsResponse = await amberInstance.listSensors()
+        console.log(`listSensorsResponse: ${JSON.stringify(listSensorsResponse,null,4)}`)
+
+        const createSensorResponse = await amberInstance.createSensor("Sensor-1-4002")
+        console.log(`createSensorResponse: ${JSON.stringify(createSensorResponse,null,4)}`)
+        const mySensor = createSensorResponse.sensorId
+
+        const updateLabelResponse = await amberInstance.updateLabel(mySensor, "newLabel")
+        console.log(`updateLabelResponse: ${JSON.stringify(updateLabelResponse,null,4)}`)
+
+        const getSensorResponse = await amberInstance.getSensor(mySensor)
+        console.log(`getSensorResponse: ${JSON.stringify(getSensorResponse,null,4)}`)
+
+        const configureSensorResponse = await amberInstance.configureSensor(mySensor, 1, 25)
+        console.log(`configureSensorResponse: ${JSON.stringify(configureSensorResponse,null,4)}`)
+
+        const getConfigResponse = await amberInstance.getConfig(mySensor)
+        console.log(`getConfigResponse: ${JSON.stringify(getConfigResponse,null,4)}`)
+
+        const streamSensorResponse = await amberInstance.streamSensor(mySensor, "0.05,1.0,2.5,0.9")
+        console.log(`streamSensorResponse: ${JSON.stringify(streamSensorResponse,null,4)}`)
+
+        const getStatusResponse = await amberInstance.getStatus(mySensor)
+        console.log(`getStatusResponse = ${JSON.stringify(getStatusResponse,null,4)}`)
+
+        const deleteSensorResponse = await amberInstance.deleteSensor(mySensor)
+        console.log(`deleteSensorResponse = ${JSON.stringify(deleteSensorResponse,null,4)}`)
+    }
+    catch(error) {
+        let response = error.response
+        let request = response.request
+        console.log(`${request.url}: status=${error.status}`)
+        console.log(`body: ${response.text}`)
+    }
+}
+
+walkthrough()
 ```
 
 ## Sample CSV file processor
@@ -121,28 +136,90 @@ const fs = require('fs')
 const MyClient = require('amber-javascript-sdk')
 
 // create amber instance
-let amberInstance = new MyClient.AmberClient()
 
-amberInstance.createSensor("sensor-1-999").then(function (data) {
-    console.log("createSensorResponse: %o", data)
-    return amberInstance.configureSensor(data.sensorId, 1, 25) // configure sensor
-}).then(function (data) {
-    console.log("configureSensorResponse: %o", data.response)
+async function streaming() {
+    try {
+        let amberInstance = new MyClient()
 
-    const filedata = fs.readFileSync('data.csv', 'UTF-8')
+        let createSensorResponse = await amberInstance.createSensor("sensor-1-999")
+        console.log(`createSensorResponse: ${JSON.stringify(createSensorResponse,null,4)}`)
+        const mySensor = createSensorResponse.sensorId
 
-    // split the contents by new line
-    const lines = filedata.split(/\r?\n/)
+        const configureSensorResponse = await amberInstance.configureSensor(mySensor, 1, 25)
+        console.log(`configureSensorResponse: ${JSON.stringify(configureSensorResponse,null,4)}`)
 
-    // stream data line by line using synchronous pattern.
-    // amber results are received before next call is made
-    let chain = Promise.resolve()
-    for (let line of lines) {
-        chain = chain.then(() => amberInstance.streamSensor(data.sensorId, line).then(function (data) {
-            console.log("%o, %o", line, data.response)
-        }))
+        const filedata = fs.readFileSync('data.csv', 'UTF-8')
+
+        // split the contents by new line
+        const lines = filedata.split(/\r?\n/)
+
+        for (let line of lines) {
+            console.log(data=`${line}`)
+            let streamSensorResponse = await amberInstance.streamSensor(mySensor, line)
+            console.log(`streamSensorResponse: ${JSON.stringify(streamSensorResponse,null,4)}`)
+        }
+
     }
-}).catch(error => {
-    console.error(error)
-})
+    catch(error) {
+        let response = error.response
+        let request = response.request
+        console.log(`${request.url}: status=${error.status}`)
+        console.log(`body: ${response.text}`)
+    }
+}
+
+streaming()
+```
+
+## Sample Pretraining
+
+The following will process a file named pretrain.csv residing in the examples directory of this javascript.
+The entire dataset will be pretrained.
+
+[stream-example.js](examples/pretrain-example.js)<br>
+[data.csv](examples/pretrain.csv)
+
+```
+const fs = require('fs')
+const MyClient = require('amber-javascript-sdk')
+
+// pretraining example
+
+async function pretraining() {
+    try {
+        let amberInstance = MyClient()
+
+        let createSensorResponse = await amberInstance.createSensor("sensor-1-999")
+        console.log(`createSensorResponse: ${JSON.stringify(createSensorResponse,null,4)}`)
+        const mySensor = createSensorResponse.sensorId
+
+        const configureSensorResponse = await amberInstance.configureSensor(mySensor, 1, 25)
+        console.log(`configureSensorResponse: ${JSON.stringify(configureSensorResponse,null,4)}`)
+
+        // read the entire data set
+        let filedata = fs.readFileSync('pretrain.csv', 'UTF-8')
+
+        // clean cr/nl
+        filedata = filedata.replace(/[\r\n\t]/g, "")
+
+        // begin pretraining
+        let pretrainResponse = await amberInstance.pretrainSensor(mySensor, filedata, false)
+        console.log(`pretrainResponse: ${JSON.stringify(pretrainResponse,null,4)}`)
+        let state = pretrainResponse.response.state
+        while (state == "Pretraining") {
+            await new Promise(r => setTimeout(r, 5000));
+            let pretrainStateResponse = await amberInstance.getPretrainState(mySensor)
+            state = pretrainStateResponse.response.state
+            console.log(`pretrainStateResponse: ${JSON.stringify(pretrainStateResponse,null,4)}`)
+        }
+    }
+    catch(error) {
+        let response = error.response
+        let request = response.request
+        console.log(`${request.url}: status=${error.status}`)
+        console.log(`body: ${response.text}`)
+    }
+}
+
+pretraining()
 ```
