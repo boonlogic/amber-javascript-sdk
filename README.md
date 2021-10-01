@@ -177,7 +177,7 @@ The following will process a file named pretrain.csv residing in the examples di
 The entire dataset will be pretrained.
 
 [stream-example.js](examples/pretrain-example.js)<br>
-[data.csv](examples/pretrain.csv)
+[pretrain.csv](examples/pretrain.csv)
 
 ```
 const fs = require('fs')
