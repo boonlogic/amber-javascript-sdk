@@ -331,6 +331,67 @@ class AmberClient {
     }
 
     /**
+     * Pretrain data to an amber sensor
+     * @param sensorId
+     * @param csv
+     * @returns {Promise<unknown>}
+     */
+    pretrainSensor(sensorId, csv, autotuneConfig) {
+        return this._authenticate().then((data) => {
+            return new Promise((resolve, reject) => {
+                let body = new this.AmberApiServer.PostPretrainRequest()
+                body.data = this.AmberApiServer.ApiClient.convertToType(csv, 'String');
+                body.autoTuneConfig = this.AmberApiServer.ApiClient.convertToType(autotuneConfig, 'Boolean');
+                this.apiInstance.postPretrain(body, sensorId, (error, data, response) => {
+                    if (error) {
+                        reject(error)
+                    } else {
+                        resolve({sensorId: sensorId, response: data})
+                    }
+                })
+            })
+        })
+    }
+
+    /**
+     * Get pretrain status
+     * @param sensorId
+     * @returns {Promise<unknown>}
+     */
+    getPretrainState(sensorId) {
+        return this._authenticate().then((data) => {
+            return new Promise((resolve, reject) => {
+                this.apiInstance.getPretrain(sensorId, (error, data, response) => {
+                    if (error) {
+                        reject(error)
+                    } else {
+                        resolve({sensorId: sensorId, response: data})
+                    }
+                })
+            })
+        })
+    }
+
+    /**
+     * Get rootcause
+     * @param sensorId
+     * @returns {Promise<unknown>}
+     */
+    getRootCause(sensorId) {
+        return this._authenticate().then((data) => {
+            return new Promise((resolve, reject) => {
+                this.apiInstance.getRootCause(sensorId, (error, data, response) => {
+                    if (error) {
+                        reject(error)
+                    } else {
+                        resolve({sensorId: sensorId, response: data})
+                    }
+                })
+            })
+        })
+    }
+
+    /**
      * Get version information for Amber server
      * @returns {Promise<unknown>}
      */

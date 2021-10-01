@@ -30,7 +30,7 @@ Deletes the sensor instance with the specified sensorId.
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import {AmberApiServer} from 'amber_api_server';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -80,7 +80,7 @@ Returns the json block of the amber sensor
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import {AmberApiServer} from 'amber_api_server';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -130,7 +130,7 @@ Returns the current configuration of the sensor instance specified.
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import {AmberApiServer} from 'amber_api_server';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -180,7 +180,7 @@ Get status of a sensor which is currently pretraining.
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import {AmberApiServer} from 'amber_api_server';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -230,7 +230,7 @@ Returns analytic information on the root cause for the clusters provided.
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import {AmberApiServer} from 'amber_api_server';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -285,7 +285,7 @@ Returns basic information about an existing sensor instance.
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import {AmberApiServer} from 'amber_api_server';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -335,7 +335,7 @@ Returns a list of all current sensor instances for this user.
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import {AmberApiServer} from 'amber_api_server';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -380,7 +380,7 @@ Returns analytic information derived from data processed by a sensor thus far.
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import {AmberApiServer} from 'amber_api_server';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -428,7 +428,14 @@ Retrieves API version information
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import {AmberApiServer} from 'amber_api_server';
+let defaultClient = AmberApiServer.ApiClient.instance;
+
+// Configure API key authorization: authorize-amber-pool
+let authorize-amber-pool = defaultClient.authentications['authorize-amber-pool'];
+authorize-amber-pool.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//authorize-amber-pool.apiKeyPrefix = 'Token';
 
 let apiInstance = new AmberApiServer.DefaultApi();
 apiInstance.getVersion((error, data, response) => {
@@ -449,7 +456,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[authorize-amber-pool](../README.md#authorize-amber-pool)
 
 ### HTTP request headers
 
@@ -458,7 +465,7 @@ No authorization required
 
 <a name="postConfig"></a>
 # **postConfig**
-> PostConfigResponse postConfig(bodysensorId)
+> PostConfigResponse postConfig(body, sensorId)
 
 Apply configuration to a sensor instance
 
@@ -466,7 +473,7 @@ Applies the provided configuration to the sensor instance specified.
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import {AmberApiServer} from 'amber_api_server';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -479,7 +486,7 @@ let apiInstance = new AmberApiServer.DefaultApi();
 let body = new AmberApiServer.PostConfigRequest(); // PostConfigRequest | Sensor configuration to be applied
 let sensorId = "sensorId_example"; // String | Unique identifier for sensor
 
-apiInstance.postConfig(bodysensorId, (error, data, response) => {
+apiInstance.postConfig(body, sensorId, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -518,7 +525,7 @@ Requests a bearer token using Amber account credentials. The requested bearer to
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import {AmberApiServer} from 'amber_api_server';
 
 let apiInstance = new AmberApiServer.DefaultApi();
 let body = new AmberApiServer.PostAuth2Request(); // PostAuth2Request | Account credentials to be used for authentication
@@ -553,7 +560,7 @@ No authorization required
 
 <a name="postPretrain"></a>
 # **postPretrain**
-> PostPretrainResponse postPretrain(bodysensorId)
+> PostPretrainResponse postPretrain(body, sensorId)
 
 Pretrain a sensor using historical data
 
@@ -561,7 +568,7 @@ Pretrains a sensor. Ingoing data should be formatted as a simple string of comma
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import {AmberApiServer} from 'amber_api_server';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -574,7 +581,7 @@ let apiInstance = new AmberApiServer.DefaultApi();
 let body = new AmberApiServer.PostPretrainRequest(); // PostPretrainRequest | Data to be streamed to sensor. Should be formatted as a simple string of comma-separated numbers with no spaces (e.g. "0,0.5,1,1.5,2").
 let sensorId = "sensorId_example"; // String | Unique identifier for sensor
 
-apiInstance.postPretrain(bodysensorId, (error, data, response) => {
+apiInstance.postPretrain(body, sensorId, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -605,7 +612,7 @@ Name | Type | Description  | Notes
 
 <a name="postSensor"></a>
 # **postSensor**
-> PostSensorResponse postSensor(body)
+> SensorInstance postSensor(body)
 
 Create a new a sensor instance
 
@@ -613,7 +620,7 @@ Spawns a new sensor instance, returning its unique sensorId.
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import {AmberApiServer} from 'amber_api_server';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -642,7 +649,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PostSensorResponse**](PostSensorResponse.md)
+[**SensorInstance**](SensorInstance.md)
 
 ### Authorization
 
@@ -655,7 +662,7 @@ Name | Type | Description  | Notes
 
 <a name="postStream"></a>
 # **postStream**
-> PostStreamResponse postStream(bodysensorId)
+> PostStreamResponse postStream(body, sensorId)
 
 Stream data to a sensor
 
@@ -663,7 +670,7 @@ Sends data to a sensor. Ingoing data should be formatted as a simple string of c
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import {AmberApiServer} from 'amber_api_server';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -676,7 +683,7 @@ let apiInstance = new AmberApiServer.DefaultApi();
 let body = new AmberApiServer.PostStreamRequest(); // PostStreamRequest | Data to be streamed to sensor. Should be formatted as a simple string of comma-separated numbers with no spaces (e.g. "0,0.5,1,1.5,2").
 let sensorId = "sensorId_example"; // String | Unique identifier for sensor
 
-apiInstance.postStream(bodysensorId, (error, data, response) => {
+apiInstance.postStream(body, sensorId, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -707,7 +714,7 @@ Name | Type | Description  | Notes
 
 <a name="putSensor"></a>
 # **putSensor**
-> PutSensorResponse putSensor(bodysensorId)
+> SensorInstance putSensor(body, sensorId)
 
 Update label for a sensor instance
 
@@ -715,7 +722,7 @@ Changes the label of an existing sensor instance to the new label specified.
 
 ### Example
 ```javascript
-import AmberApiServer from 'amber_api_server';
+import {AmberApiServer} from 'amber_api_server';
 let defaultClient = AmberApiServer.ApiClient.instance;
 
 // Configure API key authorization: authorize-amber-pool
@@ -728,7 +735,7 @@ let apiInstance = new AmberApiServer.DefaultApi();
 let body = new AmberApiServer.PutSensorRequest(); // PutSensorRequest | New label to apply to sensor instance
 let sensorId = "sensorId_example"; // String | Unique identifier for sensor
 
-apiInstance.putSensor(bodysensorId, (error, data, response) => {
+apiInstance.putSensor(body, sensorId, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -746,7 +753,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PutSensorResponse**](PutSensorResponse.md)
+[**SensorInstance**](SensorInstance.md)
 
 ### Authorization
 
