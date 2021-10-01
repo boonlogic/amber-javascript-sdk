@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "expand-home-dir": "0.0.3",
-    "superagent": "^6.1.0"
+    "superagent": "^6.1.0",
+    "superagent-proxy": "^3.0.0"
   },
   "repository": {
     "url": "git+ssh://git@github.com/boonlogic/amber-javascript-sdk.git"

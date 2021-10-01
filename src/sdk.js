@@ -7,6 +7,9 @@ const process = require('process')
 const expandHomeDir = require('expand-home-dir')
 const fs = require('fs')
 
+const superagent = require('superagent');
+require('superagent-proxy')(superagent);
+
 /** AmberClient */
 class AmberClient {
 
@@ -32,6 +35,9 @@ class AmberClient {
         this.apiInstance = new this.AmberApiServer.DefaultApi()
         this.defaultClient = this.AmberApiServer.ApiClient.instance
         this.authorize_amber_pool = this.defaultClient.authentications['authorize-amber-pool']
+
+        // override agent to support proxies
+        this.defaultClient.userAgent = new superagent.agent();
 
         let envLicenseFile = process.env.AMBER_LICENSE_FILE
         let envLicenseId = process.env.AMBER_LICENSE_ID

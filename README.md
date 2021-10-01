@@ -13,7 +13,7 @@ An SDK for Boon Amber sensor analytics
 The Boon Amber Javascript SDK is a nodejs project but is not yet published.
 
 ```
-npm install git+ssh://git@github.com/boonlogic/amber-javascript-sdk.git
+npm install amber-javascript-sdk
 ```
 
 ## Credentials setup
