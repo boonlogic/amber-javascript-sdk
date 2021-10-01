@@ -329,6 +329,28 @@ class AmberClient {
             })
         })
     }
+
+    /**
+     * Get version information for Amber server
+     * @returns {Promise<unknown>}
+     */
+    getVersion() {
+        return this._authenticate().then((data) => {
+            return new Promise((resolve, reject) => {
+                this.apiInstance.getVersion((error, data, response) => {
+                    if (error) {
+                        reject(error)
+                    } else {
+                        resolve(data)
+                    }
+                })
+            })
+        })
+    }
 }
 
-export {AmberClient}
+module.exports = function(licenseId = 'default', licenseFile = "~/.Amber.license") {
+    return new AmberClient(licenseId, licenseFile)
+}
+
+

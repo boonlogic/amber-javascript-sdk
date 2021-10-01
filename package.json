@@ -5,7 +5,7 @@
   "license": "Unlicense",
   "main": "dist/sdk.js",
   "scripts": {
-    "package": "rm -rf dist && mkdir dist && babel ./src -d dist --copy-files",
+    "package": "rm -rf dist && mkdir dist && npx babel ./src -d dist --copy-files",
     "test": "mocha --compilers js:babel-core/register --recursive",
     "generate": "cp package.json package.json.backup && swagger-codegen generate -DmoduleName=amber-javascript-sdk -DpackageName=amber-javascript-sdk -DprojectDescription='Boon_Logic_Amber_SDK' -i swagger.json -l javascript -o . && mv package.json.backup package.json",
     "docs": "documentation build src/sdk.js -f html --shallow -o docs"
@@ -14,8 +14,6 @@
     "fs": false
   },
   "dependencies": {
-    "babel": "^6.23.0",
-    "babel-cli": "^6.26.0",
     "expand-home-dir": "0.0.3",
     "superagent": "^6.1.0"
   },
@@ -23,7 +21,17 @@
     "url": "git+ssh://git@github.com/boonlogic/amber-javascript-sdk.git"
   },
   "devDependencies": {
-    "babel-core": "6.26.0",
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.5",
+    "@babel/plugin-proposal-decorators": "^7.15.4",
+    "@babel/plugin-proposal-do-expressions": "^7.14.5",
+    "@babel/plugin-proposal-export-default-from": "^7.14.5",
+    "@babel/plugin-proposal-function-bind": "^7.14.5",
+    "@babel/plugin-proposal-function-sent": "^7.14.5",
+    "@babel/plugin-proposal-pipeline-operator": "^7.15.0",
+    "@babel/plugin-proposal-throw-expressions": "^7.14.5",
+    "@babel/plugin-syntax-import-meta": "^7.10.4",
+    "@babel/preset-env": "^7.15.6",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-0": "^6.24.1",
