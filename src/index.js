@@ -19,6 +19,7 @@ import {FeatureConfig} from './model/FeatureConfig';
 import {Float32Array} from './model/Float32Array';
 import {GetConfigResponse} from './model/GetConfigResponse';
 import {GetPretrainResponse} from './model/GetPretrainResponse';
+import {GetRootCauseResponse} from './model/GetRootCauseResponse';
 import {GetSensorResponse} from './model/GetSensorResponse';
 import {GetSensorsResponse} from './model/GetSensorsResponse';
 import {GetStatusResponse} from './model/GetStatusResponse';
@@ -53,7 +54,6 @@ import {PostSensorRequest} from './model/PostSensorRequest';
 import {PostStreamRequest} from './model/PostStreamRequest';
 import {PostStreamResponse} from './model/PostStreamResponse';
 import {PutSensorRequest} from './model/PutSensorRequest';
-import {RootCauseResponse} from './model/RootCauseResponse';
 import {SensorInstance} from './model/SensorInstance';
 import {SensorInstanceFull} from './model/SensorInstanceFull';
 import {SensorUsageInfo} from './model/SensorUsageInfo';
@@ -139,6 +139,12 @@ export {
      * @property {module:model/GetPretrainResponse}
      */
     GetPretrainResponse,
+
+    /**
+     * The GetRootCauseResponse model constructor.
+     * @property {module:model/GetRootCauseResponse}
+     */
+    GetRootCauseResponse,
 
     /**
      * The GetSensorResponse model constructor.
@@ -343,12 +349,6 @@ export {
      * @property {module:model/PutSensorRequest}
      */
     PutSensorRequest,
-
-    /**
-     * The RootCauseResponse model constructor.
-     * @property {module:model/RootCauseResponse}
-     */
-    RootCauseResponse,
 
     /**
      * The SensorInstance model constructor.

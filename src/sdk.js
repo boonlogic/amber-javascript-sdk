@@ -14,6 +14,7 @@ require('superagent-proxy')(superagent);
 /** AmberClient */
 class AmberClient {
 
+
     /**
      * AmberClient constructor. Main client which interfaces with the Amber cloud. Amber account
      * credentials are discovered within a .Amber.license file located in the
@@ -149,7 +150,7 @@ class AmberClient {
         try {
             await this._authenticate()
             return await this.apiInstance.getSensors()
-        } catch {
+        } catch(error) {
             console.error(error)
         }
     }
@@ -162,7 +163,7 @@ class AmberClient {
         try {
             await this._authenticate()
             return await this.apiInstance.getSensors(sensorId)
-        } catch {
+        } catch(error) {
             console.error(error)
         }
     }
@@ -179,7 +180,7 @@ class AmberClient {
                 postRequest.label = label
             }
             return await this.apiInstance.postSensor(postRequest)
-        } catch {
+        } catch(error) {
             console.error(error)
         }
     }
@@ -194,7 +195,7 @@ class AmberClient {
             await this._authenticate()
             let putRequest = new this.AmberApiServer.PutSensorRequest(label)
             return await this.apiInstance.putSensor(putRequest, sensorId)
-        } catch {
+        } catch(error) {
             console.error(error)
         }
     }
@@ -224,7 +225,7 @@ class AmberClient {
             body.learningMaxClusters = learningMaxClusters
             body.learningMaxSamples = learningMaxSamples
             return await this.apiInstance.postConfig(body, sensorId)
-        } catch {
+        } catch(error) {
             console.error(error)
         }
     }
@@ -238,7 +239,7 @@ class AmberClient {
         try {
             await this._authenticate()
             return await this.apiInstance.getConfig(sensorId)
-        } catch {
+        } catch(error) {
             console.error(error)
         }
     }
@@ -252,7 +253,7 @@ class AmberClient {
         try {
             await this._authenticate()
             return await this.apiInstance.deleteSensor(sensorId)
-        } catch {
+        } catch(error) {
             console.error(error)
         }
     }
@@ -268,7 +269,7 @@ class AmberClient {
             await this._authenticate()
             let body = new this.AmberApiServer.PostStreamRequest(csv)
             return await this.apiInstance.postStream(body, sensorId)
-        } catch {
+        } catch(error) {
             console.error(error)
         }
     }
@@ -282,7 +283,7 @@ class AmberClient {
         try {
             await this._authenticate()
             return await this.apiInstance.getStatus(sensorId)
-        } catch {
+        } catch(error) {
             console.error(error)
         }
     }
@@ -300,7 +301,7 @@ class AmberClient {
             body.data = this.AmberApiServer.ApiClient.convertToType(csv, 'String');
             body.autoTuneConfig = this.AmberApiServer.ApiClient.convertToType(autotuneConfig, 'Boolean');
             return await this.apiInstance.postPretrain(body, sensorId)
-        } catch {
+        } catch(error) {
             console.error(error)
         }
     }
@@ -314,7 +315,7 @@ class AmberClient {
         try {
             await this._authenticate()
             return await this.apiInstance.getPretrain(sensorId)
-        } catch {
+        } catch(error) {
             console.error(error)
         }
     }
@@ -328,7 +329,7 @@ class AmberClient {
         try {
             await this._authenticate()
             return await this.apiInstance.getRootCause(sensorId)
-        } catch {
+        } catch(error) {
             console.error(error)
         }
     }
@@ -341,7 +342,7 @@ class AmberClient {
         try {
             await this._authenticate()
             return await this.apiInstance.getVersion()
-        } catch {
+        } catch(error) {
             console.error(error)
         }
     }
