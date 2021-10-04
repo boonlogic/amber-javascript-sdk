@@ -139,7 +139,7 @@ class AmberClient {
             }
             return true
         } catch (error) {
-            console.error(error)
+            throw(error)
         }
     }
 
@@ -151,7 +151,7 @@ class AmberClient {
             await this._authenticate()
             return await this.apiInstance.getSensors()
         } catch(error) {
-            console.error(error)
+            throw new AmberClient.AmberCloudException(error)
         }
     }
 
@@ -164,7 +164,7 @@ class AmberClient {
             await this._authenticate()
             return await this.apiInstance.getSensors(sensorId)
         } catch(error) {
-            console.error(error)
+            throw new AmberClient.AmberCloudException(error)
         }
     }
 
@@ -181,7 +181,7 @@ class AmberClient {
             }
             return await this.apiInstance.postSensor(postRequest)
         } catch(error) {
-            console.error(error)
+            throw new AmberClient.AmberCloudException(error)
         }
     }
 
@@ -196,7 +196,7 @@ class AmberClient {
             let putRequest = new this.AmberApiServer.PutSensorRequest(label)
             return await this.apiInstance.putSensor(putRequest, sensorId)
         } catch(error) {
-            console.error(error)
+            throw new AmberClient.AmberCloudException(error)
         }
     }
 
@@ -226,7 +226,7 @@ class AmberClient {
             body.learningMaxSamples = learningMaxSamples
             return await this.apiInstance.postConfig(body, sensorId)
         } catch(error) {
-            console.error(error)
+            throw new AmberClient.AmberCloudException(error)
         }
     }
 
@@ -240,7 +240,7 @@ class AmberClient {
             await this._authenticate()
             return await this.apiInstance.getConfig(sensorId)
         } catch(error) {
-            console.error(error)
+            throw new AmberClient.AmberCloudException(error)
         }
     }
 
@@ -254,7 +254,7 @@ class AmberClient {
             await this._authenticate()
             return await this.apiInstance.deleteSensor(sensorId)
         } catch(error) {
-            console.error(error)
+            throw new AmberClient.AmberCloudException(error)
         }
     }
 
@@ -270,7 +270,7 @@ class AmberClient {
             let body = new this.AmberApiServer.PostStreamRequest(csv)
             return await this.apiInstance.postStream(body, sensorId)
         } catch(error) {
-            console.error(error)
+            throw new AmberClient.AmberCloudException(error)
         }
     }
 
@@ -284,7 +284,7 @@ class AmberClient {
             await this._authenticate()
             return await this.apiInstance.getStatus(sensorId)
         } catch(error) {
-            console.error(error)
+            throw new AmberClient.AmberCloudException(error)
         }
     }
 
@@ -302,7 +302,7 @@ class AmberClient {
             body.autoTuneConfig = this.AmberApiServer.ApiClient.convertToType(autotuneConfig, 'Boolean');
             return await this.apiInstance.postPretrain(body, sensorId)
         } catch(error) {
-            console.error(error)
+            throw new AmberClient.AmberCloudException(error)
         }
     }
 
@@ -316,7 +316,7 @@ class AmberClient {
             await this._authenticate()
             return await this.apiInstance.getPretrain(sensorId)
         } catch(error) {
-            console.error(error)
+            throw new AmberClient.AmberCloudException(error)
         }
     }
 
@@ -330,7 +330,7 @@ class AmberClient {
             await this._authenticate()
             return await this.apiInstance.getRootCause(sensorId)
         } catch(error) {
-            console.error(error)
+            throw new AmberClient.AmberCloudException(error)
         }
     }
 
@@ -343,8 +343,17 @@ class AmberClient {
             await this._authenticate()
             return await this.apiInstance.getVersion()
         } catch(error) {
-            console.error(error)
+            throw new AmberClient.AmberCloudException(error)
         }
+    }
+
+    static AmberCloudException(exc) {
+        const error = new Error(exc.response.body);
+        error.body = exc.response.body
+        error.status = exc.status
+        error.method = exc.response.request.method
+        error.url = exc.response.request.url
+        return error
     }
 }
 

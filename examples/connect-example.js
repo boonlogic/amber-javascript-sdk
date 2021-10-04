@@ -7,10 +7,8 @@ async function version() {
         console.log(`getVersionResponse: ${JSON.stringify(data,null,4)}`)
     }
     catch(error) {
-        let response = error.response
-        let request = response.request
-        console.log(`${request.url}: status=${error.status}`)
-        console.log(`body: ${response.text}`)
+        console.log(error.body)
+        console.log(`${error.method} ${error.url}: status=${error.status}`)
     }
 }
 

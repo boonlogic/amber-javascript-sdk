@@ -33,10 +33,8 @@ async function walkthrough() {
         console.log(`deleteSensorResponse = ${JSON.stringify(deleteSensorResponse,null,4)}`)
     }
     catch(error) {
-        let response = error.response
-        let request = response.request
-        console.log(`${request.url}: status=${error.status}`)
-        console.log(`body: ${response.text}`)
+        console.log(error.body)
+        console.log(`${error.method} ${error.url}: status=${error.status}`)
     }
 }
 
