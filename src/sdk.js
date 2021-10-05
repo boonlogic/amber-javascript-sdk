@@ -109,11 +109,17 @@ class AmberClient {
         }
     }
 
+    /**
+     * AmberUserException is used when an AmberClient object can't be constructed.
+     */
     static AmberUserException(message) {
         const error = new Error(message)
         return error
     }
 
+    /**
+     * AmberCloudException is used when a an API request fails
+     */
     static AmberCloudException(exc) {
         const error = new Error(exc.response.body);
         error.body = exc.response.body
