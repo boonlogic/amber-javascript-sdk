@@ -74,20 +74,20 @@ class AmberClient {
         if (process.env.AMBER_OATH_SERVER !== undefined) {
             this.license_profile.oauth_server = process.env.AMBER_OAUTH_SERVER
         }
-        if (this.profile.oauth_server === "") {
+        if (this.license_profile.oauth_server === "") {
             // fallback oauth-server to server if not specified
             this.license_profile.oauth_server = this.license_profile.server
         }
 
         // verify reququired profile elements have been created
         if (this.license_profile.username === "") {
-            throw 'missing username in profile'
+            throw new AmberClient.AmberUserException('missing username in profile')
         }
         if (this.license_profile.password === "") {
-            throw 'missing password in profile'
+            throw new AmberClient.AmberUserException('missing password in profile')
         }
         if (this.license_profile.server === "") {
-            throw 'missing server in profile'
+            throw new AmberClient.AmberUserException('missing server in profile')
         }
 
         // load the username, password and server into client
@@ -95,21 +95,23 @@ class AmberClient {
         try {
             this.auth2RequestBody.username = this.license_profile.username
         } catch (err) {
-            // username not found
-            throw err
+            throw new AmberClient.AmberUserException('username not configured')
         }
         try {
             this.auth2RequestBody.password = this.license_profile.password
         } catch (err) {
-            // username not found
-            throw err
+            throw new AmberClient.AmberUserException('password not configured')
         }
         try {
             this.defaultClient.basePath = this.license_profile.server
         } catch (err) {
-            // username not found
-            throw err
+            throw new AmberClient.AmberUserException('server not configured')
         }
+    }
+
+    static AmberUserException(message) {
+        const error = new Error(message)
+        return error
     }
 
     static AmberCloudException(exc) {
