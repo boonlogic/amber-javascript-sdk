@@ -38,83 +38,87 @@ class AmberClient {
         this.defaultClient = this.AmberApiServer.ApiClient.instance
         this.authorize_amber_pool = this.defaultClient.authentications['authorize-amber-pool']
 
-        // override agent to support proxies
-        this.defaultClient.userAgent = new superagent.agent();
-
-        let envLicenseFile = process.env.AMBER_LICENSE_FILE
-        let envLicenseId = process.env.AMBER_LICENSE_ID
-        let envUserName = process.env.AMBER_USERNAME
-        let envPassword = process.env.AMBER_PASSWORD
-        let envServer = process.env.AMBER_SERVER
-
-        // if username, password and server are all specified via environment, we're done here
-        if (envUserName && envPassword && envServer) {
-            this.auth2RequestBody = new AmberApiServer.PostAuth2Request(envPassword, envUserName)
-            this.defaultClient.basePath = envServer
-            return
+        // first load from license file, override from environment if specified
+        this.license_file = licenseFile
+        if (process.env.AMBER_LICENSE_FILE !== undefined) {
+            this.license_file = process.env.AMBER_LICENSE_FILE
         }
 
-        // otherwise acquire either or both of them from license file
-        let localLicenseFile = envLicenseFile
-        if (!localLicenseFile) {
-            localLicenseFile = licenseFile
-        }
-        let localLicenseId = envLicenseId
-        if (!localLicenseId) {
-            localLicenseId = licenseId
+        // determine which license_id to use, override from environment if specified
+        this.license_id = licenseId
+        if (process.env.AMBER_LICENSE_FILE !== undefined) {
+            this.license_id = process.env.AMBER_LICENSE_ID
         }
 
-        let licenseData = {}
-        let licenseJson = undefined
-        try {
-            let licensePath = expandHomeDir(localLicenseFile)
-            licenseJson = JSON.parse(fs.readFileSync(licensePath).toString('utf-8'))
-        } catch (err) {
-            // license file does not exist
-            console.error(err)
-            return
+        // create license profile
+        this.license_profile = {username: "", password: "", server: "", oauth_server: ""}
+        if (this.license_file !== null) {
+            let license_path = expandHomeDir(this.license_file)
+            if (!fs.existsSync(license_path)) {
+                this.license_profile = {username: "", password: "", server: "", oauth_server: ""}
+            } else {
+                let license_json = JSON.parse(fs.readFileSync(license_path).toString('utf-8'))
+                this.license_profile = license_json[this.license_id]
+            }
         }
 
-        try {
-            licenseData = licenseJson[localLicenseId]
-        } catch (err) {
-            // license id not found
-            console.error(err)
-            return
+        if (process.env.AMBER_USERNAME !== undefined) {
+            this.license_profile.username = process.env.AMBER_USERNAME
+        }
+        if (process.env.AMBER_PASSWORD !== undefined) {
+            this.license_profile.password = process.env.AMBER_PASSWORD
+        }
+        if (process.env.AMBER_SERVER !== undefined) {
+            this.license_profile.server = process.env.AMBER_SERVER
+        }
+        if (process.env.AMBER_OATH_SERVER !== undefined) {
+            this.license_profile.oauth_server = process.env.AMBER_OAUTH_SERVER
+        }
+        if (this.profile.oauth_server === "") {
+            // fallback oauth-server to server if not specified
+            this.license_profile.oauth_server = this.license_profile.server
         }
 
-        // load the username, password and server, still giving precedence to environment
+        // verify reququired profile elements have been created
+        if (this.license_profile.username === "") {
+            throw 'missing username in profile'
+        }
+        if (this.license_profile.password === "") {
+            throw 'missing password in profile'
+        }
+        if (this.license_profile.server === "") {
+            throw 'missing server in profile'
+        }
+
+        // load the username, password and server into client
         this.auth2RequestBody = new this.AmberApiServer.PostAuth2Request()
         try {
-            this.auth2RequestBody.username = envUserName
-            if (!this.auth2RequestBody.username) {
-                this.auth2RequestBody.username = licenseData['username']
-            }
+            this.auth2RequestBody.username = this.license_profile.username
         } catch (err) {
             // username not found
-            console.error(err)
-            return
+            throw err
         }
         try {
-            this.auth2RequestBody.password = envPassword
-            if (!this.auth2RequestBody.password) {
-                this.auth2RequestBody.password = licenseData['password']
-            }
+            this.auth2RequestBody.password = this.license_profile.password
         } catch (err) {
-            // password not found
-            console.error(err)
-            return
+            // username not found
+            throw err
         }
         try {
-            this.defaultClient.basePath = envServer
-            if (!this.server) {
-                this.defaultClient.basePath = licenseData['server']
-            }
+            this.defaultClient.basePath = this.license_profile.server
         } catch (err) {
-            // server not found
-            console.error(err)
-            return
+            // username not found
+            throw err
         }
+    }
+
+    static AmberCloudException(exc) {
+        const error = new Error(exc.response.body);
+        error.body = exc.response.body
+        error.status = exc.status
+        error.method = exc.response.request.method
+        error.url = exc.response.request.url
+        return error
     }
 
     /**
@@ -150,7 +154,7 @@ class AmberClient {
         try {
             await this._authenticate()
             return await this.apiInstance.getSensors()
-        } catch(error) {
+        } catch (error) {
             throw new AmberClient.AmberCloudException(error)
         }
     }
@@ -163,7 +167,7 @@ class AmberClient {
         try {
             await this._authenticate()
             return await this.apiInstance.getSensors(sensorId)
-        } catch(error) {
+        } catch (error) {
             throw new AmberClient.AmberCloudException(error)
         }
     }
@@ -180,7 +184,7 @@ class AmberClient {
                 postRequest.label = label
             }
             return await this.apiInstance.postSensor(postRequest)
-        } catch(error) {
+        } catch (error) {
             throw new AmberClient.AmberCloudException(error)
         }
     }
@@ -195,7 +199,7 @@ class AmberClient {
             await this._authenticate()
             let putRequest = new this.AmberApiServer.PutSensorRequest(label)
             return await this.apiInstance.putSensor(putRequest, sensorId)
-        } catch(error) {
+        } catch (error) {
             throw new AmberClient.AmberCloudException(error)
         }
     }
@@ -225,7 +229,7 @@ class AmberClient {
             body.learningMaxClusters = learningMaxClusters
             body.learningMaxSamples = learningMaxSamples
             return await this.apiInstance.postConfig(body, sensorId)
-        } catch(error) {
+        } catch (error) {
             throw new AmberClient.AmberCloudException(error)
         }
     }
@@ -239,7 +243,7 @@ class AmberClient {
         try {
             await this._authenticate()
             return await this.apiInstance.getConfig(sensorId)
-        } catch(error) {
+        } catch (error) {
             throw new AmberClient.AmberCloudException(error)
         }
     }
@@ -253,7 +257,7 @@ class AmberClient {
         try {
             await this._authenticate()
             return await this.apiInstance.deleteSensor(sensorId)
-        } catch(error) {
+        } catch (error) {
             throw new AmberClient.AmberCloudException(error)
         }
     }
@@ -269,7 +273,7 @@ class AmberClient {
             await this._authenticate()
             let body = new this.AmberApiServer.PostStreamRequest(csv)
             return await this.apiInstance.postStream(body, sensorId)
-        } catch(error) {
+        } catch (error) {
             throw new AmberClient.AmberCloudException(error)
         }
     }
@@ -283,7 +287,7 @@ class AmberClient {
         try {
             await this._authenticate()
             return await this.apiInstance.getStatus(sensorId)
-        } catch(error) {
+        } catch (error) {
             throw new AmberClient.AmberCloudException(error)
         }
     }
@@ -301,7 +305,7 @@ class AmberClient {
             body.data = this.AmberApiServer.ApiClient.convertToType(csv, 'String');
             body.autoTuneConfig = this.AmberApiServer.ApiClient.convertToType(autotuneConfig, 'Boolean');
             return await this.apiInstance.postPretrain(body, sensorId)
-        } catch(error) {
+        } catch (error) {
             throw new AmberClient.AmberCloudException(error)
         }
     }
@@ -315,7 +319,7 @@ class AmberClient {
         try {
             await this._authenticate()
             return await this.apiInstance.getPretrain(sensorId)
-        } catch(error) {
+        } catch (error) {
             throw new AmberClient.AmberCloudException(error)
         }
     }
@@ -329,7 +333,7 @@ class AmberClient {
         try {
             await this._authenticate()
             return await this.apiInstance.getRootCause(sensorId)
-        } catch(error) {
+        } catch (error) {
             throw new AmberClient.AmberCloudException(error)
         }
     }
@@ -342,18 +346,9 @@ class AmberClient {
         try {
             await this._authenticate()
             return await this.apiInstance.getVersion()
-        } catch(error) {
+        } catch (error) {
             throw new AmberClient.AmberCloudException(error)
         }
-    }
-
-    static AmberCloudException(exc) {
-        const error = new Error(exc.response.body);
-        error.body = exc.response.body
-        error.status = exc.status
-        error.method = exc.response.request.method
-        error.url = exc.response.request.url
-        return error
     }
 }
 
