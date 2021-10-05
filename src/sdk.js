@@ -29,6 +29,7 @@ class AmberClient {
      *     `AMBER_USERNAME`: overrides the username as found in .Amber.license file
      *     `AMBER_PASSWORD`: overrides the password as found in .Amber.license file
      *     `AMBER_SERVER`: overrides the server as found in .Amber.license file
+     *     `AMBER_OAUTH_SERVER`: overrides the oauth server as found in .Amber.license file
      */
     constructor(licenseId = 'default', licenseFile = "~/.Amber.license") {
 
@@ -39,16 +40,10 @@ class AmberClient {
         this.authorize_amber_pool = this.defaultClient.authentications['authorize-amber-pool']
 
         // first load from license file, override from environment if specified
-        this.license_file = licenseFile
-        if (process.env.AMBER_LICENSE_FILE !== undefined) {
-            this.license_file = process.env.AMBER_LICENSE_FILE
-        }
+        this.license_file = process.env.AMBER_LICENSE_FILE || licenseFile
 
         // determine which license_id to use, override from environment if specified
-        this.license_id = licenseId
-        if (process.env.AMBER_LICENSE_FILE !== undefined) {
-            this.license_id = process.env.AMBER_LICENSE_ID
-        }
+        this.license_id = process.env.AMBER_LICENSE_FILE || licenseId
 
         // create license profile
         this.license_profile = {username: "", password: "", server: "", oauth_server: ""}
@@ -62,20 +57,12 @@ class AmberClient {
             }
         }
 
-        if (process.env.AMBER_USERNAME !== undefined) {
-            this.license_profile.username = process.env.AMBER_USERNAME
-        }
-        if (process.env.AMBER_PASSWORD !== undefined) {
-            this.license_profile.password = process.env.AMBER_PASSWORD
-        }
-        if (process.env.AMBER_SERVER !== undefined) {
-            this.license_profile.server = process.env.AMBER_SERVER
-        }
-        if (process.env.AMBER_OATH_SERVER !== undefined) {
-            this.license_profile.oauth_server = process.env.AMBER_OAUTH_SERVER
-        }
-        if (this.license_profile.oauth_server === "") {
-            // fallback oauth-server to server if not specified
+        this.license_profile.username = process.env.AMBER_USERNAME || this.license_profile.username
+        this.license_profile.password = process.env.AMBER_PASSWORD || this.license_profile.password
+        this.license_profile.server = process.env.AMBER_SERVER || this.license_profile.server
+        this.license_profile.oauth_server = process.env.AMBER_OAUTH_SERVER || this.license_profile.oauth_server
+        if (this.license_profile.oauth_server === undefined) {
+            // fallback oauth_server to server if not specified
             this.license_profile.oauth_server = this.license_profile.server
         }
 
@@ -140,6 +127,8 @@ class AmberClient {
         try {
             let _tsIn = Math.floor(Date.now() / 1000)
             if (_tsIn > this.reauthTime) {
+                console.log(this.license_profile)
+                this.defaultClient.basePath = this.license_profile.oauth_server
                 let response = await this.apiInstance.postOauth2(this.auth2RequestBody)
                 if (response) {
                     this.authorize_amber_pool.apiKey = response.idToken
@@ -161,6 +150,7 @@ class AmberClient {
     async listSensors() {
         try {
             await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getSensors()
         } catch (error) {
             throw new AmberClient.AmberCloudException(error)
@@ -174,6 +164,7 @@ class AmberClient {
     async getSensor(sensorId) {
         try {
             await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getSensors(sensorId)
         } catch (error) {
             throw new AmberClient.AmberCloudException(error)
@@ -187,6 +178,7 @@ class AmberClient {
     async createSensor(label = undefined) {
         try {
             await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
             let postRequest = new this.AmberApiServer.PostSensorRequest(label)
             if (label) {
                 postRequest.label = label
@@ -205,6 +197,7 @@ class AmberClient {
     async updateLabel(sensorId, label) {
         try {
             await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
             let putRequest = new this.AmberApiServer.PutSensorRequest(label)
             return await this.apiInstance.putSensor(putRequest, sensorId)
         } catch (error) {
@@ -230,6 +223,7 @@ class AmberClient {
                           learningMaxSamples = 1000000) {
         try {
             await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
             let body = new this.AmberApiServer.PostConfigRequest(featureCount, streamingWindowSize)
             body.samplesToBuffer = samplesToBuffer
             body.learningRateNumerator = learningRateNumerator
@@ -250,6 +244,7 @@ class AmberClient {
     async getConfig(sensorId) {
         try {
             await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getConfig(sensorId)
         } catch (error) {
             throw new AmberClient.AmberCloudException(error)
@@ -264,6 +259,7 @@ class AmberClient {
     async deleteSensor(sensorId) {
         try {
             await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.deleteSensor(sensorId)
         } catch (error) {
             throw new AmberClient.AmberCloudException(error)
@@ -279,6 +275,7 @@ class AmberClient {
     async streamSensor(sensorId, csv) {
         try {
             await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
             let body = new this.AmberApiServer.PostStreamRequest(csv)
             return await this.apiInstance.postStream(body, sensorId)
         } catch (error) {
@@ -294,6 +291,7 @@ class AmberClient {
     async getStatus(sensorId) {
         try {
             await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getStatus(sensorId)
         } catch (error) {
             throw new AmberClient.AmberCloudException(error)
@@ -309,6 +307,7 @@ class AmberClient {
     async pretrainSensor(sensorId, csv, autotuneConfig) {
         try {
             await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
             let body = new this.AmberApiServer.PostPretrainRequest()
             body.data = this.AmberApiServer.ApiClient.convertToType(csv, 'String');
             body.autoTuneConfig = this.AmberApiServer.ApiClient.convertToType(autotuneConfig, 'Boolean');
@@ -326,6 +325,7 @@ class AmberClient {
     async getPretrainState(sensorId) {
         try {
             await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getPretrain(sensorId)
         } catch (error) {
             throw new AmberClient.AmberCloudException(error)
@@ -340,6 +340,7 @@ class AmberClient {
     async getRootCause(sensorId) {
         try {
             await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getRootCause(sensorId)
         } catch (error) {
             throw new AmberClient.AmberCloudException(error)
@@ -353,6 +354,7 @@ class AmberClient {
     async getVersion() {
         try {
             await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getVersion()
         } catch (error) {
             throw new AmberClient.AmberCloudException(error)
