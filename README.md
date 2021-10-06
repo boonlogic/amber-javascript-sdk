@@ -31,7 +31,9 @@ The username and password should be placed in a file named _~/.Amber.license_ wh
 }
 ```
 
-The _~/.Amber.license_ file will be consulted by the Amber SDK to find and authenticate your account credentials with the Amber server. Credentials may optionally be provided instead via the environment variables `AMBER_USERNAME` and `AMBER_PASSWORD`.
+The _~/.Amber.license_ file will be consulted by the Amber SDK to find and authenticate your account credentials with the Amber server. Credentials may optionally be provided instead via the environment variables `AMBER_USERNAME` and `AMBER_PASSWORD` and `AMBER_SERVER`
+
+**amber-javascript-sdk** honors the `HTTP_PROXY` and `http_proxy` environemnt variables if the amber client resides behind a proxy.
 
 ## Connectivity test
 
@@ -49,27 +51,28 @@ async function version() {
         console.log(`getVersionResponse: ${JSON.stringify(data,null,4)}`)
     }
     catch(error) {
-        console.log(error)
-        let response = error.response
-        let request = response.request
-        console.log(`${request.url}: status=${error.status}`)
-        console.log(`body: ${response.text}`)
+        console.log(error.body)
+        console.log(`${error.method} ${error.url}: status=${error.status}`)
     }
 }
 
 version()
 ```
+
 Running the connect-example.js script should yield output like the following:
+
 ```
-$ node examples/connect-example.js
-{
-  idToken: 'eyJraWQiOiJMSElFb3JXWTVaY1lJeTZOTThMbXVBUHpWYWxUOEdTS2w3UGxiS2pTdkFRPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI1MjZlMzM2Yi00ZmY1LTQwNjQtYTY1ZS02MDBmZTA5NmMyYmEiLCJhdWQiOiIzbWFoZHZtMmU2dTlsdm5rYms2OW1hajloMCIsImNvZ25pdG86Z3JvdXBzIjpbInByb2R1Y3Rpb24iXSwiZXZlbnRfaWQiOiI1MjNmMzgzMC01Yzc3LTQ5NTYtODgwYy04YmMzZDU1OTkyOTgiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTYwMDM5NTU5MSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfdDNuMmZoUEVsIiwiY29nbml0bzp1c2VybmFtZSI6ImppbS1wcm9kIiwiZXhwIjoxNjAwMzk5MTkxLCJpYXQiOjE2MDAzOTU1OTEsImVtYWlsIjoiamltdGZyb21tbkBnbWFpbC5jb20ifQ.eklP3LPVfPGhFzSvp6HyT8L8kt0OQsFAzgD4DMYuWru-RuqkdjPV5PwdMKlGbnjv09Cw4dQsN2gdZ6dcUemPZOn40XZif5OSoQZftsCMPuuXUphKt6wtXZKYBVH-kmgokzIn_zVoGLgG6acsqZCMp_XeYBHUGMeJUjNG_Bzu18RZ6hC_tml1RzySEh2fvN21fMKxIuCBgJOOZRmSD6D-wmExcIv3qPLMOHvgdmPMAv1ujqg0ES4U2KAaqjiPAFwzKvUpjV3-kuy0l99Sc-pH481rplgbK_Xjako35IpJpyFFWAHwLcUn5b22rzxw41vU5cMXYXdwR0MbRD2a8vXocQ',
-  expiresIn: '3600',
-  refreshToken: 'eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.KRZMf9OEbQSqe8_3weF-TldpqgUNGkzU94ayATlZGj9HWwXIqRj0xxw2pY0k8HFAJ8Fy1aos_CnMsuuyKEDUhUyTtalYcEn6IvQP4C-gxJxEEDkVz-DCOijhxwS8HRF9nSizkFH8zCQaYVlao0hBEeU6uzofmB0GSPky8OTA2-Igvxq4kvE22teyHjCbM-qG7xR4Rrq4QRFWXtJqYawcZU2UpTtBe-r1NOxFyLF-0KLHj8sHePISDTNdb5632uzwzqTISV2sjND0Id5PRgmWHtL31sjdx4tPABw1HP_uvGh9bif0Sev4_7KerntDRzieOJIaHTR4qKTdRflOvesrAQ.HdrB2MB9XL1aVZD5.pBlou_qTg66pIYS2SFlWdHdDO9qcse6-96zp7dBTZHuX7eZW3abOnP09h3ieK5MmNEoN1Y4KBc5PIHWibY9NuSwW21u14sfO4wnsiO4a4PUWdJz4uUe26TX8QtiM219bfSMvPRAHzKIxdkMEKnsWePw8Kmi3KhqGo11jIaSQ9vjD36pFer0eUYzx0p92bDCyW7EveKV4EIKZYep2DoBicpLogvWxlE58rU0n8S42cjgewJodiQfIS0RiMM4UEwHw4PmP29Y6RCzbXMuw6hnkfYpqdpDvfZYNWDk0OkOOGyxQdVb3aLETdiy1B-o1tE8ZPxVwTE9w1TBmx6odCih-5qdyhSQ32nA5ztQDF2-crT8be2b0PQow6TAqOgiYriZF_uF1R__2uePYTEYsGV8YP3wDLIvdZxEW8QmyK_Tam6l4_QsbMiKwpnZYKYYYUdxcHcn45FeK6-AF7KwaOGQm3YnsQL4iARQIkOch-TBLTWJ6HcsTgRks-klaqcYoPimdekRWhuMYwLJ5RCq3ZcJy6QJBMGx2rvODe7vqGOD13YQsXsNlOhl98x6fanjC0v9d3ZGPLK7iVx7g3Pf2Eq-PSToFPayfh-lglZOe5RieJSeCE2ag3q49jerZcgsQeHDOMcaXwas51K79ltkq6ggJGvhYrP0CG30sTl7-2Hsf3jPYCajpUuWg7srm-Xs_J3l3keYWNSMWMSuLOyVb5R6WDl_YyXRIwo2oJ6epgmdyyZRtdpsILJC-YQLvq4d-A0JGAUnRhRIh3jqq0zRRyeur1s7SaBoL1vaVY1M2j8P42_WZVO7LZWA9CD-0KOILrgxzZXlddLJKibJRMVFITJ_ieJYFWLuWaexwU2F3-M3PdtHAb7uEsev469MBACJxlJw4PejXFYa1p947s23VPGe3YO0crKn-TvK2OeithgFxS_8wOX-X9y6-XSq1IJXvgTgqY82dJ7xH_2JGOMvgYZZGtE_9zZ26biMp9sXKnLT6Yz3cdjbFk7I5AZGTCaIIzTYgBipHgyJiROnB5g6U2TvyLBEAWagjl-BVn0v3ADHIlkM7Uyz8dQ1hrbamCk4mKOpUWB7K0isSxeOAWvPBYujxn7cIN7XCzpakhPn5zlZ1emXcZSAnkK4zLuocgbW5CaFqZ4_p4q2VqGUbrD_6bSD2qxk7EO88wmLBDMZShAzZvrsUTatmDMENGOsTtWCE8DLqavYW3HxkfkixmJj9r8O2CYoHT22NSHVoffG-Kz-lhnbBI_9Oz2xkac46ml7Su9fJXaBGax6gOBNL.SrEwhUF_Qo-l3PVkj23y0w',
-  tokenType: 'Bearer'
+% node connect-example.js 
+getVersionResponse: {
+    "release": "0.0.408",
+    "apiVersion": "/v1",
+    "builder": "005cbc71",
+    "expertApi": "109a9be8",
+    "expertCommon": "b1aea20e",
+    "nanoSecure": "eefb97f1",
+    "swaggerUi": "914af396"
 }
 ```
-where the dictionary `{}` lists all sensors that currently exist under the given Boon Amber account.
 
 ## Full Example
 
@@ -113,10 +116,8 @@ async function walkthrough() {
         console.log(`deleteSensorResponse = ${JSON.stringify(deleteSensorResponse,null,4)}`)
     }
     catch(error) {
-        let response = error.response
-        let request = response.request
-        console.log(`${request.url}: status=${error.status}`)
-        console.log(`body: ${response.text}`)
+        console.log(error.body)
+        console.log(`${error.method} ${error.url}: status=${error.status}`)
     }
 }
 
@@ -158,13 +159,10 @@ async function streaming() {
             let streamSensorResponse = await amberInstance.streamSensor(mySensor, line)
             console.log(`streamSensorResponse: ${JSON.stringify(streamSensorResponse,null,4)}`)
         }
-
     }
     catch(error) {
-        let response = error.response
-        let request = response.request
-        console.log(`${request.url}: status=${error.status}`)
-        console.log(`body: ${response.text}`)
+        console.log(error.body)
+        console.log(`${error.method} ${error.url}: status=${error.status}`)
     }
 }
 
@@ -202,22 +200,20 @@ async function pretraining() {
         // clean cr/nl
         filedata = filedata.replace(/[\r\n\t]/g, "")
 
-        // begin pretraining
-        let pretrainResponse = await amberInstance.pretrainSensor(mySensor, filedata, false)
+        // begin pretraining with autotuneConfig enabled
+        let pretrainResponse = await amberInstance.pretrainSensor(mySensor, filedata, true)
         console.log(`pretrainResponse: ${JSON.stringify(pretrainResponse,null,4)}`)
-        let state = pretrainResponse.response.state
+        let state = pretrainResponse.state
         while (state == "Pretraining") {
             await new Promise(r => setTimeout(r, 5000));
             let pretrainStateResponse = await amberInstance.getPretrainState(mySensor)
-            state = pretrainStateResponse.response.state
+            state = pretrainStateResponse.state
             console.log(`pretrainStateResponse: ${JSON.stringify(pretrainStateResponse,null,4)}`)
         }
     }
     catch(error) {
-        let response = error.response
-        let request = response.request
-        console.log(`${request.url}: status=${error.status}`)
-        console.log(`body: ${response.text}`)
+        console.log(error.body)
+        console.log(`${error.method} ${error.url}: status=${error.status}`)
     }
 }
 

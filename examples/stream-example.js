@@ -24,7 +24,6 @@ async function streaming() {
             let streamSensorResponse = await amberInstance.streamSensor(mySensor, line)
             console.log(`streamSensorResponse: ${JSON.stringify(streamSensorResponse,null,4)}`)
         }
-
     }
     catch(error) {
         console.log(error.body)
