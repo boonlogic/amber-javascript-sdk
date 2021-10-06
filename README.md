@@ -35,7 +35,7 @@ The _~/.Amber.license_ file will be consulted by the Amber SDK to find and authe
 
 **amber-javascript-sdk** honors the `HTTP_PROXY` and `http_proxy` environemnt variables if the amber client resides behind a proxy.
 
-[Internal Developers Notes](.md)
+[Internal Developers Notes](README-dev.md)
 
 ## Connectivity test
 
