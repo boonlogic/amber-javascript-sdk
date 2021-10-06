@@ -5,11 +5,9 @@
 
 const regeneratorRuntime = require("regenerator-runtime");
 const process = require('process')
+
 const expandHomeDir = require('expand-home-dir')
 const fs = require('fs')
-
-const superagent = require('superagent');
-require('superagent-proxy')(superagent);
 
 /** AmberClient */
 class AmberClient {
@@ -43,7 +41,7 @@ class AmberClient {
         this.license_file = process.env.AMBER_LICENSE_FILE || licenseFile
 
         // determine which license_id to use, override from environment if specified
-        this.license_id = process.env.AMBER_LICENSE_FILE || licenseId
+        this.license_id = process.env.AMBER_LICENSE_ID || licenseId
 
         // create license profile
         this.license_profile = {username: "", password: "", server: "", oauth_server: ""}
@@ -127,7 +125,6 @@ class AmberClient {
         try {
             let _tsIn = Math.floor(Date.now() / 1000)
             if (_tsIn > this.reauthTime) {
-                console.log(this.license_profile)
                 this.defaultClient.basePath = this.license_profile.oauth_server
                 let response = await this.apiInstance.postOauth2(this.auth2RequestBody)
                 if (response) {

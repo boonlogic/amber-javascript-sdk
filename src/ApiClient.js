@@ -12,7 +12,8 @@
  * Do not edit the class manually.
  *
  */
-import superagent from "superagent";
+var superagent = require('superagent');
+require('superagent-proxy')(superagent);
 import querystring from "querystring";
 
 /**
@@ -84,8 +85,9 @@ export class ApiClient {
         /*
          * Allow user to override superagent agent
          */
-         this.requestAgent = null;
+        this.requestAgent = null;
 
+        this.proxy = process.env.https_proxy || process.env.HTTPS_PROXY || process.env.http_proxy || process.env.HTTP_PROXY || null 
     }
 
     /**
@@ -452,7 +454,7 @@ export class ApiClient {
         }
 
         return new Promise((resolve, reject) => {
-            request.end((error, response) => {
+            request.proxy(this.proxy).end((error, response) => {
                 if (error) {
                     reject(error);
                 } else {
