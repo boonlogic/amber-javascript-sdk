@@ -1,6 +1,6 @@
 {
   "name": "amber-javascript-sdk",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "Boon_Logic_Amber_SDK",
   "license": "Unlicense",
   "main": "dist/sdk.js",
