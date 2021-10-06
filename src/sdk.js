@@ -44,12 +44,10 @@ class AmberClient {
         this.license_id = process.env.AMBER_LICENSE_ID || licenseId
 
         // create license profile
-        this.license_profile = {username: "", password: "", server: "", oauth_server: ""}
+        this.license_profile = {username: null, password: null, server: null, oauth_server: null}
         if (this.license_file !== null) {
             let license_path = expandHomeDir(this.license_file)
-            if (!fs.existsSync(license_path)) {
-                this.license_profile = {username: "", password: "", server: "", oauth_server: ""}
-            } else {
+            if (fs.existsSync(license_path)) {
                 let license_json = JSON.parse(fs.readFileSync(license_path).toString('utf-8'))
                 this.license_profile = license_json[this.license_id]
             }
@@ -58,20 +56,18 @@ class AmberClient {
         this.license_profile.username = process.env.AMBER_USERNAME || this.license_profile.username
         this.license_profile.password = process.env.AMBER_PASSWORD || this.license_profile.password
         this.license_profile.server = process.env.AMBER_SERVER || this.license_profile.server
-        this.license_profile.oauth_server = process.env.AMBER_OAUTH_SERVER || this.license_profile.oauth_server
-        if (this.license_profile.oauth_server === undefined) {
-            // fallback oauth_server to server if not specified
-            this.license_profile.oauth_server = this.license_profile.server
-        }
+
+        // fallback oauth_server to server if not specified
+        this.license_profile.oauth_server = process.env.AMBER_OAUTH_SERVER || this.license_profile.oauth_server || this.license_profile.server
 
         // verify reququired profile elements have been created
-        if (this.license_profile.username === "") {
+        if (this.license_profile.username === null) {
             throw new AmberClient.AmberUserException('missing username in profile')
         }
-        if (this.license_profile.password === "") {
+        if (this.license_profile.password === null) {
             throw new AmberClient.AmberUserException('missing password in profile')
         }
-        if (this.license_profile.server === "") {
+        if (this.license_profile.server === null) {
             throw new AmberClient.AmberUserException('missing server in profile')
         }
 

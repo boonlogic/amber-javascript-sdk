@@ -4,3 +4,4 @@ node_modules
 /.idea
 .travis.yml
 *.tgz
+/src/ApiClient.js
