@@ -4,9 +4,9 @@
 
 ### clone package and create a local package
 ```
-git clone git@gitlab.boonlogic.com:development:expert/amber-javascript-sdk
+git clone git@gitlab.boonlogic.com:development/expert/amber-javascript-sdk
 cd amber-javascript-sdk
-npm init
+npm install
 npm run package
 ```
 
