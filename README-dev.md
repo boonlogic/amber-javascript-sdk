@@ -6,9 +6,12 @@
 ```
 git clone git@gitlab.boonlogic.com:development/expert/amber-javascript-sdk
 cd amber-javascript-sdk
+npm link
 npm install
 npm run package
 ```
+
+Note: When finished with development, run `npm unlink amber-javascript-sdk`
 
 ### seting up example scripts
 
@@ -16,7 +19,8 @@ from amber-javascript-sdk top level directory:
 
 ```
 cd examples
-npm install ..
+npm init -y
+npm install amber-javascript-sdk
 ```
 
 ### running sample scripts
