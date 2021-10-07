@@ -13,7 +13,7 @@
  *
  */
 var superagent = require('superagent');
-require('superagent-proxy')(superagent);
+var superagent_proxy = require('superagent-proxy')(superagent)
 import querystring from "querystring";
 
 /**
@@ -381,7 +381,7 @@ export class ApiClient {
         returnType) {
 
         var url = this.buildUrl(path, pathParams);
-        var request = superagent(httpMethod, url);
+        var request = superagent_proxy(httpMethod, url);
 
         // apply authentications
         this.applyAuthToRequest(request, authNames);
@@ -453,8 +453,12 @@ export class ApiClient {
             }
         }
 
+        if (this.proxy !== null) {
+            request.proxy(this.proxy)
+        }
+
         return new Promise((resolve, reject) => {
-            request.proxy(this.proxy).end((error, response) => {
+            request.end((error, response) => {
                 if (error) {
                     reject(error);
                 } else {

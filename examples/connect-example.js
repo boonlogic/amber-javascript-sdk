@@ -7,8 +7,12 @@ async function version() {
         console.log(`getVersionResponse: ${JSON.stringify(data,null,4)}`)
     }
     catch(error) {
-        console.log(error.body)
-        console.log(`${error.method} ${error.url}: status=${error.status}`)
+        if (error.name === "AmberHttpException") {
+            console.log(error.body)
+            console.log(`${error.method} ${error.url}: status=${error.status}`)
+        } else {
+            console.log(error)
+        }
     }
 }
 

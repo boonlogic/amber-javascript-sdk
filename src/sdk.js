@@ -101,12 +101,18 @@ class AmberClient {
     /**
      * AmberCloudException is used when a an API request fails
      */
-    static AmberCloudException(exc) {
-        const error = new Error(exc.response.body);
-        error.body = exc.response.body
-        error.status = exc.status
-        error.method = exc.response.request.method
-        error.url = exc.response.request.url
+    static AmberException(error) {
+        if (error.hasOwnProperty('status'))  {
+            // this is a superagent/http response error
+            const new_error = new Error(error.response.body);
+            new_error.name = "AmberHttpException"
+            new_error.body = error.response.body
+            new_error.status = error.status
+            new_error.method = error.response.request.method
+            new_error.url = error.response.request.url
+            return new_error
+        }
+        error.name = "AmberException"
         return error
     }
 
@@ -146,7 +152,7 @@ class AmberClient {
             this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getSensors()
         } catch (error) {
-            throw new AmberClient.AmberCloudException(error)
+            throw new AmberClient.AmberException(error)
         }
     }
 
@@ -160,7 +166,7 @@ class AmberClient {
             this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getSensors(sensorId)
         } catch (error) {
-            throw new AmberClient.AmberCloudException(error)
+            throw new AmberClient.AmberException(error)
         }
     }
 
@@ -178,7 +184,7 @@ class AmberClient {
             }
             return await this.apiInstance.postSensor(postRequest)
         } catch (error) {
-            throw new AmberClient.AmberCloudException(error)
+            throw new AmberClient.AmberException(error)
         }
     }
 
@@ -194,7 +200,7 @@ class AmberClient {
             let putRequest = new this.AmberApiServer.PutSensorRequest(label)
             return await this.apiInstance.putSensor(putRequest, sensorId)
         } catch (error) {
-            throw new AmberClient.AmberCloudException(error)
+            throw new AmberClient.AmberException(error)
         }
     }
 
@@ -225,7 +231,7 @@ class AmberClient {
             body.learningMaxSamples = learningMaxSamples
             return await this.apiInstance.postConfig(body, sensorId)
         } catch (error) {
-            throw new AmberClient.AmberCloudException(error)
+            throw new AmberClient.AmberException(error)
         }
     }
 
@@ -240,7 +246,7 @@ class AmberClient {
             this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getConfig(sensorId)
         } catch (error) {
-            throw new AmberClient.AmberCloudException(error)
+            throw new AmberClient.AmberException(error)
         }
     }
 
@@ -255,7 +261,7 @@ class AmberClient {
             this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.deleteSensor(sensorId)
         } catch (error) {
-            throw new AmberClient.AmberCloudException(error)
+            throw new AmberClient.AmberException(error)
         }
     }
 
@@ -272,7 +278,7 @@ class AmberClient {
             let body = new this.AmberApiServer.PostStreamRequest(csv)
             return await this.apiInstance.postStream(body, sensorId)
         } catch (error) {
-            throw new AmberClient.AmberCloudException(error)
+            throw new AmberClient.AmberException(error)
         }
     }
 
@@ -287,7 +293,7 @@ class AmberClient {
             this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getStatus(sensorId)
         } catch (error) {
-            throw new AmberClient.AmberCloudException(error)
+            throw new AmberClient.AmberException(error)
         }
     }
 
@@ -306,7 +312,7 @@ class AmberClient {
             body.autoTuneConfig = this.AmberApiServer.ApiClient.convertToType(autotuneConfig, 'Boolean');
             return await this.apiInstance.postPretrain(body, sensorId)
         } catch (error) {
-            throw new AmberClient.AmberCloudException(error)
+            throw new AmberClient.AmberException(error)
         }
     }
 
@@ -321,7 +327,7 @@ class AmberClient {
             this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getPretrain(sensorId)
         } catch (error) {
-            throw new AmberClient.AmberCloudException(error)
+            throw new AmberClient.AmberException(error)
         }
     }
 
@@ -336,7 +342,7 @@ class AmberClient {
             this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getRootCause(sensorId)
         } catch (error) {
-            throw new AmberClient.AmberCloudException(error)
+            throw new AmberClient.AmberException(error)
         }
     }
 
@@ -350,7 +356,7 @@ class AmberClient {
             this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getVersion()
         } catch (error) {
-            throw new AmberClient.AmberCloudException(error)
+            throw new AmberClient.AmberException(error)
         }
     }
 }
