@@ -12,7 +12,6 @@ const fs = require('fs')
 /** AmberClient */
 class AmberClient {
 
-
     /**
      * AmberClient constructor. Main client which interfaces with the Amber cloud. Amber account
      * credentials are discovered within a .Amber.license file located in the
@@ -28,8 +27,10 @@ class AmberClient {
      *     `AMBER_PASSWORD`: overrides the password as found in .Amber.license file
      *     `AMBER_SERVER`: overrides the server as found in .Amber.license file
      *     `AMBER_OAUTH_SERVER`: overrides the oauth server as found in .Amber.license file
+     *     `AMBER_SSL_CERT`: path to ssl client cert file (.pem)
+     *     `AMBER_SSL_VERIFY`: Either a boolean, in which case it controls whether we verify the server’s TLS certificate, or a string, in which case it must be a path to a CA bundle to use
      */
-    constructor(licenseId = 'default', licenseFile = "~/.Amber.license") {
+    constructor(licenseId = 'default', licenseFile = "~/.Amber.license", verify = true, cert = null, timeout = 300) {
 
         this.reauthTime = Math.floor(Date.now() / 1000) - 1  // init re-auth in the past
         this.AmberApiServer = require('./index.js')
@@ -60,7 +61,7 @@ class AmberClient {
         // fallback oauth_server to server if not specified
         this.license_profile.oauth_server = process.env.AMBER_OAUTH_SERVER || this.license_profile.oauth_server || this.license_profile.server
 
-        // verify reququired profile elements have been created
+        // verify required profile elements have been created
         if (this.license_profile.username === null) {
             throw new AmberClient.AmberUserException('missing username in profile')
         }
@@ -88,6 +89,23 @@ class AmberClient {
         } catch (err) {
             throw new AmberClient.AmberUserException('server not configured')
         }
+
+        // set timeout in milliseconds
+        this.defaultClient.timeout = timeout * 1000
+
+        // process overrides for the cert and verify
+        this.license_profile.cert = process.env.AMBER_SSL_CERT || cert
+        if (this.license_profile.cert !== null) {
+            console.log("cert specification not implemented yet")
+        }
+        this.license_profile.verify = verify
+        let verify_str = process.env.AMBER_SSL_VERIFY
+        if (verify_str && verify_str.toLowerCase() === "false") {
+            this.license_profile.verify = false
+        }
+        if (this.license_profile.verify === false) {
+            this.defaultClient.verifyTLS = this.license_profile.verify
+        }
     }
 
     /**
@@ -102,7 +120,7 @@ class AmberClient {
      * AmberCloudException is used when a an API request fails
      */
     static AmberException(error) {
-        if (error.hasOwnProperty('status'))  {
+        if (error.hasOwnProperty('status')) {
             // this is a superagent/http response error
             const new_error = new Error(error.response.body);
             new_error.name = "AmberHttpException"
@@ -361,6 +379,6 @@ class AmberClient {
     }
 }
 
-module.exports = function (licenseId = 'default', licenseFile = "~/.Amber.license") {
-    return new AmberClient(licenseId, licenseFile)
+module.exports = function (licenseId = 'default', licenseFile = "~/.Amber.license", verify = true, cert = null, timeout = 300) {
+    return new AmberClient(licenseId, licenseFile, verify, cert, timeout)
 }
