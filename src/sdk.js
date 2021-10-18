@@ -9,8 +9,44 @@ const process = require('process')
 const expandHomeDir = require('expand-home-dir')
 const fs = require('fs')
 
+/**
+* AmberUserException is used when an AmberClient object
+* can't be created. (bad json, missing required fields, etc)
+*/
+class AmberUserException extends Error {
+    constructor(amber_message, error = null) {
+        let message = amber_message
+        if (error != null) {
+            message += `: ${error.message}`
+        }
+        super(message)
+        this.name = "AmberUserException"
+    }
+}
+
+/**
+ * AmberHttpException is used when a an API request fails
+ */
+class AmberHttpException extends Error {
+    constructor(amber_message, error = null) {
+        let message = amber_message
+        if (error != null) {
+            message += `: ${error.message}`
+        }
+        super(message)
+        this.name = "AmberHttpException"
+        if (error != null && error.hasOwnProperty('status')) {
+            // this is a superagent/http response error
+            this.body = error.response.body
+            this.status = error.status
+            this.method = error.response.request.method
+            this.url = error.response.request.url
+        }
+    }
+}
+
 /** AmberClient */
-class AmberClient {
+class AmberClientClass {
 
     /**
      * AmberClient constructor. Main client which interfaces with the Amber cloud. Amber account
@@ -18,7 +54,10 @@ class AmberClient {
      * home directory, or optionally overridden using environment variables.
      *
      * @licenseId  {string} [input='default'] config license identifier label found within .Amber.license file
-     * @licenseFile {string} [input='~/Amber.license'] config path to .Amber.license file
+     * @licenseFile {string} [input=''] config path (~.Amber.license file will be used if null specified)
+     * @verify {boolean} [input=] indicating whether to verify the server’s TLS certificate
+     * @cert {string} [input=null] path to ssl client cert file (.pem)
+     * @timeout {number} [input=300] maximum time length for a command
      *
      * Environment:
      *     `AMBER_LICENSE_FILE`: sets license_file path
@@ -28,9 +67,9 @@ class AmberClient {
      *     `AMBER_SERVER`: overrides the server as found in .Amber.license file
      *     `AMBER_OAUTH_SERVER`: overrides the oauth server as found in .Amber.license file
      *     `AMBER_SSL_CERT`: path to ssl client cert file (.pem)
-     *     `AMBER_SSL_VERIFY`: Either a boolean, in which case it controls whether we verify the server’s TLS certificate, or a string, in which case it must be a path to a CA bundle to use
+     *     `AMBER_SSL_VERIFY`: A boolean value indicating whether to verify the server’s TLS certificate
      */
-    constructor(licenseId = 'default', licenseFile = "~/.Amber.license", verify = true, cert = null, timeout = 300) {
+    constructor(licenseId = 'default', licenseFile = '~/.Amber.license', verify = true, cert = null, timeout = 300) {
 
         this.reauthTime = Math.floor(Date.now() / 1000) - 1  // init re-auth in the past
         this.AmberApiServer = require('./index.js')
@@ -38,56 +77,68 @@ class AmberClient {
         this.defaultClient = this.AmberApiServer.ApiClient.instance
         this.authorize_amber_pool = this.defaultClient.authentications['authorize-amber-pool']
 
-        // first load from license file, override from environment if specified
-        this.license_file = process.env.AMBER_LICENSE_FILE || licenseFile
-
         // determine which license_id to use, override from environment if specified
         this.license_id = process.env.AMBER_LICENSE_ID || licenseId
 
-        // create license profile
+        // create a stub license_profile
         this.license_profile = {username: null, password: null, server: null, oauth_server: null}
-        if (this.license_file !== null) {
-            let license_path = expandHomeDir(this.license_file)
-            if (fs.existsSync(license_path)) {
-                let license_json = JSON.parse(fs.readFileSync(license_path).toString('utf-8'))
-                this.license_profile = license_json[this.license_id]
+
+        // load from license file if necessary, override from environment if specified
+        this.license_file = process.env.AMBER_LICENSE_FILE || licenseFile
+        if (this.license_file) {
+            this.license_file = expandHomeDir(this.license_file)
+            if (fs.existsSync(this.license_file)) {
+                let blob = fs.readFileSync(this.license_file).toString('utf-8')
+                let license_json = JSON.parse(blob)
+                    if (!this.license_id) {
+                        throw new AmberUserException(`missing licenseId`)
+                    } else if (license_json.hasOwnProperty(this.license_id)) {
+                        this.license_profile = license_json[this.license_id]
+                    } else {
+                        throw new AmberUserException(`bad licenseId ${this.license_id}`)
+                    }
+            } else {
+                if (this.license_file != '~/.Amber.license') {
+                    // if license file is something other than default, throw exception
+                    throw new AmberUserException(`license file ${this.license_file} not found`)
+                }
             }
         }
 
-        this.license_profile.username = process.env.AMBER_USERNAME || this.license_profile.username
-        this.license_profile.password = process.env.AMBER_PASSWORD || this.license_profile.password
-        this.license_profile.server = process.env.AMBER_SERVER || this.license_profile.server
-
+        // override from environment
+        this.license_profile.username = process.env.AMBER_USERNAME || this.license_profile.username || null
+        this.license_profile.password = process.env.AMBER_PASSWORD || this.license_profile.password || null
+        this.license_profile.server = process.env.AMBER_SERVER || this.license_profile.server || null
         // fallback oauth_server to server if not specified
         this.license_profile.oauth_server = process.env.AMBER_OAUTH_SERVER || this.license_profile.oauth_server || this.license_profile.server
 
         // verify required profile elements have been created
         if (this.license_profile.username === null) {
-            throw new AmberClient.AmberUserException('missing username in profile')
+            throw new AmberUserException('missing username in profile')
         }
         if (this.license_profile.password === null) {
-            throw new AmberClient.AmberUserException('missing password in profile')
+            throw new AmberUserException('missing password in profile')
         }
         if (this.license_profile.server === null) {
-            throw new AmberClient.AmberUserException('missing server in profile')
+            throw new AmberUserException('missing server in profile')
         }
 
         // load the username, password and server into client
         this.auth2RequestBody = new this.AmberApiServer.PostAuth2Request()
         try {
             this.auth2RequestBody.username = this.license_profile.username
-        } catch (err) {
-            throw new AmberClient.AmberUserException('username not configured')
+        } catch (error) {
+            throw new AmberUserException('username not configured', error)
         }
         try {
             this.auth2RequestBody.password = this.license_profile.password
-        } catch (err) {
-            throw new AmberClient.AmberUserException('password not configured')
+        } catch (error) {
+            throw new AmberUserException('password not configured', error)
         }
         try {
             this.defaultClient.basePath = this.license_profile.server
-        } catch (err) {
-            throw new AmberClient.AmberUserException('server not configured')
+        } catch (error) {
+            throw new AmberUserException('server not configured', error)
         }
 
         // set timeout in milliseconds
@@ -106,32 +157,6 @@ class AmberClient {
         if (this.license_profile.verify === false) {
             this.defaultClient.verifyTLS = this.license_profile.verify
         }
-    }
-
-    /**
-     * AmberUserException is used when an AmberClient object can't be constructed.
-     */
-    static AmberUserException(message) {
-        const error = new Error(message)
-        return error
-    }
-
-    /**
-     * AmberCloudException is used when a an API request fails
-     */
-    static AmberException(error) {
-        if (error.hasOwnProperty('status')) {
-            // this is a superagent/http response error
-            const new_error = new Error(error.response.body);
-            new_error.name = "AmberHttpException"
-            new_error.body = error.response.body
-            new_error.status = error.status
-            new_error.method = error.response.request.method
-            new_error.url = error.response.request.url
-            return new_error
-        }
-        error.name = "AmberException"
-        return error
     }
 
     /**
@@ -170,7 +195,7 @@ class AmberClient {
             this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getSensors()
         } catch (error) {
-            throw new AmberClient.AmberException(error)
+            throw new AmberHttpException('listSensors failed', error)
         }
     }
 
@@ -182,9 +207,9 @@ class AmberClient {
         try {
             await this._authenticate()
             this.defaultClient.basePath = this.license_profile.server
-            return await this.apiInstance.getSensors(sensorId)
+            return await this.apiInstance.getSensor(sensorId)
         } catch (error) {
-            throw new AmberClient.AmberException(error)
+            throw new AmberHttpException('getSensor failed', error)
         }
     }
 
@@ -202,7 +227,7 @@ class AmberClient {
             }
             return await this.apiInstance.postSensor(postRequest)
         } catch (error) {
-            throw new AmberClient.AmberException(error)
+            throw new AmberHttpException('createSensor failed', error)
         }
     }
 
@@ -218,7 +243,7 @@ class AmberClient {
             let putRequest = new this.AmberApiServer.PutSensorRequest(label)
             return await this.apiInstance.putSensor(putRequest, sensorId)
         } catch (error) {
-            throw new AmberClient.AmberException(error)
+            throw new AmberHttpException('updateLabel failed', error)
         }
     }
 
@@ -232,24 +257,26 @@ class AmberClient {
      * @param learningRateDenominator
      * @param learningMaxClusters
      * @param learningMaxSamples
+     * @param anomaly_history_window
      * @returns {Promise<unknown>}
      */
     async configureSensor(sensorId, featureCount = 1, streamingWindowSize = 25,
                           samplesToBuffer = 10000, learningRateNumerator = 10,
                           learningRateDenominator = 10000, learningMaxClusters = 1000,
-                          learningMaxSamples = 1000000) {
+                          learningMaxSamples = 1000000, anomaly_history_window= 10000) {
         try {
             await this._authenticate()
             this.defaultClient.basePath = this.license_profile.server
             let body = new this.AmberApiServer.PostConfigRequest(featureCount, streamingWindowSize)
             body.samplesToBuffer = samplesToBuffer
+            body.anomalyHistoryWindow = anomaly_history_window
             body.learningRateNumerator = learningRateNumerator
             body.learningRateDenominator = learningRateDenominator
             body.learningMaxClusters = learningMaxClusters
             body.learningMaxSamples = learningMaxSamples
             return await this.apiInstance.postConfig(body, sensorId)
         } catch (error) {
-            throw new AmberClient.AmberException(error)
+            throw new AmberHttpException('configureSensor failed', error)
         }
     }
 
@@ -264,7 +291,7 @@ class AmberClient {
             this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getConfig(sensorId)
         } catch (error) {
-            throw new AmberClient.AmberException(error)
+            throw new AmberHttpException('getConfig failed', error)
         }
     }
 
@@ -279,7 +306,7 @@ class AmberClient {
             this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.deleteSensor(sensorId)
         } catch (error) {
-            throw new AmberClient.AmberException(error)
+            throw new AmberHttpException('deleteSensor failed', error)
         }
     }
 
@@ -296,7 +323,7 @@ class AmberClient {
             let body = new this.AmberApiServer.PostStreamRequest(csv)
             return await this.apiInstance.postStream(body, sensorId)
         } catch (error) {
-            throw new AmberClient.AmberException(error)
+            throw new AmberHttpException('streamSensor failed', error)
         }
     }
 
@@ -311,7 +338,7 @@ class AmberClient {
             this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getStatus(sensorId)
         } catch (error) {
-            throw new AmberClient.AmberException(error)
+            throw new AmberHttpException('getStatus failed', error)
         }
     }
 
@@ -319,6 +346,7 @@ class AmberClient {
      * Pretrain data to an amber sensor
      * @param sensorId
      * @param csv
+     * @param autotuneConfig
      * @returns {Promise<unknown>}
      */
     async pretrainSensor(sensorId, csv, autotuneConfig) {
@@ -326,11 +354,12 @@ class AmberClient {
             await this._authenticate()
             this.defaultClient.basePath = this.license_profile.server
             let body = new this.AmberApiServer.PostPretrainRequest()
+            csv = csv.replace(/[\r\n\t]/g, "")
             body.data = this.AmberApiServer.ApiClient.convertToType(csv, 'String');
             body.autoTuneConfig = this.AmberApiServer.ApiClient.convertToType(autotuneConfig, 'Boolean');
             return await this.apiInstance.postPretrain(body, sensorId)
         } catch (error) {
-            throw new AmberClient.AmberException(error)
+            throw new AmberHttpException('pretrainSensor failed', error)
         }
     }
 
@@ -345,22 +374,37 @@ class AmberClient {
             this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getPretrain(sensorId)
         } catch (error) {
-            throw new AmberClient.AmberException(error)
+            throw new AmberHttpException('getPretrainState failed', error)
         }
     }
 
     /**
      * Get rootcause
      * @param sensorId
+     * @param clusterId
+     * @param pattern
      * @returns {Promise<unknown>}
      */
-    async getRootCause(sensorId) {
+    async getRootCause(sensorId, clusterId, pattern) {
         try {
             await this._authenticate()
             this.defaultClient.basePath = this.license_profile.server
-            return await this.apiInstance.getRootCause(sensorId)
+            let opts = {}
+            if (clusterId != null) {
+                opts = {
+                    clusterID: clusterId.replace(/[\r\n\t]/g, "")
+                }
+                console.log(`opts = ${opts.clusterID}`)
+            } else if (pattern != null) {
+                pattern = pattern.replace(/[\r\n\t]/g, "")
+                opts = {
+                    pattern: pattern.replace(/[\r\n\t]/g, "")
+                }
+                console.log(`opts = ${opts.pattern}`)
+            }
+            return await this.apiInstance.getRootCause(sensorId, opts)
         } catch (error) {
-            throw new AmberClient.AmberException(error)
+            throw new AmberHttpException('getRootCause failed', error)
         }
     }
 
@@ -374,11 +418,15 @@ class AmberClient {
             this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getVersion()
         } catch (error) {
-            throw new AmberClient.AmberException(error)
+            throw new AmberHttpException('getVersion failed', error)
         }
     }
 }
 
-module.exports = function (licenseId = 'default', licenseFile = "~/.Amber.license", verify = true, cert = null, timeout = 300) {
-    return new AmberClient(licenseId, licenseFile, verify, cert, timeout)
+module.exports = {
+    AmberClient: (licenseId = 'default', licenseFile = '~/.Amber.license', verify = true, cert = null, timeout = 300) => {
+        return new AmberClientClass(licenseId, licenseFile, verify, cert, timeout)
+    },
+    AmberUserException,
+    AmberHttpException
 }

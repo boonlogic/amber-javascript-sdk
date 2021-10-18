@@ -13,24 +13,23 @@
  *
  */
 import {ApiClient} from '../ApiClient';
-import {SensorInstance} from './SensorInstance';
 
 /**
  * The PostSensorResponse model module.
  * @module model/PostSensorResponse
  * @version 1.0.3
  */
-export class PostSensorResponse extends SensorInstance {
+export class PostSensorResponse {
   /**
    * Constructs a new <code>PostSensorResponse</code>.
    * @alias module:model/PostSensorResponse
    * @class
-   * @extends module:model/SensorInstance
-   * @param label {} Additional label to be assigned for sensor
-   * @param sensorId {} Unique identifier for sensor
+   * @param label {String} Additional label to be assigned for sensor
+   * @param sensorId {String} Unique identifier for sensor
    */
   constructor(label, sensorId) {
-    super(label, sensorId);
+    this.label = label;
+    this.sensorId = sensorId;
   }
 
   /**
@@ -43,8 +42,24 @@ export class PostSensorResponse extends SensorInstance {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new PostSensorResponse();
-      SensorInstance.constructFromObject(data, obj);
+      if (data.hasOwnProperty('label'))
+        obj.label = ApiClient.convertToType(data['label'], 'String');
+      if (data.hasOwnProperty('sensorId'))
+        obj.sensorId = ApiClient.convertToType(data['sensorId'], 'String');
     }
     return obj;
   }
 }
+
+/**
+ * Additional label to be assigned for sensor
+ * @member {String} label
+ */
+PostSensorResponse.prototype.label = undefined;
+
+/**
+ * Unique identifier for sensor
+ * @member {String} sensorId
+ */
+PostSensorResponse.prototype.sensorId = undefined;
+

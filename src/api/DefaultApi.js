@@ -16,6 +16,7 @@ import {ApiClient} from "../ApiClient";
 import {Error} from '../model/Error';
 import {GetConfigResponse} from '../model/GetConfigResponse';
 import {GetPretrainResponse} from '../model/GetPretrainResponse';
+import {GetRootCauseResponse} from '../model/GetRootCauseResponse';
 import {GetSensorResponse} from '../model/GetSensorResponse';
 import {GetSensorsResponse} from '../model/GetSensorsResponse';
 import {GetStatusResponse} from '../model/GetStatusResponse';
@@ -27,11 +28,11 @@ import {PostConfigResponse} from '../model/PostConfigResponse';
 import {PostPretrainRequest} from '../model/PostPretrainRequest';
 import {PostPretrainResponse} from '../model/PostPretrainResponse';
 import {PostSensorRequest} from '../model/PostSensorRequest';
+import {PostSensorResponse} from '../model/PostSensorResponse';
 import {PostStreamRequest} from '../model/PostStreamRequest';
 import {PostStreamResponse} from '../model/PostStreamResponse';
 import {PutSensorRequest} from '../model/PutSensorRequest';
-import {RootCauseResponse} from '../model/RootCauseResponse';
-import {SensorInstance} from '../model/SensorInstance';
+import {PutSensorResponse} from '../model/PutSensorResponse';
 import {Version} from '../model/Version';
 
 /**
@@ -274,7 +275,7 @@ export class DefaultApi {
      * @param {Object} opts Optional parameters
      * @param {String} opts.clusterID An array of cluster IDs
      * @param {String} opts.pattern Patterns to compare to the nano model for the root cause analysis
-     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/RootCauseResponse} and HTTP response
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/GetRootCauseResponse} and HTTP response
      */
     getRootCauseWithHttpInfo(sensorId, opts) {
       opts = opts || {};
@@ -300,7 +301,7 @@ export class DefaultApi {
       let authNames = ['authorize-amber-pool'];
       let contentTypes = [];
       let accepts = ['application/json'];
-      let returnType = RootCauseResponse;
+      let returnType = GetRootCauseResponse;
 
       return this.apiClient.callApi(
         '/rootCause', 'GET',
@@ -316,7 +317,7 @@ export class DefaultApi {
      * @param {Object} opts Optional parameters
      * @param {String} opts.clusterID An array of cluster IDs
      * @param {String} opts.pattern Patterns to compare to the nano model for the root cause analysis
-     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/RootCauseResponse}
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/GetRootCauseResponse}
      */
     getRootCause(sensorId, opts) {
       return this.getRootCauseWithHttpInfo(sensorId, opts)
@@ -699,7 +700,7 @@ export class DefaultApi {
      * Create a new a sensor instance
      * Spawns a new sensor instance, returning its unique sensorId.
      * @param {module:model/PostSensorRequest} body Label for new sensor instance to be created
-     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/SensorInstance} and HTTP response
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/PostSensorResponse} and HTTP response
      */
     postSensorWithHttpInfo(body) {
       
@@ -725,7 +726,7 @@ export class DefaultApi {
       let authNames = ['authorize-amber-pool'];
       let contentTypes = ['application/json'];
       let accepts = ['application/json'];
-      let returnType = SensorInstance;
+      let returnType = PostSensorResponse;
 
       return this.apiClient.callApi(
         '/sensor', 'POST',
@@ -738,7 +739,7 @@ export class DefaultApi {
      * Create a new a sensor instance
      * Spawns a new sensor instance, returning its unique sensorId.
      * @param {<&vendorExtensions.x-jsdoc-type>} body Label for new sensor instance to be created
-     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/SensorInstance}
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/PostSensorResponse}
      */
     postSensor(body) {
       return this.postSensorWithHttpInfo(body)
@@ -812,7 +813,7 @@ export class DefaultApi {
      * Changes the label of an existing sensor instance to the new label specified.
      * @param {module:model/PutSensorRequest} body New label to apply to sensor instance
      * @param {String} sensorId Unique identifier for sensor
-     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/SensorInstance} and HTTP response
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/PutSensorResponse} and HTTP response
      */
     putSensorWithHttpInfo(body, sensorId) {
       
@@ -842,7 +843,7 @@ export class DefaultApi {
       let authNames = ['authorize-amber-pool'];
       let contentTypes = ['application/json'];
       let accepts = ['application/json'];
-      let returnType = SensorInstance;
+      let returnType = PutSensorResponse;
 
       return this.apiClient.callApi(
         '/sensor', 'PUT',
@@ -856,7 +857,7 @@ export class DefaultApi {
      * Changes the label of an existing sensor instance to the new label specified.
      * @param {<&vendorExtensions.x-jsdoc-type>} body New label to apply to sensor instance
      * @param {<&vendorExtensions.x-jsdoc-type>} sensorId Unique identifier for sensor
-     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/SensorInstance}
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/PutSensorResponse}
      */
     putSensor(body, sensorId) {
       return this.putSensorWithHttpInfo(body, sensorId)

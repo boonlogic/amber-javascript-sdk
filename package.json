@@ -6,7 +6,7 @@
   "main": "dist/sdk.js",
   "scripts": {
     "package": "rm -rf dist && mkdir dist && npx babel ./src -d dist --copy-files",
-    "test": "mocha --compilers js:babel-core/register --recursive",
+    "test": "mocha test/test.js",
     "generate": "cp package.json package.json.backup && swagger-codegen generate -DmoduleName=amber-javascript-sdk -DpackageName=amber-javascript-sdk -DprojectDescription='Boon_Logic_Amber_SDK' -DusePromises=true -i swagger.json -l javascript -o . && mv package.json.backup package.json",
     "docs": "documentation build src/sdk.js -f html --shallow -o docs"
   },
@@ -23,6 +23,7 @@
     "url": "git+ssh://git@github.com/boonlogic/amber-javascript-sdk.git"
   },
   "devDependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.36.0",
     "@babel/cli": "^7.15.7",
     "@babel/core": "^7.15.5",
     "@babel/plugin-proposal-decorators": "^7.15.4",
@@ -38,8 +39,9 @@
     "babel-plugin-transform-builtin-extend": "^1.1.2",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-0": "^6.24.1",
+    "chai": "^4.3.4",
     "expect.js": "~0.3.1",
-    "mocha": "~2.3.4",
+    "mocha": "^2.3.4",
     "sinon": "1.17.3"
   }
 }
