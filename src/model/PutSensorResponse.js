@@ -24,8 +24,12 @@ export class PutSensorResponse {
    * Constructs a new <code>PutSensorResponse</code>.
    * @alias module:model/PutSensorResponse
    * @class
+   * @param label {String} Additional label to be assigned for sensor
+   * @param sensorId {String} Unique identifier for sensor
    */
-  constructor() {
+  constructor(label, sensorId) {
+    this.label = label;
+    this.sensorId = sensorId;
   }
 
   /**
@@ -38,7 +42,24 @@ export class PutSensorResponse {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new PutSensorResponse();
+      if (data.hasOwnProperty('label'))
+        obj.label = ApiClient.convertToType(data['label'], 'String');
+      if (data.hasOwnProperty('sensorId'))
+        obj.sensorId = ApiClient.convertToType(data['sensorId'], 'String');
     }
     return obj;
   }
 }
+
+/**
+ * Additional label to be assigned for sensor
+ * @member {String} label
+ */
+PutSensorResponse.prototype.label = undefined;
+
+/**
+ * Unique identifier for sensor
+ * @member {String} sensorId
+ */
+PutSensorResponse.prototype.sensorId = undefined;
+

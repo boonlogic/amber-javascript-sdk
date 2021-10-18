@@ -218,7 +218,7 @@ Name | Type | Description  | Notes
 
 <a name="getRootCause"></a>
 # **getRootCause**
-> RootCauseResponse getRootCause(sensorId, opts)
+> GetRootCauseResponse getRootCause(sensorId, opts)
 
 Get root cause analysis information from a sensor
 
@@ -259,7 +259,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**RootCauseResponse**](RootCauseResponse.md)
+[**GetRootCauseResponse**](GetRootCauseResponse.md)
 
 ### Authorization
 
@@ -600,7 +600,7 @@ Name | Type | Description  | Notes
 
 <a name="postSensor"></a>
 # **postSensor**
-> SensorInstance postSensor(body)
+> PostSensorResponse postSensor(body)
 
 Create a new a sensor instance
 
@@ -636,7 +636,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**SensorInstance**](SensorInstance.md)
+[**PostSensorResponse**](PostSensorResponse.md)
 
 ### Authorization
 
@@ -700,7 +700,7 @@ Name | Type | Description  | Notes
 
 <a name="putSensor"></a>
 # **putSensor**
-> SensorInstance putSensor(body, sensorId)
+> PutSensorResponse putSensor(body, sensorId)
 
 Update label for a sensor instance
 
@@ -738,7 +738,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**SensorInstance**](SensorInstance.md)
+[**PutSensorResponse**](PutSensorResponse.md)
 
 ### Authorization
 
