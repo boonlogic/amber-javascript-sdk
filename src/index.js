@@ -51,11 +51,12 @@ import {PostConfigResponse} from './model/PostConfigResponse';
 import {PostPretrainRequest} from './model/PostPretrainRequest';
 import {PostPretrainResponse} from './model/PostPretrainResponse';
 import {PostSensorRequest} from './model/PostSensorRequest';
+import {PostSensorResponse} from './model/PostSensorResponse';
 import {PostStreamRequest} from './model/PostStreamRequest';
 import {PostStreamResponse} from './model/PostStreamResponse';
 import {PutSensorRequest} from './model/PutSensorRequest';
+import {PutSensorResponse} from './model/PutSensorResponse';
 import {SensorInstance} from './model/SensorInstance';
-import {SensorInstanceFull} from './model/SensorInstanceFull';
 import {SensorUsageInfo} from './model/SensorUsageInfo';
 import {StreamStatus} from './model/StreamStatus';
 import {StreamingEndpointUsageInfo} from './model/StreamingEndpointUsageInfo';
@@ -333,6 +334,12 @@ export {
     PostSensorRequest,
 
     /**
+     * The PostSensorResponse model constructor.
+     * @property {module:model/PostSensorResponse}
+     */
+    PostSensorResponse,
+
+    /**
      * The PostStreamRequest model constructor.
      * @property {module:model/PostStreamRequest}
      */
@@ -351,16 +358,16 @@ export {
     PutSensorRequest,
 
     /**
+     * The PutSensorResponse model constructor.
+     * @property {module:model/PutSensorResponse}
+     */
+    PutSensorResponse,
+
+    /**
      * The SensorInstance model constructor.
      * @property {module:model/SensorInstance}
      */
     SensorInstance,
-
-    /**
-     * The SensorInstanceFull model constructor.
-     * @property {module:model/SensorInstanceFull}
-     */
-    SensorInstanceFull,
 
     /**
      * The SensorUsageInfo model constructor.

@@ -13,6 +13,7 @@
  *
  */
 import {ApiClient} from '../ApiClient';
+import {SensorUsageInfo} from './SensorUsageInfo';
 
 /**
  * The GetSensorResponse model module.
@@ -24,8 +25,14 @@ export class GetSensorResponse {
    * Constructs a new <code>GetSensorResponse</code>.
    * @alias module:model/GetSensorResponse
    * @class
+   * @param label {String} Additional label to be assigned for sensor
+   * @param sensorId {String} Unique identifier for sensor
+   * @param usageInfo {module:model/SensorUsageInfo} 
    */
-  constructor() {
+  constructor(label, sensorId, usageInfo) {
+    this.label = label;
+    this.sensorId = sensorId;
+    this.usageInfo = usageInfo;
   }
 
   /**
@@ -38,7 +45,31 @@ export class GetSensorResponse {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new GetSensorResponse();
+      if (data.hasOwnProperty('label'))
+        obj.label = ApiClient.convertToType(data['label'], 'String');
+      if (data.hasOwnProperty('sensorId'))
+        obj.sensorId = ApiClient.convertToType(data['sensorId'], 'String');
+      if (data.hasOwnProperty('usageInfo'))
+        obj.usageInfo = SensorUsageInfo.constructFromObject(data['usageInfo']);
     }
     return obj;
   }
 }
+
+/**
+ * Additional label to be assigned for sensor
+ * @member {String} label
+ */
+GetSensorResponse.prototype.label = undefined;
+
+/**
+ * Unique identifier for sensor
+ * @member {String} sensorId
+ */
+GetSensorResponse.prototype.sensorId = undefined;
+
+/**
+ * @member {module:model/SensorUsageInfo} usageInfo
+ */
+GetSensorResponse.prototype.usageInfo = undefined;
+

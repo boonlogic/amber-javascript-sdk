@@ -6,7 +6,7 @@
   "main": "dist/sdk.js",
   "scripts": {
     "package": "rm -rf dist && mkdir dist && npx babel ./src -d dist --copy-files",
-    "test": "mocha",
+    "test": "mocha test/test.js",
     "generate": "cp package.json package.json.backup && swagger-codegen generate -DmoduleName=amber-javascript-sdk -DpackageName=amber-javascript-sdk -DprojectDescription='Boon_Logic_Amber_SDK' -DusePromises=true -i swagger.json -l javascript -o . && mv package.json.backup package.json",
     "docs": "documentation build src/sdk.js -f html --shallow -o docs"
   },
