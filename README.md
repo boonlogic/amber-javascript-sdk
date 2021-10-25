@@ -188,7 +188,7 @@ streaming()
 The following will process a file named pretrain.csv residing in the examples directory of this javascript.
 The entire dataset will be pretrained.
 
-[stream-example.js](examples/pretrain-example.js)<br>
+[pretrain-example.js](examples/pretrain-example.js)<br>
 [pretrain.csv](examples/pretrain.csv)
 
 ```
