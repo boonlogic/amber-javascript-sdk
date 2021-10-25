@@ -423,10 +423,8 @@ class AmberClientClass {
     }
 }
 
-module.exports = {
-    AmberClient: (licenseId = 'default', licenseFile = '~/.Amber.license', verify = true, cert = null, timeout = 300) => {
-        return new AmberClientClass(licenseId, licenseFile, verify, cert, timeout)
-    },
-    AmberUserException,
-    AmberHttpException
+exports.AmberClient = function(licenseId = 'default', licenseFile = '~/.Amber.license', verify = true, cert = null, timeout = 300) {
+    return new AmberClientClass(licenseId, licenseFile, verify, cert, timeout)
 }
+exports.AmberHttpException = AmberHttpException
+exports.AmberUserException = AmberUserException
