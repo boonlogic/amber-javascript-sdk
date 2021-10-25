@@ -44,17 +44,21 @@ The following javascript provides a basic proof-of-connectivity:
 [connect-example.js](examples/connect-example.js)
 
 ```
-const MyClient = require('amber-javascript-sdk')
+const {AmberClient,AmberHttpException,AmberUserException} = require('amber-javascript-sdk')
 
 async function version() {
-    let amberInstance = MyClient()
+    let amberInstance = AmberClient()
     try {
         const data = await amberInstance.getVersion()
         console.log(`getVersionResponse: ${JSON.stringify(data,null,4)}`)
     }
     catch(error) {
-        console.log(error.body)
-        console.log(`${error.method} ${error.url}: status=${error.status}`)
+        if (error.name === "AmberHttpException") {
+            console.log(error.body)
+            console.log(`${error.method} ${error.url}: status=${error.status}`)
+        } else {
+            console.log(error)
+        }
     }
 }
 
@@ -83,11 +87,11 @@ The following javascript will demonstrate each API call in the Amber Javascript 
 [full-example.js](examples/full-example.js)
 
 ```
-const MyClient = require('amber-javascript-sdk')
+const {AmberClient,AmberHttpException,AmberUserException} = require('amber-javascript-sdk')
 
 async function walkthrough() {
     try {
-        let amberInstance = MyClient()
+        let amberInstance = AmberClient()
 
         const listSensorsResponse = await amberInstance.listSensors()
         console.log(`listSensorsResponse: ${JSON.stringify(listSensorsResponse,null,4)}`)
@@ -118,8 +122,12 @@ async function walkthrough() {
         console.log(`deleteSensorResponse = ${JSON.stringify(deleteSensorResponse,null,4)}`)
     }
     catch(error) {
-        console.log(error.body)
-        console.log(`${error.method} ${error.url}: status=${error.status}`)
+        if (error.name === "AmberHttpException") {
+            console.log(error.body)
+            console.log(`${error.method} ${error.url}: status=${error.status}`)
+        } else {
+            console.log(error)
+        }
     }
 }
 
@@ -136,13 +144,13 @@ Each row will be fed to an Amber instance with SI analytics being displayed.
 
 ```
 const fs = require('fs')
-const MyClient = require('amber-javascript-sdk')
+const {AmberClient,AmberHttpException,AmberUserException} = require('amber-javascript-sdk')
 
 // create amber instance
 
 async function streaming() {
     try {
-        let amberInstance = new MyClient()
+        let amberInstance = new AmberClient()
 
         let createSensorResponse = await amberInstance.createSensor("sensor-1-999")
         console.log(`createSensorResponse: ${JSON.stringify(createSensorResponse,null,4)}`)
@@ -163,8 +171,12 @@ async function streaming() {
         }
     }
     catch(error) {
-        console.log(error.body)
-        console.log(`${error.method} ${error.url}: status=${error.status}`)
+        if (error.name === "AmberHttpException") {
+            console.log(error.body)
+            console.log(`${error.method} ${error.url}: status=${error.status}`)
+        } else {
+            console.log(error)
+        }
     }
 }
 
@@ -181,13 +193,13 @@ The entire dataset will be pretrained.
 
 ```
 const fs = require('fs')
-const MyClient = require('amber-javascript-sdk')
+const {AmberClient,AmberHttpException,AmberUserException} = require('amber-javascript-sdk')
 
 // pretraining example
 
 async function pretraining() {
     try {
-        let amberInstance = MyClient()
+        let amberInstance = AmberClient()
 
         let createSensorResponse = await amberInstance.createSensor("sensor-1-999")
         console.log(`createSensorResponse: ${JSON.stringify(createSensorResponse,null,4)}`)
@@ -214,8 +226,12 @@ async function pretraining() {
         }
     }
     catch(error) {
-        console.log(error.body)
-        console.log(`${error.method} ${error.url}: status=${error.status}`)
+        if (error.name === "AmberHttpException") {
+            console.log(error.body)
+            console.log(`${error.method} ${error.url}: status=${error.status}`)
+        } else {
+            console.log(error)
+        }
     }
 }
 
