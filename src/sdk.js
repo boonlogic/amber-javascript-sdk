@@ -68,6 +68,7 @@ class AmberClientClass {
      *     `AMBER_OAUTH_SERVER`: overrides the oauth server as found in .Amber.license file
      *     `AMBER_SSL_CERT`: path to ssl client cert file (.pem)
      *     `AMBER_SSL_VERIFY`: A boolean value indicating whether to verify the server’s TLS certificate
+     *     `AMBER_PROXY`: Use this proxy setting
      */
     constructor(licenseId = 'default', licenseFile = '~/.Amber.license', verify = true, cert = null, timeout = 300) {
 
@@ -143,6 +144,9 @@ class AmberClientClass {
 
         // set timeout in milliseconds
         this.defaultClient.timeout = timeout * 1000
+
+        // set the proxy
+        this.defaultClient.proxy = process.env.AMBER_PROXY || null
 
         // process overrides for the cert and verify
         this.license_profile.cert = process.env.AMBER_SSL_CERT || cert
