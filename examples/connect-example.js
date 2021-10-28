@@ -1,7 +1,7 @@
-const MyClient = require('amber-javascript-sdk')
+const {AmberClient,AmberHttpException,AmberUserException} = require('amber-javascript-sdk')
 
 async function version() {
-    let amberInstance = MyClient()
+    let amberInstance = AmberClient()
     try {
         const data = await amberInstance.getVersion()
         console.log(`getVersionResponse: ${JSON.stringify(data,null,4)}`)

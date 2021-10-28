@@ -33,7 +33,18 @@ The username and password should be placed in a file named _~/.Amber.license_ wh
 
 The _~/.Amber.license_ file will be consulted by the Amber SDK to find and authenticate your account credentials with the Amber server. Credentials may optionally be provided instead via the environment variables `AMBER_USERNAME` and `AMBER_PASSWORD` and `AMBER_SERVER`
 
-**amber-javascript-sdk** honors the `HTTP_PROXY` and `http_proxy` environemnt variables if the amber client resides behind a proxy.
+Amber configuration can be specified through the environment if a license file is not present OR if
+certain settings need to be overridden.
+
+**AMBER_LICENSE_FILE**: sets license_file path<br>
+**AMBER_LICENSE_ID**: sets license_id to use in amber license file<br>
+**AMBER_USERNAME**: overrides the username as found in .Amber.license file<br>
+**AMBER_PASSWORD**: overrides the password as found in .Amber.license file<br>
+**AMBER_SERVER**: overrides the server as found in .Amber.license file<br>
+**AMBER_OAUTH_SERVER**: overrides the oauth server as found in .Amber.license file<br>
+**AMBER_SSL_CERT**: path to ssl client cert file (.pem)<br>
+**AMBER_SSL_VERIFY**: A boolean value indicating whether to verify the server’s TLS certificate<br>
+**AMBER_PROXY**: Send requests through this proxy<br>
 
 [Internal Developers Notes](README-dev.md)
 
@@ -44,17 +55,21 @@ The following javascript provides a basic proof-of-connectivity:
 [connect-example.js](examples/connect-example.js)
 
 ```
-const MyClient = require('amber-javascript-sdk')
+const {AmberClient,AmberHttpException,AmberUserException} = require('amber-javascript-sdk')
 
 async function version() {
-    let amberInstance = MyClient()
+    let amberInstance = AmberClient()
     try {
         const data = await amberInstance.getVersion()
         console.log(`getVersionResponse: ${JSON.stringify(data,null,4)}`)
     }
     catch(error) {
-        console.log(error.body)
-        console.log(`${error.method} ${error.url}: status=${error.status}`)
+        if (error.name === "AmberHttpException") {
+            console.log(error.body)
+            console.log(`${error.method} ${error.url}: status=${error.status}`)
+        } else {
+            console.log(error)
+        }
     }
 }
 
@@ -83,11 +98,11 @@ The following javascript will demonstrate each API call in the Amber Javascript 
 [full-example.js](examples/full-example.js)
 
 ```
-const MyClient = require('amber-javascript-sdk')
+const {AmberClient,AmberHttpException,AmberUserException} = require('amber-javascript-sdk')
 
 async function walkthrough() {
     try {
-        let amberInstance = MyClient()
+        let amberInstance = AmberClient()
 
         const listSensorsResponse = await amberInstance.listSensors()
         console.log(`listSensorsResponse: ${JSON.stringify(listSensorsResponse,null,4)}`)
@@ -118,8 +133,12 @@ async function walkthrough() {
         console.log(`deleteSensorResponse = ${JSON.stringify(deleteSensorResponse,null,4)}`)
     }
     catch(error) {
-        console.log(error.body)
-        console.log(`${error.method} ${error.url}: status=${error.status}`)
+        if (error.name === "AmberHttpException") {
+            console.log(error.body)
+            console.log(`${error.method} ${error.url}: status=${error.status}`)
+        } else {
+            console.log(error)
+        }
     }
 }
 
@@ -136,13 +155,13 @@ Each row will be fed to an Amber instance with SI analytics being displayed.
 
 ```
 const fs = require('fs')
-const MyClient = require('amber-javascript-sdk')
+const {AmberClient,AmberHttpException,AmberUserException} = require('amber-javascript-sdk')
 
 // create amber instance
 
 async function streaming() {
     try {
-        let amberInstance = new MyClient()
+        let amberInstance = new AmberClient()
 
         let createSensorResponse = await amberInstance.createSensor("sensor-1-999")
         console.log(`createSensorResponse: ${JSON.stringify(createSensorResponse,null,4)}`)
@@ -163,8 +182,12 @@ async function streaming() {
         }
     }
     catch(error) {
-        console.log(error.body)
-        console.log(`${error.method} ${error.url}: status=${error.status}`)
+        if (error.name === "AmberHttpException") {
+            console.log(error.body)
+            console.log(`${error.method} ${error.url}: status=${error.status}`)
+        } else {
+            console.log(error)
+        }
     }
 }
 
@@ -176,18 +199,18 @@ streaming()
 The following will process a file named pretrain.csv residing in the examples directory of this javascript.
 The entire dataset will be pretrained.
 
-[stream-example.js](examples/pretrain-example.js)<br>
+[pretrain-example.js](examples/pretrain-example.js)<br>
 [pretrain.csv](examples/pretrain.csv)
 
 ```
 const fs = require('fs')
-const MyClient = require('amber-javascript-sdk')
+const {AmberClient,AmberHttpException,AmberUserException} = require('amber-javascript-sdk')
 
 // pretraining example
 
 async function pretraining() {
     try {
-        let amberInstance = MyClient()
+        let amberInstance = AmberClient()
 
         let createSensorResponse = await amberInstance.createSensor("sensor-1-999")
         console.log(`createSensorResponse: ${JSON.stringify(createSensorResponse,null,4)}`)
@@ -214,8 +237,12 @@ async function pretraining() {
         }
     }
     catch(error) {
-        console.log(error.body)
-        console.log(`${error.method} ${error.url}: status=${error.status}`)
+        if (error.name === "AmberHttpException") {
+            console.log(error.body)
+            console.log(`${error.method} ${error.url}: status=${error.status}`)
+        } else {
+            console.log(error)
+        }
     }
 }
 
