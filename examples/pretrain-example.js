@@ -1,11 +1,11 @@
 const fs = require('fs')
-const MyClient = require('amber-javascript-sdk')
+const {AmberClient,AmberHttpException,AmberUserException} = require('amber-javascript-sdk')
 
 // pretraining example
 
 async function pretraining() {
     try {
-        let amberInstance = MyClient()
+        let amberInstance = AmberClient()
 
         let createSensorResponse = await amberInstance.createSensor("sensor-1-999")
         console.log(`createSensorResponse: ${JSON.stringify(createSensorResponse,null,4)}`)

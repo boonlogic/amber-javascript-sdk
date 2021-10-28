@@ -1,11 +1,11 @@
 const fs = require('fs')
-const MyClient = require('amber-javascript-sdk')
+const {AmberClient,AmberHttpException,AmberUserException} = require('amber-javascript-sdk')
 
 // create amber instance
 
 async function streaming() {
     try {
-        let amberInstance = new MyClient()
+        let amberInstance = new AmberClient()
 
         let createSensorResponse = await amberInstance.createSensor("sensor-1-999")
         console.log(`createSensorResponse: ${JSON.stringify(createSensorResponse,null,4)}`)

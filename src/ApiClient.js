@@ -504,6 +504,9 @@ export class ApiClient {
             request.agent(this.requestAgent);
         }
 
+        // set user-agent
+        request.set('user-agent', 'Boon Logic / amber-javascript-sdk / superagent');
+
         // set request timeout
         request.timeout(this.timeout);
 

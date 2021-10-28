@@ -1,8 +1,8 @@
-const MyClient = require('amber-javascript-sdk')
+const {AmberClient,AmberHttpException,AmberUserException} = require('amber-javascript-sdk')
 
 async function walkthrough() {
     try {
-        let amberInstance = MyClient()
+        let amberInstance = AmberClient()
 
         const listSensorsResponse = await amberInstance.listSensors()
         console.log(`listSensorsResponse: ${JSON.stringify(listSensorsResponse,null,4)}`)
