@@ -33,7 +33,18 @@ The username and password should be placed in a file named _~/.Amber.license_ wh
 
 The _~/.Amber.license_ file will be consulted by the Amber SDK to find and authenticate your account credentials with the Amber server. Credentials may optionally be provided instead via the environment variables `AMBER_USERNAME` and `AMBER_PASSWORD` and `AMBER_SERVER`
 
-**amber-javascript-sdk** honors the `HTTP_PROXY` and `http_proxy` environemnt variables if the amber client resides behind a proxy.
+Amber configuration can be specified through the environment if a license file is not present OR if
+certain settings need to be overridden.
+
+**AMBER_LICENSE_FILE**: sets license_file path<br>
+**AMBER_LICENSE_ID**: sets license_id to use in amber license file<br>
+**AMBER_USERNAME**: overrides the username as found in .Amber.license file<br>
+**AMBER_PASSWORD**: overrides the password as found in .Amber.license file<br>
+**AMBER_SERVER**: overrides the server as found in .Amber.license file<br>
+**AMBER_OAUTH_SERVER**: overrides the oauth server as found in .Amber.license file<br>
+**AMBER_SSL_CERT**: path to ssl client cert file (.pem)<br>
+**AMBER_SSL_VERIFY**: A boolean value indicating whether to verify the server’s TLS certificate<br>
+**AMBER_PROXY**: Send requests through this proxy<br>
 
 [Internal Developers Notes](README-dev.md)
 
