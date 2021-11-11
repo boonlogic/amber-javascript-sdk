@@ -10,7 +10,7 @@
     "test-dev": "cd test && AMBER_TEST_PROFILE=dev mocha --timeout 180000 test.js",
     "test-v1": "cd test && AMBER_TEST_PROFILE=v1 mocha --timeout 180000 test.js",
     "test-v1next": "cd test && AMBER_TEST_PROFILE=v1next mocha --timeout 180000 test.js",
-    "generate": "cp package.json package.json.backup && swagger-codegen generate -DmoduleName=amber-javascript-sdk -DpackageName=amber-javascript-sdk -DprojectDescription='Boon_Logic_Amber_SDK' -DusePromises=true -i swagger.json -l javascript -o . && mv package.json.backup package.json",
+    "generate": "./generate-from-spec.sh",
     "docs": "documentation build src/sdk.js -f html --shallow -o docs"
   },
   "browser": {
