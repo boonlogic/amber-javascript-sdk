@@ -318,13 +318,14 @@ class AmberClientClass {
      * Stream data to an amber sensor and return the inference result
      * @param sensorId
      * @param csv
+     * @param saveImage
      * @returns {Promise<unknown>}
      */
-    async streamSensor(sensorId, csv) {
+    async streamSensor(sensorId, csv, saveImage = true) {
         try {
             await this._authenticate()
             this.defaultClient.basePath = this.license_profile.server
-            let body = new this.AmberApiServer.PostStreamRequest(csv)
+            let body = new this.AmberApiServer.PostStreamRequest(saveImage, csv)
             return await this.apiInstance.postStream(body, sensorId)
         } catch (error) {
             throw new AmberHttpException('streamSensor failed', error)

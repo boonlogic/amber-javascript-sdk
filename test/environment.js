@@ -44,23 +44,6 @@ describe('#amber_instance()', function () {
             expect(profile3.license_profile.verify).to.eql(false)
             await secrets.restore_environment(saved_env)
         })
-
-        it('should environmental settings when default license file is absent', async function () {
-            let saved_env = await secrets.clear_environment()
-            // override items in license file through environment
-            process.env.AMBER_USERNAME = 'xyyyAmberUser'
-            process.env.AMBER_PASSWORD = 'bogus_password'
-            process.env.AMBER_SERVER = 'https://temp.amber.boonlogic.com/v1'
-            process.env.AMBER_SSL_CERT = 'bogus_ssl_cert'
-            process.env.AMBER_SSL_VERIFY = 'false'
-            let profile3 = AmberClient('default', '~/.Amber.license')
-            expect(profile3.license_profile.username).to.eql('xyyyAmberUser')
-            expect(profile3.license_profile.password).to.eql('bogus_password')
-            expect(profile3.license_profile.server).to.eql('https://temp.amber.boonlogic.com/v1')
-            expect(profile3.license_profile.cert).to.eql('bogus_ssl_cert')
-            expect(profile3.license_profile.verify).to.eql(false)
-            await secrets.restore_environment(saved_env)
-        })
     })
 
     context('environmental negative tests', function () {

@@ -24,9 +24,11 @@ export class PostStreamRequest {
    * Constructs a new <code>PostStreamRequest</code>.
    * @alias module:model/PostStreamRequest
    * @class
+   * @param saveImage {Boolean} save the sensor after calculation
    * @param data {String} 
    */
-  constructor(data) {
+  constructor(saveImage, data) {
+    this.saveImage = saveImage;
     this.data = data;
   }
 
@@ -40,12 +42,20 @@ export class PostStreamRequest {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new PostStreamRequest();
+      if (data.hasOwnProperty('saveImage'))
+        obj.saveImage = ApiClient.convertToType(data['saveImage'], 'Boolean');
       if (data.hasOwnProperty('data'))
         obj.data = ApiClient.convertToType(data['data'], 'String');
     }
     return obj;
   }
 }
+
+/**
+ * save the sensor after calculation
+ * @member {Boolean} saveImage
+ */
+PostStreamRequest.prototype.saveImage = undefined;
 
 /**
  * @member {String} data

@@ -10,7 +10,7 @@ describe('#authenticate()', function () {
             let saved_env = await secrets.clear_environment()
             try {
                 await secrets.load_credentials_into_env()
-                let amber = AmberClient()
+                let amber = AmberClient(null, null)
                 expect(await amber._authenticate()).to.equal(true)
             } catch (error) {
                 assert(false, 'unintended exception from _authentication')
@@ -23,7 +23,7 @@ describe('#authenticate()', function () {
             try {
                 await secrets.load_credentials_into_env()
                 process.env.AMBER_PASSWORD = 'bad-password'
-                let amber = AmberClient()
+                let amber = AmberClient(null, null)
                 await amber._authenticate()
                 await secrets.restore_environment(saved_env)
             } catch (error) {

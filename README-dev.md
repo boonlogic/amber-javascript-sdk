@@ -37,6 +37,21 @@ node connect-example.js
 * Execute the `npm publish` command.  You will need a login to the npmjs registry.  The new package should appear at: [https://www.npmjs.com/package/amber-javascript-sdk](https://www.npmjs.com/package/amber-javascript-sdk)
 
 
+### regenerating models via codegen
 
+When the amber swagger specification has changed, it will be necessary to
+regenerate the models and supporting code via codegen.  This is done through
+the following procedure
 
+* Copy amber-api.json specification into amber-javascript-sdk directory as `swagger.json`
+
+* Run swagger generator
+
+```
+npm run generate
+```
+
+It may be necessary at this point to edit the src/sdk.js file to update the interface for any
+new features.  For example, a property was added to a model that now needs to become a parameter
+to an function.
 
