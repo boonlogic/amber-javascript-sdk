@@ -48,6 +48,7 @@ import {PostAuth2Request} from './model/PostAuth2Request';
 import {PostAuth2Response} from './model/PostAuth2Response';
 import {PostConfigRequest} from './model/PostConfigRequest';
 import {PostConfigResponse} from './model/PostConfigResponse';
+import {PostFeatureConfig} from './model/PostFeatureConfig';
 import {PostPretrainRequest} from './model/PostPretrainRequest';
 import {PostPretrainResponse} from './model/PostPretrainResponse';
 import {PostSensorRequest} from './model/PostSensorRequest';
@@ -314,6 +315,12 @@ export {
      * @property {module:model/PostConfigResponse}
      */
     PostConfigResponse,
+
+    /**
+     * The PostFeatureConfig model constructor.
+     * @property {module:model/PostFeatureConfig}
+     */
+    PostFeatureConfig,
 
     /**
      * The PostPretrainRequest model constructor.

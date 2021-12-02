@@ -262,12 +262,14 @@ class AmberClientClass {
      * @param learningMaxClusters
      * @param learningMaxSamples
      * @param anomaly_history_window
+     * @param features
      * @returns {Promise<unknown>}
      */
     async configureSensor(sensorId, featureCount = 1, streamingWindowSize = 25,
                           samplesToBuffer = 10000, learningRateNumerator = 10,
                           learningRateDenominator = 10000, learningMaxClusters = 1000,
-                          learningMaxSamples = 1000000, anomaly_history_window= 10000) {
+                          learningMaxSamples = 1000000, anomaly_history_window= 10000,
+                          features = []) {
         try {
             await this._authenticate()
             this.defaultClient.basePath = this.license_profile.server
@@ -278,6 +280,7 @@ class AmberClientClass {
             body.learningRateDenominator = learningRateDenominator
             body.learningMaxClusters = learningMaxClusters
             body.learningMaxSamples = learningMaxSamples
+            body.features = features
             return await this.apiInstance.postConfig(body, sensorId)
         } catch (error) {
             throw new AmberHttpException('configureSensor failed', error)

@@ -51,6 +51,8 @@ export class FeatureConfig {
         obj.maxVal = ApiClient.convertToType(data['maxVal'], 'Number');
       if (data.hasOwnProperty('weight'))
         obj.weight = ApiClient.convertToType(data['weight'], 'Number');
+      if (data.hasOwnProperty('label'))
+        obj.label = ApiClient.convertToType(data['label'], 'String');
     }
     return obj;
   }
@@ -78,4 +80,10 @@ FeatureConfig.prototype.maxVal = undefined;
  * @member {Number} weight
  */
 FeatureConfig.prototype.weight = undefined;
+
+/**
+ * label associated with feature
+ * @member {String} label
+ */
+FeatureConfig.prototype.label = undefined;
 
