@@ -85,7 +85,29 @@ describe('#sensor_ops()', function () {
     })
 
     context('configureSensor', function () {
-        it('should configure the test sensor', async function () {
+        it('should configure the test sensor with custom features', async function () {
+            try {
+                let features = [{'minVal': 1, 'maxVal': 10, 'label': 'fancy-label'}]
+                let response = await amber.configureSensor(test_sensor, 1, 25,
+                    10000, 10,
+                    10000, 1000,
+                    1000000, 10000, features)
+                expect(response.featureCount).to.equal(1)
+                expect(response.streamingWindowSize).to.equal(25)
+                expect(response.samplesToBuffer).to.equal(10000)
+                expect(response.learningRateNumerator).to.equal(10)
+                expect(response.learningRateDenominator).to.equal(10000)
+                expect(response.learningMaxClusters).to.equal(1000)
+                expect(response.learningMaxSamples).to.equal(1000000)
+                expect(response.anomalyHistoryWindow).to.equal(10000)
+                expect(response.features[0].minVal).to.equal(1)
+                expect(response.features[0].maxVal).to.equal(10)
+                expect(response.features[0].label).to.equal('fancy-label')
+            } catch (error) {
+                assert.fail(!error, error, 'unintended exception from configureSensor')
+            }
+        })
+        it('should configure the test sensor using default feature values', async function () {
             try {
                 let response = await amber.configureSensor(test_sensor, 1, 25,
                     10000, 10,
@@ -99,6 +121,8 @@ describe('#sensor_ops()', function () {
                 expect(response.learningMaxClusters).to.equal(1000)
                 expect(response.learningMaxSamples).to.equal(1000000)
                 expect(response.anomalyHistoryWindow).to.equal(10000)
+                expect(response.features[0].minVal).to.equal(0)
+                expect(response.features[0].maxVal).to.equal(1)
             } catch (error) {
                 assert.fail(!error, error, 'unintended exception from configureSensor')
             }

@@ -11,3 +11,4 @@ Name | Type | Description | Notes
 **learningRateDenominator** | **Number** | enables graduation requirements for learning | 
 **learningMaxClusters** | **Number** | learning graduation requirement for stopping learning upon reaching this cluster count | 
 **learningMaxSamples** | **Number** | learning graduation requirement for stopping learning after acquiring this many samples | 
+**features** | [**[FeatureConfig]**](FeatureConfig.md) |  | [optional] 
