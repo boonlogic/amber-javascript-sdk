@@ -13,7 +13,7 @@ const fs = require('fs')
 * AmberUserException is used when an AmberClient object
 * can't be created. (bad json, missing required fields, etc)
 */
-class AmberUserException extends Error {
+export class AmberUserException extends Error {
     constructor(amber_message, error = null) {
         let message = amber_message
         if (error != null) {
@@ -27,7 +27,7 @@ class AmberUserException extends Error {
 /**
  * AmberHttpException is used when a an API request fails
  */
-class AmberHttpException extends Error {
+export class AmberHttpException extends Error {
     constructor(amber_message, error = null) {
         let message = amber_message
         if (error != null) {
@@ -46,7 +46,7 @@ class AmberHttpException extends Error {
 }
 
 /** AmberClient */
-class AmberClientClass {
+export class AmberClientClass {
 
     /**
      * AmberClient constructor. Main client which interfaces with the Amber cloud. Amber account
@@ -429,8 +429,10 @@ class AmberClientClass {
     }
 }
 
-exports.AmberClient = function(licenseId = 'default', licenseFile = '~/.Amber.license', verify = true, cert = null, timeout = 300) {
+export function AmberClient(licenseId = 'default', licenseFile = '~/.Amber.license', verify = true, cert = null, timeout = 300) {
     return new AmberClientClass(licenseId, licenseFile, verify, cert, timeout)
 }
-exports.AmberHttpException = AmberHttpException
-exports.AmberUserException = AmberUserException
+
+import {TSMuxFromFiles} from "./tsmux.js"
+import {TSMuxFromBlobs} from "./tsmux.js"
+export {TSMuxFromFiles, TSMuxFromBlobs}

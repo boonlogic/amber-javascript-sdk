@@ -20,7 +20,7 @@ const fs = require('fs')
  * @param  {...array} blobs [strings containing data, vectors will be built in order the files are provided]
  * @return {array} csv string
  */
-function TSMuxFromBlobs(format, blobs) {
+export function TSMuxFromBlobs(format, blobs) {
     try {
         let objs = []
         let featureIdx = 0
@@ -60,7 +60,7 @@ function TSMuxFromBlobs(format, blobs) {
  * @param  {array} files [data files to read from, vectors will be built in order the files are provided]
  * @return {string} csv string
  */
-function TSMuxFromFiles(format, files) {
+export function TSMuxFromFiles(format, files) {
     try {
         let objs = []
         let featureIdx = 0
@@ -221,17 +221,3 @@ function compare(a, b) {
     }
     return 0;
 }
-
-export {TSMuxFromBlobs, TSMuxFromFiles}
-
-// example demonstrating TSMuxFromFiles
-// let csvString = TSMuxFromFiles("json", ["DCD_Chiller-5_ActivePower.txt", "DCD_Chiller-5_InletTemp.txt", "DCD_Chiller-5_OutletTemp.txt", "DCD_Chiller-5_TempSP.txt"])
-// console.log("done")
-
-// example demonstrating TSMuxFromBlobs
-// let activePower = fs.readFileSync('DCD_Chiller-5_ActivePower.txt').toString('utf-8')
-// let inletTemp = fs.readFileSync('DCD_Chiller-5_InletTemp.txt').toString('utf-8')
-// let outletTemp = fs.readFileSync('DCD_Chiller-5_OutletTemp.txt').toString('utf-8')
-// let tempSP = fs.readFileSync('DCD_Chiller-5_TempSP.txt').toString('utf-8')
-
-// let csvString = TSMuxFromBlobs("json", [activePower, inletTemp, outletTemp, tempSP])
