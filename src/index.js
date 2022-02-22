@@ -66,7 +66,7 @@ import {Uint32Array} from './model/Uint32Array';
 import {Uint64Array} from './model/Uint64Array';
 import {Version} from './model/Version';
 import {VersionNumber} from './model/VersionNumber';
-import {DefaultApi} from './api/DefaultApi';
+// import {DefaultApi} from './api/DefaultApi';
 
 /**
 * Boon_Logic_Amber_API_Server.<br>
@@ -428,5 +428,5 @@ export {
     * The DefaultApi service constructor.
     * @property {module:api/DefaultApi}
     */
-    DefaultApi
+    // DefaultApi
 };

@@ -328,12 +328,13 @@ describe('#sensor_ops()', function () {
             try {
                 let response = await amber.getVersion()
                 expect(response).to.be.a('object')
-                expect(response.release).to.be.a('string')
+                expect(response['api-version']).to.be.a('string')
                 expect(response.builder).to.be.a('string')
-                expect(response.expertApi).to.be.a('string')
-                expect(response.expertCommon).to.be.a('string')
-                expect(response.nanoSecure).to.be.a('string')
-                expect(response.swaggerUi).to.be.a('string')
+                expect(response['expert-api']).to.be.a('string')
+                expect(response['expert-common']).to.be.a('string')
+                expect(response['nano-secure']).to.be.a('string')
+                expect(response.release).to.be.a('string')
+                expect(response['swagger-ui']).to.be.a('string')
             } catch (error) {
                 assert.fail(!error, error, 'unintended exception from getVersion')
             }

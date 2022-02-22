@@ -5,14 +5,18 @@
 
 const regeneratorRuntime = require("regenerator-runtime");
 const process = require('process')
+const axios = require('axios')
+const parseurl = require('parse-url')
+const https = require('https')
+const {gzip} = require('node-gzip')
 
 const expandHomeDir = require('expand-home-dir')
 const fs = require('fs')
 
 /**
-* AmberUserException is used when an AmberClient object
-* can't be created. (bad json, missing required fields, etc)
-*/
+ * AmberUserException is used when an AmberClient object
+ * can't be created. (bad json, missing required fields, etc)
+ */
 export class AmberUserException extends Error {
     constructor(amber_message, error = null) {
         let message = amber_message
@@ -25,25 +29,17 @@ export class AmberUserException extends Error {
 }
 
 /**
- * AmberHttpException is used when a an API request fails
+ * AmberHttpException is used when an API request fails
  */
-export class AmberHttpException extends Error {
-    constructor(amber_message, error = null) {
-        let message = amber_message
-        if (error != null) {
-            message += `: ${error.message}`
-        }
-        super(message)
-        this.name = "AmberHttpException"
-        if (error != null && error.hasOwnProperty('status')) {
-            // this is a superagent/http response error
-            this.body = error.response.body
-            this.status = error.status
-            this.method = error.response.request.method
-            this.url = error.response.request.url
-        }
-    }
+export function AmberHttpException(err_response) {
+    this.name = "AmberHttpException"
+    this.message = JSON.stringify(err_response.response.data)
+    this.method = err_response.config.method
+    this.status = err_response.response.status
+    this.url = `${err_response.config.baseURL}${err_response.config.url}`
 }
+
+AmberHttpException.prototype = Error.prototype
 
 /** AmberClient */
 export class AmberClientClass {
@@ -73,10 +69,9 @@ export class AmberClientClass {
     constructor(licenseId = 'default', licenseFile = '~/.Amber.license', verify = true, cert = null, timeout = 300) {
 
         this.reauthTime = Math.floor(Date.now() / 1000) - 1  // init re-auth in the past
+        this.apiKey = ''
+
         this.AmberApiServer = require('./index.js')
-        this.apiInstance = new this.AmberApiServer.DefaultApi()
-        this.defaultClient = this.AmberApiServer.ApiClient.instance
-        this.authorize_amber_pool = this.defaultClient.authentications['authorize-amber-pool']
 
         // determine which license_id to use, override from environment if specified
         this.license_id = process.env.AMBER_LICENSE_ID || licenseId
@@ -91,13 +86,13 @@ export class AmberClientClass {
             if (fs.existsSync(this.license_file)) {
                 let blob = fs.readFileSync(this.license_file).toString('utf-8')
                 let license_json = JSON.parse(blob)
-                    if (!this.license_id) {
-                        throw new AmberUserException(`missing licenseId`)
-                    } else if (license_json.hasOwnProperty(this.license_id)) {
-                        this.license_profile = license_json[this.license_id]
-                    } else {
-                        throw new AmberUserException(`bad licenseId ${this.license_id}`)
-                    }
+                if (!this.license_id) {
+                    throw new AmberUserException(`missing licenseId`)
+                } else if (license_json.hasOwnProperty(this.license_id)) {
+                    this.license_profile = license_json[this.license_id]
+                } else {
+                    throw new AmberUserException(`bad licenseId ${this.license_id}`)
+                }
             } else {
                 if (this.license_file != '~/.Amber.license') {
                     // if license file is something other than default, throw exception
@@ -136,31 +131,51 @@ export class AmberClientClass {
         } catch (error) {
             throw new AmberUserException('password not configured', error)
         }
-        try {
-            this.defaultClient.basePath = this.license_profile.server
-        } catch (error) {
-            throw new AmberUserException('server not configured', error)
+
+        // create a proxy configuration if specified
+        let proxyEnv = process.env.AMBER_PROXY || null
+        if (proxyEnv !== null) {
+            let parsedProxy = parseurl(proxyEnv)
+            this.proxy = {
+                host: parsedProxy.resource,
+                port: parsedProxy.port,
+                protocol: parsedProxy.protocol,
+            }
         }
-
-        // set timeout in milliseconds
-        this.defaultClient.timeout = timeout * 1000
-
-        // set the proxy
-        this.defaultClient.proxy = process.env.AMBER_PROXY || null
 
         // process overrides for the cert and verify
         this.license_profile.cert = process.env.AMBER_SSL_CERT || cert
         if (this.license_profile.cert !== null) {
             console.log("cert specification not implemented yet")
         }
+
+        // default to verify SSL cert
         this.license_profile.verify = verify
+        delete process.env.NODE_TLS_REJECT_UNAUTHORIZED
+
+        // override from environment if required
         let verify_str = process.env.AMBER_SSL_VERIFY
         if (verify_str && verify_str.toLowerCase() === "false") {
             this.license_profile.verify = false
         }
+        let httpsAgent = undefined
         if (this.license_profile.verify === false) {
-            this.defaultClient.verifyTLS = this.license_profile.verify
+            httpsAgent = new https.Agent({
+                rejectUnauthorized: false
+            })
         }
+
+        // generate the new axios instance
+        this.client = axios.create({
+            baseURL: `${this.license_profile.server}/`,
+            timeout: timeout * 1000,
+            headers: {
+                'User-Agent': 'Boon Logic / amber-javascript-sdk / axios',
+                'Content-Type': 'application/json'
+            },
+            proxy: this.proxy,
+            httpsAgent: httpsAgent
+        });
     }
 
     /**
@@ -174,19 +189,18 @@ export class AmberClientClass {
         try {
             let _tsIn = Math.floor(Date.now() / 1000)
             if (_tsIn > this.reauthTime) {
-                this.defaultClient.basePath = this.license_profile.oauth_server
-                let response = await this.apiInstance.postOauth2(this.auth2RequestBody)
-                if (response) {
-                    this.authorize_amber_pool.apiKey = response.idToken
-                    this.reauthTime = _tsIn + parseInt(response.expiresIn) - 60
+                let payload = this.auth2RequestBody
+                let response = await axios.post(`${this.license_profile.oauth_server}/oauth2`, payload)
+                if (response.status === 200) {
+                    this.apiKey = response.data.idToken
+                    this.reauthTime = _tsIn + parseInt(response.data.expiresIn - 60)
                     return true
-                } else {
-                    return false
                 }
+                return false
             }
             return true
         } catch (error) {
-            throw(error)
+            throw new AmberHttpException(error)
         }
     }
 
@@ -195,11 +209,10 @@ export class AmberClientClass {
      */
     async listSensors() {
         try {
-            await this._authenticate()
-            this.defaultClient.basePath = this.license_profile.server
-            return await this.apiInstance.getSensors()
+            let response = await this.apiCall('get', 'sensors', null, null, null)
+            return Promise.resolve(response.data)
         } catch (error) {
-            throw new AmberHttpException('listSensors failed', error)
+            throw(error)
         }
     }
 
@@ -209,11 +222,11 @@ export class AmberClientClass {
      */
     async getSensor(sensorId) {
         try {
-            await this._authenticate()
-            this.defaultClient.basePath = this.license_profile.server
-            return await this.apiInstance.getSensor(sensorId)
+            let headers = {'sensorId': sensorId}
+            let response = await this.apiCall('get', 'sensor', headers, null, null)
+            return Promise.resolve(response.data)
         } catch (error) {
-            throw new AmberHttpException('getSensor failed', error)
+            throw(error)
         }
     }
 
@@ -223,15 +236,14 @@ export class AmberClientClass {
      */
     async createSensor(label = undefined) {
         try {
-            await this._authenticate()
-            this.defaultClient.basePath = this.license_profile.server
             let postRequest = new this.AmberApiServer.PostSensorRequest(label)
-            if (label) {
+            if (label != undefined) {
                 postRequest.label = label
             }
-            return await this.apiInstance.postSensor(postRequest)
+            let response = await this.apiCall('post', 'sensor', null, null, postRequest)
+            return Promise.resolve(response.data)
         } catch (error) {
-            throw new AmberHttpException('createSensor failed', error)
+            throw(error)
         }
     }
 
@@ -242,12 +254,12 @@ export class AmberClientClass {
      */
     async updateLabel(sensorId, label) {
         try {
-            await this._authenticate()
-            this.defaultClient.basePath = this.license_profile.server
+            let headers = {'sensorId': sensorId}
             let putRequest = new this.AmberApiServer.PutSensorRequest(label)
-            return await this.apiInstance.putSensor(putRequest, sensorId)
+            let response = await this.apiCall('put', 'sensor', headers, null, putRequest)
+            return Promise.resolve(response.data)
         } catch (error) {
-            throw new AmberHttpException('updateLabel failed', error)
+            throw(error)
         }
     }
 
@@ -268,22 +280,22 @@ export class AmberClientClass {
     async configureSensor(sensorId, featureCount = 1, streamingWindowSize = 25,
                           samplesToBuffer = 10000, learningRateNumerator = 10,
                           learningRateDenominator = 10000, learningMaxClusters = 1000,
-                          learningMaxSamples = 1000000, anomaly_history_window= 10000,
+                          learningMaxSamples = 1000000, anomaly_history_window = 10000,
                           features = []) {
         try {
-            await this._authenticate()
-            this.defaultClient.basePath = this.license_profile.server
-            let body = new this.AmberApiServer.PostConfigRequest(featureCount, streamingWindowSize)
-            body.samplesToBuffer = samplesToBuffer
-            body.anomalyHistoryWindow = anomaly_history_window
-            body.learningRateNumerator = learningRateNumerator
-            body.learningRateDenominator = learningRateDenominator
-            body.learningMaxClusters = learningMaxClusters
-            body.learningMaxSamples = learningMaxSamples
-            body.features = features
-            return await this.apiInstance.postConfig(body, sensorId)
+            let headers = {'sensorId': sensorId}
+            let postRequest = new this.AmberApiServer.PostConfigRequest(featureCount, streamingWindowSize)
+            postRequest.samplesToBuffer = samplesToBuffer
+            postRequest.anomalyHistoryWindow = anomaly_history_window
+            postRequest.learningRateNumerator = learningRateNumerator
+            postRequest.learningRateDenominator = learningRateDenominator
+            postRequest.learningMaxClusters = learningMaxClusters
+            postRequest.learningMaxSamples = learningMaxSamples
+            postRequest.features = features
+            let response = await this.apiCall('post', 'config', headers, null, postRequest)
+            return Promise.resolve(response.data)
         } catch (error) {
-            throw new AmberHttpException('configureSensor failed', error)
+            throw(error)
         }
     }
 
@@ -294,11 +306,11 @@ export class AmberClientClass {
      */
     async getConfig(sensorId) {
         try {
-            await this._authenticate()
-            this.defaultClient.basePath = this.license_profile.server
-            return await this.apiInstance.getConfig(sensorId)
+            let headers = {'sensorId': sensorId}
+            let response = await this.apiCall('get', 'config', headers, null, null)
+            return Promise.resolve(response.data)
         } catch (error) {
-            throw new AmberHttpException('getConfig failed', error)
+            throw(error)
         }
     }
 
@@ -309,11 +321,11 @@ export class AmberClientClass {
      */
     async deleteSensor(sensorId) {
         try {
-            await this._authenticate()
-            this.defaultClient.basePath = this.license_profile.server
-            return await this.apiInstance.deleteSensor(sensorId)
+            let headers = {'sensorId': sensorId}
+            let response = await this.apiCall('delete', 'sensor', headers, null, null)
+            return Promise.resolve(response.data)
         } catch (error) {
-            throw new AmberHttpException('deleteSensor failed', error)
+            throw(error)
         }
     }
 
@@ -326,12 +338,12 @@ export class AmberClientClass {
      */
     async streamSensor(sensorId, csv, saveImage = true) {
         try {
-            await this._authenticate()
-            this.defaultClient.basePath = this.license_profile.server
-            let body = new this.AmberApiServer.PostStreamRequest(saveImage, csv)
-            return await this.apiInstance.postStream(body, sensorId)
+            let headers = {'sensorId': sensorId}
+            let postRequest = new this.AmberApiServer.PostStreamRequest(saveImage, csv)
+            let response = await this.apiCall('post', 'stream', headers, null, postRequest)
+            return Promise.resolve(response.data)
         } catch (error) {
-            throw new AmberHttpException('streamSensor failed', error)
+            throw(error)
         }
     }
 
@@ -342,11 +354,11 @@ export class AmberClientClass {
      */
     async getStatus(sensorId) {
         try {
-            await this._authenticate()
-            this.defaultClient.basePath = this.license_profile.server
-            return await this.apiInstance.getStatus(sensorId)
+            let headers = {'sensorId': sensorId}
+            let response = await this.apiCall('get', 'status', headers, null, null)
+            return Promise.resolve(response.data)
         } catch (error) {
-            throw new AmberHttpException('getStatus failed', error)
+            throw(error)
         }
     }
 
@@ -357,17 +369,18 @@ export class AmberClientClass {
      * @param autotuneConfig
      * @returns {Promise<unknown>}
      */
-    async pretrainSensor(sensorId, csv, autotuneConfig) {
+    async pretrainSensor(sensorId, csv, autotuneConfig = undefined) {
         try {
-            await this._authenticate()
-            this.defaultClient.basePath = this.license_profile.server
-            let body = new this.AmberApiServer.PostPretrainRequest()
+            let headers = {'sensorId': sensorId}
             csv = csv.replace(/[\r\n\t]/g, "")
-            body.data = this.AmberApiServer.ApiClient.convertToType(csv, 'String');
-            body.autoTuneConfig = this.AmberApiServer.ApiClient.convertToType(autotuneConfig, 'Boolean');
-            return await this.apiInstance.postPretrain(body, sensorId)
+            let postRequest = new this.AmberApiServer.PostPretrainRequest(csv)
+            if (autotuneConfig !== undefined) {
+                postRequest.autoTuneConfig = autotuneConfig
+            }
+            let response = await this.apiCall('post', 'pretrain', headers, null, postRequest)
+            return Promise.resolve(response.data)
         } catch (error) {
-            throw new AmberHttpException('pretrainSensor failed', error)
+            throw(error)
         }
     }
 
@@ -378,11 +391,11 @@ export class AmberClientClass {
      */
     async getPretrainState(sensorId) {
         try {
-            await this._authenticate()
-            this.defaultClient.basePath = this.license_profile.server
-            return await this.apiInstance.getPretrain(sensorId)
+            let headers = {'sensorId': sensorId}
+            let response = await this.apiCall('get', 'pretrain', headers, null, null)
+            return Promise.resolve(response.data)
         } catch (error) {
-            throw new AmberHttpException('getPretrainState failed', error)
+            throw(error)
         }
     }
 
@@ -395,22 +408,22 @@ export class AmberClientClass {
      */
     async getRootCause(sensorId, clusterId, pattern) {
         try {
-            await this._authenticate()
-            this.defaultClient.basePath = this.license_profile.server
-            let opts = {}
+            let query = {}
+            let headers = {'sensorId': sensorId}
             if (clusterId != null) {
-                opts = {
+                query = {
                     clusterID: clusterId.replace(/[\r\n\t]/g, "")
                 }
             } else if (pattern != null) {
                 pattern = pattern.replace(/[\r\n\t]/g, "")
-                opts = {
+                query = {
                     pattern: pattern.replace(/[\r\n\t]/g, "")
                 }
             }
-            return await this.apiInstance.getRootCause(sensorId, opts)
+            let response = await this.apiCall('get', 'rootCause', headers, query, null)
+            return Promise.resolve(response.data)
         } catch (error) {
-            throw new AmberHttpException('getRootCause failed', error)
+            throw(error)
         }
     }
 
@@ -420,11 +433,41 @@ export class AmberClientClass {
      */
     async getVersion() {
         try {
-            await this._authenticate()
-            this.defaultClient.basePath = this.license_profile.server
-            return await this.apiInstance.getVersion()
+            let response = await this.apiCall('get', 'version', null, null, null)
+            return Promise.resolve(response.data)
         } catch (error) {
-            throw new AmberHttpException('getVersion failed', error)
+            throw(error)
+        }
+    }
+
+    async apiCall(method, url, head, query, body) {
+
+        // compress post requests that exceed 10k bytes
+        let bodyStr = JSON.stringify(body)
+        let encoding = {}
+        if (method === 'post' && bodyStr.length > 10000) {
+            encoding = {
+                'content-encoding': 'gzip'
+            }
+            bodyStr = await gzip(bodyStr)
+        }
+
+        try {
+            await this._authenticate()
+            const config = {
+                method: method,
+                url: url,
+                data: bodyStr,
+                params: query,
+                headers: {
+                    'Authorization': this.apiKey,
+                    ...head,
+                    ...encoding
+                }
+            }
+            return await this.client.request(config)
+        } catch (error) {
+            throw new AmberHttpException(error)
         }
     }
 }
@@ -433,6 +476,6 @@ export function AmberClient(licenseId = 'default', licenseFile = '~/.Amber.licen
     return new AmberClientClass(licenseId, licenseFile, verify, cert, timeout)
 }
 
-import {TSMuxFromFiles} from "./tsmux.js"
-import {TSMuxFromBlobs} from "./tsmux.js"
+import {TSMuxFromBlobs, TSMuxFromFiles} from "./tsmux.js"
+
 export {TSMuxFromFiles, TSMuxFromBlobs}

@@ -33,9 +33,8 @@ async function walkthrough() {
         console.log(`deleteSensorResponse = ${JSON.stringify(deleteSensorResponse,null,4)}`)
     }
     catch(error) {
-        if (error.name === "AmberHttpException") {
-            console.log(error.body)
-            console.log(`${error.method} ${error.url}: status=${error.status}`)
+        if (error instanceof AmberHttpException) {
+            console.log(`${error.method} ${error.url}: status=${error.status}\n${error.message}`)
         } else {
             console.log(error)
         }

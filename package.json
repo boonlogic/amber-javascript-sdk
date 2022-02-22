@@ -1,6 +1,6 @@
 {
   "name": "amber-javascript-sdk",
-  "version": "1.0.34",
+  "version": "1.0.35",
   "description": "Boon_Logic_Amber_SDK",
   "license": "Unlicense",
   "main": "dist/sdk.js",
@@ -17,10 +17,15 @@
     "fs": false
   },
   "dependencies": {
+    "axios": "^0.26.0",
+    "axios-debug-log": "^0.8.4",
     "expand-home-dir": "0.0.3",
+    "https": "^1.0.0",
+    "node-gzip": "^1.1.2",
+    "parse-url": "^5.0.7",
     "regenerator-runtime": "^0.13.9",
     "superagent": "^6.1.0",
-    "superagent-proxy": "^3.0.0"
+    "zlib": "^1.0.5"
   },
   "repository": {
     "url": "git+ssh://git@github.com/boonlogic/amber-javascript-sdk.git"
