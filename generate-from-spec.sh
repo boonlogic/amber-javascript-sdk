@@ -11,14 +11,6 @@ if [ ! -f swagger.json ]; then
     exit 1
 fi
 
-
-# some files should not be overwritten
-# move them aside and back again after the generation
-backup_list="src/ApiClient.js README.md package.json"
-for file in ${backup_list}; do
-    cp ${file} ${file}.backup
-done
-
 # run the generator
 swagger-codegen generate -DmoduleName=amber-javascript-sdk \
 	-DpackageName=amber-javascript-sdk \
@@ -27,7 +19,3 @@ swagger-codegen generate -DmoduleName=amber-javascript-sdk \
 	-i swagger.json \
 	-l javascript -o .
 
-# restore backups
-for file in ${backup_list}; do
-    mv ${file}.backup ${file}
-done

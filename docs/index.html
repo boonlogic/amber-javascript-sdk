@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset='utf-8'>
-  <title>amber-javascript-sdk 1.0.33 | Documentation</title>
+  <title>amber-javascript-sdk 1.0.35 | Documentation</title>
   <meta name='description' content='Boon_Logic_Amber_SDK'>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' rel='stylesheet'>
@@ -15,7 +15,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>amber-javascript-sdk</h3>
-          <div class='mb1'><code>1.0.33</code></div>
+          <div class='mb1'><code>1.0.35</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -310,17 +310,10 @@ can't be created. (bad json, missing required fields, etc)</p>
   </div>
   
 
-  <p>AmberHttpException is used when a an API request fails</p>
+  <p>AmberHttpException is used when an API request fails</p>
 
-    <div class='pre p1 fill-light mt0'>new AmberHttpException(amber_message: any, error: any)</div>
+    <div class='pre p1 fill-light mt0'>new AmberHttpException(err_response: any)</div>
   
-  
-    <p>
-      Extends
-      
-        <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>
-      
-    </p>
   
 
   
@@ -336,16 +329,7 @@ can't be created. (bad json, missing required fields, etc)</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>amber_message</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>error</span> <code class='quiet'>(any
-            = <code>null</code>)</code>
+            <span class='code bold'>err_response</span> <code class='quiet'>(any)</code>
 	    
           </div>
           
@@ -1211,7 +1195,8 @@ can't be created. (bad json, missing required fields, etc)</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>autotuneConfig</span> <code class='quiet'>(any)</code>
+            <span class='code bold'>autotuneConfig</span> <code class='quiet'>(any
+            = <code>undefined</code>)</code>
 	    
           </div>
           

@@ -27,7 +27,7 @@ describe('#authenticate()', function () {
                 await amber._authenticate()
                 await secrets.restore_environment(saved_env)
             } catch (error) {
-                expect(error.message).to.equal('Unauthorized')
+                expect(error.message).to.equal(JSON.stringify({"code":401,"message":"Incorrect username or password."}))
             }
             secrets.restore_environment(saved_env)
         })
