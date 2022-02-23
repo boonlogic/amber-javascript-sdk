@@ -372,7 +372,14 @@ export class AmberClientClass {
     async pretrainSensor(sensorId, csv, autotuneConfig = undefined) {
         try {
             let headers = {'sensorId': sensorId}
-            csv = csv.replace(/[\r\n\t]/g, "")
+
+            // trim spaces from beginning and end
+            csv = csv.trim()
+            // trim whitespace other than newlines
+            csv = csv.replace(/\r \t/g, "")
+            // create a single csv string with no newlines
+            csv = csv.replace(/\n/g, ",")
+
             let postRequest = new this.AmberApiServer.PostPretrainRequest(csv)
             if (autotuneConfig !== undefined) {
                 postRequest.autoTuneConfig = autotuneConfig

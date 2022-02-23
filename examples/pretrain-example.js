@@ -17,9 +17,6 @@ async function pretraining() {
         // read the entire data set
         let filedata = fs.readFileSync('pretrain.csv', 'UTF-8')
 
-        // clean cr/nl
-        filedata = filedata.replace(/[\r\n\t]/g, "")
-
         // begin pretraining with autotuneConfig enabled
         let pretrainResponse = await amberInstance.pretrainSensor(mySensor, filedata, true)
         console.log(`pretrainResponse: ${JSON.stringify(pretrainResponse,null,4)}`)
@@ -30,6 +27,8 @@ async function pretraining() {
             state = pretrainStateResponse.state
             console.log(`pretrainStateResponse: ${JSON.stringify(pretrainStateResponse,null,4)}`)
         }
+        const getConfigResponse = await amberInstance.getConfig(mySensor)
+        console.log(`getConfigResponse: ${JSON.stringify(getConfigResponse,null,4)}`)
     }
     catch(error) {
         if (error instanceof AmberHttpException) {
