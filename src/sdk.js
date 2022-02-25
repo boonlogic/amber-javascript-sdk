@@ -5,10 +5,11 @@
 
 const regeneratorRuntime = require("regenerator-runtime");
 const process = require('process')
-const axios = require('axios')
 const parseurl = require('parse-url')
 const https = require('https')
 const {gzip} = require('node-gzip')
+const HttpsProxyAgent = require('https-proxy-agent')
+const axios = require('axios')
 
 const expandHomeDir = require('expand-home-dir')
 const fs = require('fs')
@@ -132,17 +133,6 @@ export class AmberClientClass {
             throw new AmberUserException('password not configured', error)
         }
 
-        // create a proxy configuration if specified
-        let proxyEnv = process.env.AMBER_PROXY || null
-        if (proxyEnv !== null) {
-            let parsedProxy = parseurl(proxyEnv)
-            this.proxy = {
-                host: parsedProxy.resource,
-                port: parsedProxy.port,
-                protocol: parsedProxy.protocol,
-            }
-        }
-
         // process overrides for the cert and verify
         this.license_profile.cert = process.env.AMBER_SSL_CERT || cert
         if (this.license_profile.cert !== null) {
@@ -158,11 +148,15 @@ export class AmberClientClass {
         if (verify_str && verify_str.toLowerCase() === "false") {
             this.license_profile.verify = false
         }
+
         let httpsAgent = undefined
-        if (this.license_profile.verify === false) {
+        let proxyEnv = process.env.AMBER_PROXY || null
+        if (proxyEnv === null) {
             httpsAgent = new https.Agent({
-                rejectUnauthorized: false
+                rejectUnauthorized: this.verify
             })
+        } else {
+            httpsAgent = new HttpsProxyAgent(proxyEnv)
         }
 
         // generate the new axios instance
@@ -173,8 +167,8 @@ export class AmberClientClass {
                 'User-Agent': 'Boon Logic / amber-javascript-sdk / axios',
                 'Content-Type': 'application/json'
             },
-            proxy: this.proxy,
-            httpsAgent: httpsAgent
+            proxy: false,
+            httpsAgent: httpsAgent,
         });
     }
 
@@ -190,7 +184,11 @@ export class AmberClientClass {
             let _tsIn = Math.floor(Date.now() / 1000)
             if (_tsIn > this.reauthTime) {
                 let payload = this.auth2RequestBody
-                let response = await axios.post(`${this.license_profile.oauth_server}/oauth2`, payload)
+                let config = {
+
+                    proxy: false
+                }
+                let response = await this.client.post(`${this.license_profile.oauth_server}/oauth2`, payload, config)
                 if (response.status === 200) {
                     this.apiKey = response.data.idToken
                     this.reauthTime = _tsIn + parseInt(response.data.expiresIn - 60)
@@ -470,7 +468,8 @@ export class AmberClientClass {
                     'Authorization': this.apiKey,
                     ...head,
                     ...encoding
-                }
+                },
+                proxy: false
             }
             return await this.client.request(config)
         } catch (error) {
