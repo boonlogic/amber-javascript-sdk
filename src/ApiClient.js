@@ -15,6 +15,17 @@
 var superagent = require('superagent');
 var superagent_proxy = require('superagent-proxy')(superagent)
 import querystring from "querystring";
+var isgzipBuffer = require('@stdlib/assert-is-gzip-buffer')
+
+/* Boon Logic:
+ * Override serialize agent for application/json.  Allow for
+ * for binary objects. */
+superagent.serialize['application/json'] = function(...args) {
+    if (isgzipBuffer(args[0]) === false) {
+        return JSON.stringify(...args)
+    }
+    return args[0]
+}
 
 /**
  * @module ApiClient
@@ -495,6 +506,10 @@ export class ApiClient {
         }
 
         request.query(this.normalizeParams(queryParams));
+
+        if (isgzipBuffer(bodyParam) === true) {
+            headerParams['Content-Encoding'] = 'gzip'
+        }
 
         // set header parameters
         request.set(this.defaultHeaders).set(this.normalizeParams(headerParams));

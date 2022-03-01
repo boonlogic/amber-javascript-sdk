@@ -8,6 +8,7 @@ const process = require('process')
 
 const expandHomeDir = require('expand-home-dir')
 const fs = require('fs')
+const {gzip} = require('node-gzip');
 
 /**
 * AmberUserException is used when an AmberClient object
@@ -362,10 +363,19 @@ export class AmberClientClass {
             await this._authenticate()
             this.defaultClient.basePath = this.license_profile.server
             let body = new this.AmberApiServer.PostPretrainRequest()
-            csv = csv.replace(/[\r\n\t]/g, "")
+            // trim spaces from beginning and end
+            csv = csv.trim()
+            // trim whitespace other than newlines
+            csv = csv.replace(/\r \t/g, "")
+            // create a single csv string with no newlines
+            csv = csv.replace(/\n/g, ",")
             body.data = this.AmberApiServer.ApiClient.convertToType(csv, 'String');
             body.autoTuneConfig = this.AmberApiServer.ApiClient.convertToType(autotuneConfig, 'Boolean');
-            return await this.apiInstance.postPretrain(body, sensorId)
+            let bodyStr = JSON.stringify(body)
+            if (bodyStr.length > 10000) {
+                bodyStr = await gzip(bodyStr)
+            }
+            return await this.apiInstance.postPretrain(bodyStr, sensorId)
         } catch (error) {
             throw new AmberHttpException('pretrainSensor failed', error)
         }
@@ -424,6 +434,7 @@ export class AmberClientClass {
             this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getVersion()
         } catch (error) {
+            console.log(error)
             throw new AmberHttpException('getVersion failed', error)
         }
     }

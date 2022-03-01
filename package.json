@@ -17,7 +17,9 @@
     "fs": false
   },
   "dependencies": {
+    "@stdlib/assert-is-gzip-buffer": "0.0.7",
     "expand-home-dir": "0.0.3",
+    "node-gzip": "^1.1.2",
     "regenerator-runtime": "^0.13.9",
     "superagent": "^6.1.0",
     "superagent-proxy": "^3.0.0"

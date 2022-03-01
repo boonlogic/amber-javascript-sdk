@@ -17,9 +17,6 @@ async function pretraining() {
         // read the entire data set
         let filedata = fs.readFileSync('pretrain.csv', 'UTF-8')
 
-        // clean cr/nl
-        filedata = filedata.replace(/[\r\n\t]/g, "")
-
         // begin pretraining with autotuneConfig enabled
         let pretrainResponse = await amberInstance.pretrainSensor(mySensor, filedata, true)
         console.log(`pretrainResponse: ${JSON.stringify(pretrainResponse,null,4)}`)
