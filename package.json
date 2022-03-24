@@ -5,9 +5,10 @@
   "license": "Unlicense",
   "main": "dist/sdk.js",
   "scripts": {
+    "format": "js-beautify -r src/sdk.js src/tsmux.js",
+    "format-check": "js-beautify -r src/sdk.js src/tsmux.js && git diff --exit-code src/sdk.js src/tsmux.js",
     "package": "rm -rf dist && mkdir dist && npx babel ./src -d dist --copy-files",
-    "test-qa": "cd test && AMBER_TEST_PROFILE=qa mocha --timeout 180000 test.js",
-    "test-dev": "cd test && AMBER_TEST_PROFILE=dev mocha --timeout 180000 test.js",
+    "test": "cd test && mocha --timeout 180000 test.js",
     "test-v1": "cd test && AMBER_TEST_PROFILE=v1 mocha --timeout 180000 test.js",
     "test-v1next": "cd test && AMBER_TEST_PROFILE=v1next mocha --timeout 180000 test.js",
     "generate": "./generate-from-spec.sh",
@@ -19,9 +20,10 @@
   "dependencies": {
     "@stdlib/assert-is-gzip-buffer": "0.0.7",
     "expand-home-dir": "0.0.3",
+    "js-beautify": "^1.14.0",
     "node-gzip": "^1.1.2",
     "regenerator-runtime": "^0.13.9",
-    "superagent": "^6.1.0",
+    "superagent": "^7.0.2",
     "superagent-proxy": "^3.0.0"
   },
   "repository": {

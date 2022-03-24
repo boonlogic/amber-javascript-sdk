@@ -12,8 +12,7 @@ describe('#sensor_ops()', function () {
     before(async function () {
         try {
             // create amber client object using environment
-            await secrets.load_credentials_into_env()
-            amber = AmberClient(null, null)
+            amber = await secrets.create_amber_client()
 
             // read in pretrain data
             pretrainData = fs.readFileSync('pretrain.csv').toString('utf-8')
@@ -275,19 +274,19 @@ describe('#sensor_ops()', function () {
             try {
                 let response = await amber.getStatus(test_sensor)
                 expect(response.pca).to.be.a('Array')
-                expect(response.pca).to.have.lengthOf(55)
+                expect(response.pca).to.have.lengthOf(66)
                 expect(response.clusterGrowth).to.be.a('Array')
-                expect(response.clusterGrowth).to.have.lengthOf(55)
+                expect(response.clusterGrowth).to.have.lengthOf(66)
                 expect(response.clusterSizes).to.be.a('Array')
-                expect(response.clusterSizes).to.have.lengthOf(55)
+                expect(response.clusterSizes).to.have.lengthOf(66)
                 expect(response.anomalyIndexes).to.be.a('Array')
-                expect(response.anomalyIndexes).to.have.lengthOf(55)
+                expect(response.anomalyIndexes).to.have.lengthOf(66)
                 expect(response.frequencyIndexes).to.be.a('Array')
-                expect(response.frequencyIndexes).to.have.lengthOf(55)
+                expect(response.frequencyIndexes).to.have.lengthOf(66)
                 expect(response.distanceIndexes).to.be.a('Array')
-                expect(response.distanceIndexes).to.have.lengthOf(55)
+                expect(response.distanceIndexes).to.have.lengthOf(66)
                 expect(response.totalInferences).to.equal(115306)
-                expect(response.numClusters).to.equal(55)
+                expect(response.numClusters).to.equal(66)
                 expect(response.anomalyThreshold).to.equal(750)
                 expect(response.state).to.equal('Monitoring')
             } catch (error) {

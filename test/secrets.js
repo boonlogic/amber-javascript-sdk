@@ -1,3 +1,4 @@
+const {AmberClient} = require("..")
 const { SecretsManagerClient, GetSecretValueCommand } = require("@aws-sdk/client-secrets-manager");
 
 const env_mappings = {
@@ -9,6 +10,47 @@ const env_mappings = {
     'AMBER_OAUTH_SERVER': 'oauth-server',
     'AMBER_SSL_CERT': 'ssl-cert',
     'AMBER_SSL_VERIFY': 'ssl-verify'
+}
+
+/**
+ *  create an amber client using either local configuration file OR secrets manager
+ *  AMBER_TEST_LICENSE_ID is required in environment
+ *  AMBER_TEST_LICENSE_FILE is optional, secrets manager is used if AMBER_TEST_LICENSE_FILE is not
+ *  found in env.
+ **/
+async function create_amber_client() {
+
+    let amber_license_file = process.env.AMBER_TEST_LICENSE_FILE || null
+    let amber_license_id = process.env.AMBER_TEST_LICENSE_ID || null
+    if (amber_license_id == null) {
+        throw `AMBER_TEST_LICENSE_ID must be sent in environment`
+    }
+
+    let amber_client = null
+    try {
+        clear_environment()
+
+        if (amber_license_file != null) {
+            // load license profile using a local license file
+            amber_client = AmberClient(amber_license_id, amber_license_file)
+        } else {
+            // load license profile from secrets manager
+            let secrets = await get_secrets()
+            let license_profile = secrets[amber_license_id]
+            if (license_profile === undefined) {
+                throw `license id of ${amber_license_id} not found in secrets manager`
+            }
+            process.env.AMBER_USERNAME = license_profile['username']
+            process.env.AMBER_PASSWORD = license_profile['password']
+            process.env.AMBER_SERVER = license_profile['server']
+            process.env.AMBER_OAUTH_SERVER = license_profile['oauth-server']
+            amber_client = AmberClient(null, null)
+        }
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+    return amber_client
 }
 
 /**
@@ -114,4 +156,4 @@ function restore_environment(saved_profile) {
     }
 }
 
-module.exports = {get_secrets, load_credentials_into_env, clear_environment, restore_environment}
+module.exports = {create_amber_client, get_secrets, load_credentials_into_env, clear_environment, restore_environment}
