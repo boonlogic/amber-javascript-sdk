@@ -8,12 +8,12 @@ const process = require('process')
 
 const expandHomeDir = require('expand-home-dir')
 const fs = require('fs')
-const {gzip} = require('node-gzip');
+const gzip = require('node-gzip')
 
 /**
-* AmberUserException is used when an AmberClient object
-* can't be created. (bad json, missing required fields, etc)
-*/
+ * AmberUserException is used when an AmberClient object
+ * can't be created. (bad json, missing required fields, etc)
+ */
 export class AmberUserException extends Error {
     constructor(amber_message, error = null) {
         let message = amber_message
@@ -73,7 +73,7 @@ export class AmberClientClass {
      */
     constructor(licenseId = 'default', licenseFile = '~/.Amber.license', verify = true, cert = null, timeout = 300) {
 
-        this.reauthTime = Math.floor(Date.now() / 1000) - 1  // init re-auth in the past
+        this.reauthTime = Math.floor(Date.now() / 1000) - 1 // init re-auth in the past
         this.AmberApiServer = require('./index.js')
         this.apiInstance = new this.AmberApiServer.DefaultApi()
         this.defaultClient = this.AmberApiServer.ApiClient.instance
@@ -83,7 +83,12 @@ export class AmberClientClass {
         this.license_id = process.env.AMBER_LICENSE_ID || licenseId
 
         // create a stub license_profile
-        this.license_profile = {username: null, password: null, server: null, oauth_server: null}
+        this.license_profile = {
+            username: null,
+            password: null,
+            server: null,
+            oauth_server: null
+        }
 
         // load from license file if necessary, override from environment if specified
         this.license_file = process.env.AMBER_LICENSE_FILE || licenseFile
@@ -92,13 +97,13 @@ export class AmberClientClass {
             if (fs.existsSync(this.license_file)) {
                 let blob = fs.readFileSync(this.license_file).toString('utf-8')
                 let license_json = JSON.parse(blob)
-                    if (!this.license_id) {
-                        throw new AmberUserException(`missing licenseId`)
-                    } else if (license_json.hasOwnProperty(this.license_id)) {
-                        this.license_profile = license_json[this.license_id]
-                    } else {
-                        throw new AmberUserException(`bad licenseId ${this.license_id}`)
-                    }
+                if (!this.license_id) {
+                    throw new AmberUserException(`missing licenseId`)
+                } else if (license_json.hasOwnProperty(this.license_id)) {
+                    this.license_profile = license_json[this.license_id]
+                } else {
+                    throw new AmberUserException(`bad licenseId ${this.license_id}`)
+                }
             } else {
                 if (this.license_file != '~/.Amber.license') {
                     // if license file is something other than default, throw exception
@@ -187,7 +192,7 @@ export class AmberClientClass {
             }
             return true
         } catch (error) {
-            throw(error)
+            throw (error)
         }
     }
 
@@ -267,10 +272,10 @@ export class AmberClientClass {
      * @returns {Promise<unknown>}
      */
     async configureSensor(sensorId, featureCount = 1, streamingWindowSize = 25,
-                          samplesToBuffer = 10000, learningRateNumerator = 10,
-                          learningRateDenominator = 10000, learningMaxClusters = 1000,
-                          learningMaxSamples = 1000000, anomaly_history_window= 10000,
-                          features = []) {
+        samplesToBuffer = 10000, learningRateNumerator = 10,
+        learningRateDenominator = 10000, learningMaxClusters = 1000,
+        learningMaxSamples = 1000000, anomaly_history_window = 10000,
+        features = []) {
         try {
             await this._authenticate()
             this.defaultClient.basePath = this.license_profile.server
@@ -444,6 +449,12 @@ export function AmberClient(licenseId = 'default', licenseFile = '~/.Amber.licen
     return new AmberClientClass(licenseId, licenseFile, verify, cert, timeout)
 }
 
-import {TSMuxFromFiles} from "./tsmux.js"
-import {TSMuxFromBlobs} from "./tsmux.js"
-export {TSMuxFromFiles, TSMuxFromBlobs}
+import {
+    TSMuxFromBlobs,
+    TSMuxFromFiles
+} from "./tsmux.js"
+
+export {
+    TSMuxFromFiles,
+    TSMuxFromBlobs
+}
