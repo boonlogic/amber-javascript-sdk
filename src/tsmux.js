@@ -146,7 +146,7 @@ function createTsMuxArray(blob, format, featureIdx, tsLabel, valLabel) {
     }
 }
 
-let processJsonEntry = function (line, tsLabel, valLabel) {
+let processJsonEntry = function(line, tsLabel, valLabel) {
     if (line[0] !== '{' || line.slice(-1) !== '}') {
         return null
     }
@@ -157,17 +157,23 @@ let processJsonEntry = function (line, tsLabel, valLabel) {
     if (jsonObj.hasOwnProperty(valLabel) === false) {
         return null
     }
-    return ({'ts': jsonObj[tsLabel], 'value': jsonObj[valLabel]})
+    return ({
+        'ts': jsonObj[tsLabel],
+        'value': jsonObj[valLabel]
+    })
 }
 
-let processCsvEntry = function (line) {
+let processCsvEntry = function(line) {
     let fields = line.split(",")
     if (fields.length !== 2) {
         return null
     }
     // first field should be timestamp
     // second field should be value
-    return {'ts': fields[0], 'value': fields[1]}
+    return {
+        'ts': fields[0],
+        'value': fields[1]
+    }
 }
 
 /**
