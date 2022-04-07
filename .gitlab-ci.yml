@@ -24,7 +24,7 @@ stages:
   - self-test
   - test-setup
   - test
-  
+
 build:
   stage: build
   tags:
