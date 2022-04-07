@@ -117,7 +117,7 @@ export class AmberClientClass {
         this.license_profile.password = process.env.AMBER_PASSWORD || this.license_profile.password || null
         this.license_profile.server = process.env.AMBER_SERVER || this.license_profile.server || null
         // fallback oauth_server to server if not specified
-        this.license_profile.oauth_server = process.env.AMBER_OAUTH_SERVER || this.license_profile.oauth_server || this.license_profile.server
+        this.license_profile.oauth_server = process.env.AMBER_OAUTH_SERVER || this.license_profile['oauth-server'] || this.license_profile.server
 
         // verify required profile elements have been created
         if (this.license_profile.username === null) {
@@ -131,7 +131,7 @@ export class AmberClientClass {
         }
 
         // load the username, password and server into client
-        this.auth2RequestBody = new this.AmberApiServer.PostAuth2Request()
+        this.auth2RequestBody = new this.AmberApiServer.PostAuth2Request('', '')
         try {
             this.auth2RequestBody.username = this.license_profile.username
         } catch (error) {
@@ -378,7 +378,7 @@ export class AmberClientClass {
             body.autoTuneConfig = this.AmberApiServer.ApiClient.convertToType(autotuneConfig, 'Boolean');
             let bodyStr = JSON.stringify(body)
             if (bodyStr.length > 10000) {
-                bodyStr = await gzip(bodyStr)
+                bodyStr = await gzip.gzip(bodyStr)
             }
             return await this.apiInstance.postPretrain(bodyStr, sensorId)
         } catch (error) {

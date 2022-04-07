@@ -25,7 +25,7 @@
     "js-beautify": "^1.14.0",
     "node-gzip": "^1.1.2",
     "regenerator-runtime": "^0.13.9",
-    "superagent": "^6.1.0",
+    "superagent": "^7.0.2",
     "superagent-proxy": "^3.0.0"
   },
   "repository": {
