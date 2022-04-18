@@ -9,10 +9,8 @@
     "format-check": "js-beautify -r src/sdk.js src/tsmux.js && git diff --exit-code src/sdk.js src/tsmux.js",
     "package": "rm -rf dist && mkdir dist && npx babel ./src -d dist --copy-files",
     "test": "cd test && mocha --timeout 180000 test.js",
-    "test-qa": "cd test && AMBER_TEST_PROFILE=qa mocha --timeout 180000 test.js",
-    "test-dev": "cd test && AMBER_TEST_PROFILE=dev mocha --timeout 180000 test.js",
-    "test-v1": "cd test && AMBER_TEST_PROFILE=v1 mocha --timeout 180000 test.js",
-    "test-v1next": "cd test && AMBER_TEST_PROFILE=v1next mocha --timeout 180000 test.js",
+    "test-v1": "cd test && AMBER_TEST_LICENSE_ID=v1 mocha --timeout 180000 test.js",
+    "test-v1next": "cd test && AMBER_TEST_LICENSE_ID=v1next mocha --timeout 180000 test.js",
     "generate": "./generate-from-spec.sh",
     "docs": "documentation build src/sdk.js -f html --shallow -o docs"
   },
