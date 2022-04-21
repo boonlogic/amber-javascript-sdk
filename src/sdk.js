@@ -272,10 +272,10 @@ export class AmberClientClass {
      * @returns {Promise<unknown>}
      */
     async configureSensor(sensorId, featureCount = 1, streamingWindowSize = 25,
-                          samplesToBuffer = 10000, learningRateNumerator = 10,
-                          learningRateDenominator = 10000, learningMaxClusters = 1000,
-                          learningMaxSamples = 1000000, anomaly_history_window = 10000,
-                          features = []) {
+        samplesToBuffer = 10000, learningRateNumerator = 10,
+        learningRateDenominator = 10000, learningMaxClusters = 1000,
+        learningMaxSamples = 1000000, anomaly_history_window = 10000,
+        features = []) {
         try {
             await this._authenticate()
             this.defaultClient.basePath = this.license_profile.server
@@ -444,10 +444,15 @@ export class AmberClientClass {
                     throw "invalid 'feature_count': must be positive integer"
                 }
                 for (let i = 0; i < featureCount; i++) {
-                    features.push({labels: '', submitRule: ''})
+                    features.push({
+                        labels: '',
+                        submitRule: ''
+                    })
                 }
             }
-            let body = {'features': features}
+            let body = {
+                'features': features
+            }
             let putConfigResponse = await this.apiInstance.putConfig(body, sensorId)
             return putConfigResponse['features']
         } catch (error) {
