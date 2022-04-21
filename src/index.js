@@ -17,6 +17,7 @@ import {EndpointUsageInfo} from './model/EndpointUsageInfo';
 import {Error} from './model/Error';
 import {FeatureConfig} from './model/FeatureConfig';
 import {Float32Array} from './model/Float32Array';
+import {FusionConfig} from './model/FusionConfig';
 import {GetConfigResponse} from './model/GetConfigResponse';
 import {GetPretrainResponse} from './model/GetPretrainResponse';
 import {GetRootCauseResponse} from './model/GetRootCauseResponse';
@@ -43,20 +44,25 @@ import {MRecentTimes} from './model/MRecentTimes';
 import {MStreamingParameters} from './model/MStreamingParameters';
 import {MTraining} from './model/MTraining';
 import {MagicNumber} from './model/MagicNumber';
+import {MayContainNullsArray} from './model/MayContainNullsArray';
 import {PCA} from './model/PCA';
 import {PostAuth2Request} from './model/PostAuth2Request';
 import {PostAuth2Response} from './model/PostAuth2Response';
 import {PostConfigRequest} from './model/PostConfigRequest';
 import {PostConfigResponse} from './model/PostConfigResponse';
-import {PostFeatureConfig} from './model/PostFeatureConfig';
 import {PostPretrainRequest} from './model/PostPretrainRequest';
 import {PostPretrainResponse} from './model/PostPretrainResponse';
 import {PostSensorRequest} from './model/PostSensorRequest';
 import {PostSensorResponse} from './model/PostSensorResponse';
 import {PostStreamRequest} from './model/PostStreamRequest';
 import {PostStreamResponse} from './model/PostStreamResponse';
+import {PutConfigRequest} from './model/PutConfigRequest';
+import {PutConfigResponse} from './model/PutConfigResponse';
 import {PutSensorRequest} from './model/PutSensorRequest';
 import {PutSensorResponse} from './model/PutSensorResponse';
+import {PutStreamFeature} from './model/PutStreamFeature';
+import {PutStreamRequest} from './model/PutStreamRequest';
+import {PutStreamResponse} from './model/PutStreamResponse';
 import {SensorInstance} from './model/SensorInstance';
 import {SensorUsageInfo} from './model/SensorUsageInfo';
 import {StreamStatus} from './model/StreamStatus';
@@ -129,6 +135,12 @@ export {
      * @property {module:model/Float32Array}
      */
     Float32Array,
+
+    /**
+     * The FusionConfig model constructor.
+     * @property {module:model/FusionConfig}
+     */
+    FusionConfig,
 
     /**
      * The GetConfigResponse model constructor.
@@ -287,6 +299,12 @@ export {
     MagicNumber,
 
     /**
+     * The MayContainNullsArray model constructor.
+     * @property {module:model/MayContainNullsArray}
+     */
+    MayContainNullsArray,
+
+    /**
      * The PCA model constructor.
      * @property {module:model/PCA}
      */
@@ -315,12 +333,6 @@ export {
      * @property {module:model/PostConfigResponse}
      */
     PostConfigResponse,
-
-    /**
-     * The PostFeatureConfig model constructor.
-     * @property {module:model/PostFeatureConfig}
-     */
-    PostFeatureConfig,
 
     /**
      * The PostPretrainRequest model constructor.
@@ -359,6 +371,18 @@ export {
     PostStreamResponse,
 
     /**
+     * The PutConfigRequest model constructor.
+     * @property {module:model/PutConfigRequest}
+     */
+    PutConfigRequest,
+
+    /**
+     * The PutConfigResponse model constructor.
+     * @property {module:model/PutConfigResponse}
+     */
+    PutConfigResponse,
+
+    /**
      * The PutSensorRequest model constructor.
      * @property {module:model/PutSensorRequest}
      */
@@ -369,6 +393,24 @@ export {
      * @property {module:model/PutSensorResponse}
      */
     PutSensorResponse,
+
+    /**
+     * The PutStreamFeature model constructor.
+     * @property {module:model/PutStreamFeature}
+     */
+    PutStreamFeature,
+
+    /**
+     * The PutStreamRequest model constructor.
+     * @property {module:model/PutStreamRequest}
+     */
+    PutStreamRequest,
+
+    /**
+     * The PutStreamResponse model constructor.
+     * @property {module:model/PutStreamResponse}
+     */
+    PutStreamResponse,
 
     /**
      * The SensorInstance model constructor.

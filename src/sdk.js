@@ -272,10 +272,10 @@ export class AmberClientClass {
      * @returns {Promise<unknown>}
      */
     async configureSensor(sensorId, featureCount = 1, streamingWindowSize = 25,
-        samplesToBuffer = 10000, learningRateNumerator = 10,
-        learningRateDenominator = 10000, learningMaxClusters = 1000,
-        learningMaxSamples = 1000000, anomaly_history_window = 10000,
-        features = []) {
+                          samplesToBuffer = 10000, learningRateNumerator = 10,
+                          learningRateDenominator = 10000, learningMaxClusters = 1000,
+                          learningMaxSamples = 1000000, anomaly_history_window = 10000,
+                          features = []) {
         try {
             await this._authenticate()
             this.defaultClient.basePath = this.license_profile.server
@@ -334,7 +334,9 @@ export class AmberClientClass {
         try {
             await this._authenticate()
             this.defaultClient.basePath = this.license_profile.server
-            let body = new this.AmberApiServer.PostStreamRequest(saveImage, csv)
+            let body = new this.AmberApiServer.PostStreamRequest(csv)
+            body.saveImage = saveImage
+            console.log(body)
             return await this.apiInstance.postStream(body, sensorId)
         } catch (error) {
             throw new AmberHttpException('streamSensor failed', error)
@@ -426,6 +428,52 @@ export class AmberClientClass {
             return await this.apiInstance.getRootCause(sensorId, opts)
         } catch (error) {
             throw new AmberHttpException('getRootCause failed', error)
+        }
+    }
+
+    /**
+     * Configure to fusion vector
+     * @returns {Promise<unknown>}
+     */
+    async configureFusion(sensorId, featureCount, features) {
+        try {
+            await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
+            if (features == null || features.length === 0) {
+                if (featureCount < 1) {
+                    throw "invalid 'feature_count': must be positive integer"
+                }
+                for (let i = 0; i < featureCount; i++) {
+                    features.push({labels: '', submitRule: ''})
+                }
+            }
+            let body = {'features': features}
+            let putConfigResponse = await this.apiInstance.putConfig(body, sensorId)
+            return putConfigResponse['features']
+        } catch (error) {
+            throw new AmberHttpException('configureFusion failed', error)
+        }
+    }
+
+    /**
+     * Stream to fusion vector
+     * @returns {Promise<unknown>}
+     */
+    async streamFusion(sensorId, vector, rule) {
+        try {
+            await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
+            if (!['submit', 'nosubmit'].includes(rule)) {
+                throw new `rule must be 'submit' or 'nosubmit', got ${rule}`
+            }
+            let body = {
+                'vector': vector,
+                'submitRule': rule
+            }
+            let putConfigResponse = await this.apiInstance.putStream(body, sensorId)
+            return putConfigResponse['features']
+        } catch (error) {
+            throw new AmberHttpException('configureFusion failed', error)
         }
     }
 

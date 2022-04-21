@@ -24,11 +24,9 @@ export class PostStreamRequest {
    * Constructs a new <code>PostStreamRequest</code>.
    * @alias module:model/PostStreamRequest
    * @class
-   * @param saveImage {Boolean} save the sensor after calculation
    * @param data {String} 
    */
-  constructor(saveImage, data) {
-    this.saveImage = saveImage;
+  constructor(data) {
     this.data = data;
   }
 
@@ -54,8 +52,9 @@ export class PostStreamRequest {
 /**
  * save the sensor after calculation
  * @member {Boolean} saveImage
+ * @default true
  */
-PostStreamRequest.prototype.saveImage = undefined;
+PostStreamRequest.prototype.saveImage = true;
 
 /**
  * @member {String} data

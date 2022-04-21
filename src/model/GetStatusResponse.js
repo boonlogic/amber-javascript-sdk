@@ -36,7 +36,7 @@ export class GetStatusResponse {
    * @param totalInferences {Number} inferences since the most recent restart
    * @param numClusters {Number} 
    * @param anomalyThreshold {Number} 
-   * @param state {String} state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error, Autotuning retry
+   * @param state {String} state of the sensor. Possible state variables are: Error, Buffering, Autotuning, Learning, Monitoring
    */
   constructor(pca, clusterGrowth, clusterSizes, anomalyIndexes, frequencyIndexes, distanceIndexes, totalInferences, numClusters, anomalyThreshold, state) {
     this.pca = pca;
@@ -133,7 +133,7 @@ GetStatusResponse.prototype.numClusters = undefined;
 GetStatusResponse.prototype.anomalyThreshold = undefined;
 
 /**
- * state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error, Autotuning retry
+ * state of the sensor. Possible state variables are: Error, Buffering, Autotuning, Learning, Monitoring
  * @member {String} state
  */
 GetStatusResponse.prototype.state = undefined;

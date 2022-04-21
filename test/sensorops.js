@@ -184,7 +184,8 @@ describe('#sensor_ops()', function () {
         it('should stream data and get results', async function () {
             try {
                 let csv = '1.0,2.0,1.0,1.5'
-                let response = await amber.streamSensor(test_sensor, csv)
+                let response = await amber.streamSensor(test_sensor, csv, true)
+                console.log(`JAT::::::\n`)
                 expect(response.state).to.equal('Buffering')
                 expect(response.message).to.equal('')
                 expect(response.progress).to.equal(0)
@@ -297,6 +298,23 @@ describe('#sensor_ops()', function () {
             try {
                 let response = await amber.getStatus(test_sensor + '7')
                 assert.fail(null, response, 'unintended response from getStatus')
+            } catch (error) {
+                expect(error.status).to.equal(404)
+            }
+        })
+    })
+
+    context('configureFusion', function () {
+
+        let features = []
+        for (let i = 0; i < 5; i++) {
+            features.push({label: `f${i}`, submitRule: 'submit'})
+        }
+
+        it('should return http status 404 if sensor not found', async function () {
+            try {
+                let response = await amber.configureFusion(test_sensor + '7', features.length, features)
+                assert.fail(null, response, 'unintended response from getConfig')
             } catch (error) {
                 expect(error.status).to.equal(404)
             }
