@@ -14,6 +14,7 @@
  */
 import {ApiClient} from '../ApiClient';
 import {FusionConfig} from './FusionConfig';
+import {StreamingParameters} from './StreamingParameters';
 
 /**
  * The PutConfigResponse model module.
@@ -25,10 +26,8 @@ export class PutConfigResponse {
    * Constructs a new <code>PutConfigResponse</code>.
    * @alias module:model/PutConfigResponse
    * @class
-   * @param features {Array.<module:model/FusionConfig>} 
    */
-  constructor(features) {
-    this.features = features;
+  constructor() {
   }
 
   /**
@@ -43,6 +42,8 @@ export class PutConfigResponse {
       obj = obj || new PutConfigResponse();
       if (data.hasOwnProperty('features'))
         obj.features = ApiClient.convertToType(data['features'], [FusionConfig]);
+      if (data.hasOwnProperty('streaming'))
+        obj.streaming = StreamingParameters.constructFromObject(data['streaming']);
     }
     return obj;
   }
@@ -52,4 +53,9 @@ export class PutConfigResponse {
  * @member {Array.<module:model/FusionConfig>} features
  */
 PutConfigResponse.prototype.features = undefined;
+
+/**
+ * @member {module:model/StreamingParameters} streaming
+ */
+PutConfigResponse.prototype.streaming = undefined;
 

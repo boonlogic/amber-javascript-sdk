@@ -14,21 +14,24 @@
  */
 import {ApiClient} from '../ApiClient';
 import {FeatureConfig} from './FeatureConfig';
+import {StreamingParameters} from './StreamingParameters';
 
 /**
  * The PostConfigRequest model module.
  * @module model/PostConfigRequest
  * @version 1.0.3
  */
-export class PostConfigRequest {
+export class PostConfigRequest extends StreamingParameters {
   /**
    * Constructs a new <code>PostConfigRequest</code>.
    * @alias module:model/PostConfigRequest
    * @class
-   * @param featureCount {Number} number of features per sample
-   * @param streamingWindowSize {Number} streaming window size
+   * @extends module:model/StreamingParameters
+   * @param featureCount {} number of features per sample
+   * @param streamingWindowSize {} streaming window size
    */
   constructor(featureCount, streamingWindowSize) {
+    super();
     this.featureCount = featureCount;
     this.streamingWindowSize = streamingWindowSize;
   }
@@ -43,24 +46,15 @@ export class PostConfigRequest {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new PostConfigRequest();
+      StreamingParameters.constructFromObject(data, obj);
       if (data.hasOwnProperty('featureCount'))
         obj.featureCount = ApiClient.convertToType(data['featureCount'], 'Number');
       if (data.hasOwnProperty('streamingWindowSize'))
         obj.streamingWindowSize = ApiClient.convertToType(data['streamingWindowSize'], 'Number');
-      if (data.hasOwnProperty('samplesToBuffer'))
-        obj.samplesToBuffer = ApiClient.convertToType(data['samplesToBuffer'], 'Number');
-      if (data.hasOwnProperty('anomalyHistoryWindow'))
-        obj.anomalyHistoryWindow = ApiClient.convertToType(data['anomalyHistoryWindow'], 'Number');
-      if (data.hasOwnProperty('learningRateNumerator'))
-        obj.learningRateNumerator = ApiClient.convertToType(data['learningRateNumerator'], 'Number');
-      if (data.hasOwnProperty('learningRateDenominator'))
-        obj.learningRateDenominator = ApiClient.convertToType(data['learningRateDenominator'], 'Number');
-      if (data.hasOwnProperty('learningMaxClusters'))
-        obj.learningMaxClusters = ApiClient.convertToType(data['learningMaxClusters'], 'Number');
-      if (data.hasOwnProperty('learningMaxSamples'))
-        obj.learningMaxSamples = ApiClient.convertToType(data['learningMaxSamples'], 'Number');
       if (data.hasOwnProperty('features'))
         obj.features = ApiClient.convertToType(data['features'], [FeatureConfig]);
+      if (data.hasOwnProperty('samplesToBuffer'))
+        obj.samplesToBuffer = ApiClient.convertToType(data['samplesToBuffer'], 'Number');
     }
     return obj;
   }
@@ -79,43 +73,13 @@ PostConfigRequest.prototype.featureCount = undefined;
 PostConfigRequest.prototype.streamingWindowSize = undefined;
 
 /**
+ * @member {Array.<module:model/FeatureConfig>} features
+ */
+PostConfigRequest.prototype.features = undefined;
+
+/**
  * the number of samples to be applied before autotuning begins
  * @member {Number} samplesToBuffer
  */
 PostConfigRequest.prototype.samplesToBuffer = undefined;
-
-/**
- * the number of samples to use when calculating AH
- * @member {Number} anomalyHistoryWindow
- */
-PostConfigRequest.prototype.anomalyHistoryWindow = undefined;
-
-/**
- * enables graduation requirements for learning
- * @member {Number} learningRateNumerator
- */
-PostConfigRequest.prototype.learningRateNumerator = undefined;
-
-/**
- * enables graduation requirements for learning
- * @member {Number} learningRateDenominator
- */
-PostConfigRequest.prototype.learningRateDenominator = undefined;
-
-/**
- * learning graduation requirement for stopping learning upon reaching this cluster count
- * @member {Number} learningMaxClusters
- */
-PostConfigRequest.prototype.learningMaxClusters = undefined;
-
-/**
- * learning graduation requirement for stopping learning after acquiring this many samples
- * @member {Number} learningMaxSamples
- */
-PostConfigRequest.prototype.learningMaxSamples = undefined;
-
-/**
- * @member {Array.<module:model/FeatureConfig>} features
- */
-PostConfigRequest.prototype.features = undefined;
 

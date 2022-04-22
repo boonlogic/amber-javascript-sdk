@@ -1,6 +1,6 @@
 const {assert, expect} = require('chai')
 const {AmberClient} = require("..")
-const {PutStreamResponse} = require("../dist")
+const {StreamingParameters, PutStreamResponse} = require("../dist")
 const secrets = require('./secrets.js')
 const fs = require('fs')
 
@@ -432,19 +432,36 @@ describe('#sensor_ops()', function () {
         })
     })
 
-    context('configureFusion', function () {
-
-        let features = []
-        for (let i = 0; i < 5; i++) {
-            features.push({label: `f${i}`, submitRule: 'submit'})
-        }
-
+    context('enableLearning', function () {
         it('should return http status 404 if sensor not found', async function () {
             try {
-                let response = await amber.configureFusion(test_sensor + '7', features)
+                let response = await amber.enableLearning(test_sensor + '7')
                 assert.fail(null, response, 'unintended response from getConfig')
             } catch (error) {
                 expect(error.status).to.equal(404)
+            }
+        })
+        it('should return http status 404 if sensor not found', async function () {
+            try {
+                let response = await amber.enableLearning(test_sensor + '7')
+                assert.fail(null, response, 'unintended response from getConfig')
+            } catch (error) {
+                expect(error.status).to.equal(404)
+            }
+        })
+        it('should enable learning', async function () {
+            try {
+                let exp = StreamingParameters.constructFromObject({
+                    anomalyHistoryWindow: 1000,
+                    learningRateNumerator: 10,
+                    learningRateDenominator: 10000,
+                    learningMaxClusters: 1000,
+                    learningMaxSamples: 1000000})
+                let response = await amber.enableLearning(test_sensor, 1000, 10,
+                    10000, 1000, 1000000)
+                expect(response).to.eql(exp)
+            } catch (error) {
+                assert.fail(null, response, 'unintended response from getConfig')
             }
         })
     })

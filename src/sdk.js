@@ -274,14 +274,14 @@ export class AmberClientClass {
     async configureSensor(sensorId, featureCount = 1, streamingWindowSize = 25,
         samplesToBuffer = 10000, learningRateNumerator = 10,
         learningRateDenominator = 10000, learningMaxClusters = 1000,
-        learningMaxSamples = 1000000, anomaly_history_window = 10000,
+        learningMaxSamples = 1000000, anomalyHistoryWindow = 10000,
         features = []) {
         try {
             await this._authenticate()
             this.defaultClient.basePath = this.license_profile.server
             let body = new this.AmberApiServer.PostConfigRequest(featureCount, streamingWindowSize)
             body.samplesToBuffer = samplesToBuffer
-            body.anomalyHistoryWindow = anomaly_history_window
+            body.anomalyHistoryWindow = anomalyHistoryWindow
             body.learningRateNumerator = learningRateNumerator
             body.learningRateDenominator = learningRateDenominator
             body.learningMaxClusters = learningMaxClusters
@@ -477,6 +477,51 @@ export class AmberClientClass {
             throw new AmberHttpException('configureFusion failed', error)
         }
     }
+
+    async enableLearning(sensorId, anomalyHistoryWindow, learningRateNumerator = null,
+        learningRateDenominator = null, learningMaxClusters = null,
+        learningMaxSamples = null) {
+        try {
+            await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
+            let body = {
+                streaming: {}
+            }
+            if (anomalyHistoryWindow != null) {
+                body.streaming['AnomalyHistoryWindow'] = anomalyHistoryWindow
+            }
+            if (learningRateNumerator != null) {
+                body.streaming['LearningRateNumerator'] = learningRateNumerator
+            }
+            if (learningRateDenominator != null) {
+                body.streaming['LearningRateDenominator'] = learningRateDenominator
+            }
+            if (learningMaxSamples != null) {
+                body.streaming['LearningMaxSamples'] = learningMaxSamples
+            }
+            if (learningMaxClusters != null) {
+                body.streaming['LearningMaxClusters'] = learningMaxClusters
+            }
+            let putConfigResult = await this.apiInstance.putConfig(body, sensorId)
+            return putConfigResult.streaming
+        } catch (error) {
+            throw new AmberHttpException('enableLearning failed', error)
+        }
+    }
+    /*
+
+        if learning_max_clusters:
+            streaming['learningMaxClusters'] = learning_max_clusters
+
+        url = self.license_profile['server'] + '/config'
+        headers = {
+            'Content-Type': 'application/json',
+            'sensorId': sensor_id
+        }
+        body = {'streaming': streaming}
+        return self._api_call('PUT', url, headers, body=body)['streaming']
+
+     */
 
     /**
      * Get version information for Amber server
