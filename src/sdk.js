@@ -431,7 +431,9 @@ export class AmberClientClass {
     }
 
     /**
-     * Configure to fusion vector
+     * Configure sensor fusion vector
+     * @param sensorId
+     * @param features
      * @returns {Promise<unknown>}
      */
     async configureFusion(sensorId, features) {
@@ -453,6 +455,9 @@ export class AmberClientClass {
 
     /**
      * Stream to fusion vector
+     * @param sensorId
+     * @param vector
+     * @param rule
      * @returns {Promise<unknown>}
      */
     async streamFusion(sensorId, vector, rule) {
