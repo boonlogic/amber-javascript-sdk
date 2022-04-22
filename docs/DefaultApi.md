@@ -18,7 +18,9 @@ Method | HTTP request | Description
 [**postPretrain**](DefaultApi.md#postPretrain) | **POST** /pretrain | Pretrain a sensor using historical data
 [**postSensor**](DefaultApi.md#postSensor) | **POST** /sensor | Create a new a sensor instance
 [**postStream**](DefaultApi.md#postStream) | **POST** /stream | Stream data to a sensor
+[**putConfig**](DefaultApi.md#putConfig) | **PUT** /config | Update configuration for a sensor instance
 [**putSensor**](DefaultApi.md#putSensor) | **PUT** /sensor | Update label for a sensor instance
+[**putStream**](DefaultApi.md#putStream) | **PUT** /stream | Stream data to a sensor fusion vector
 
 <a name="deleteSensor"></a>
 # **deleteSensor**
@@ -698,6 +700,57 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+<a name="putConfig"></a>
+# **putConfig**
+> PutConfigResponse putConfig(body, sensorId)
+
+Update configuration for a sensor instance
+
+Updates the configuration for the sensor instance specified.
+
+### Example
+```javascript
+import {AmberApiServer} from 'amber_api_server';
+let defaultClient = AmberApiServer.ApiClient.instance;
+
+// Configure API key authorization: authorize-amber-pool
+let authorize-amber-pool = defaultClient.authentications['authorize-amber-pool'];
+authorize-amber-pool.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//authorize-amber-pool.apiKeyPrefix = 'Token';
+
+let apiInstance = new AmberApiServer.DefaultApi();
+let body = new AmberApiServer.PutConfigRequest(); // PutConfigRequest | Updates to sensor configuration
+let sensorId = "sensorId_example"; // String | Unique identifier for sensor
+
+apiInstance.putConfig(body, sensorId).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
+});
+
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**PutConfigRequest**](PutConfigRequest.md)| Updates to sensor configuration | 
+ **sensorId** | **String**| Unique identifier for sensor | 
+
+### Return type
+
+[**PutConfigResponse**](PutConfigResponse.md)
+
+### Authorization
+
+[authorize-amber-pool](../README.md#authorize-amber-pool)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
 <a name="putSensor"></a>
 # **putSensor**
 > PutSensorResponse putSensor(body, sensorId)
@@ -739,6 +792,57 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**PutSensorResponse**](PutSensorResponse.md)
+
+### Authorization
+
+[authorize-amber-pool](../README.md#authorize-amber-pool)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="putStream"></a>
+# **putStream**
+> PutStreamResponse putStream(body, sensorId)
+
+Stream data to a sensor fusion vector
+
+Update fusion vector with new values for the given features, and optionally submit to Amber. Analytic results returned are the same as POST /stream.
+
+### Example
+```javascript
+import {AmberApiServer} from 'amber_api_server';
+let defaultClient = AmberApiServer.ApiClient.instance;
+
+// Configure API key authorization: authorize-amber-pool
+let authorize-amber-pool = defaultClient.authentications['authorize-amber-pool'];
+authorize-amber-pool.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//authorize-amber-pool.apiKeyPrefix = 'Token';
+
+let apiInstance = new AmberApiServer.DefaultApi();
+let body = new AmberApiServer.PutStreamRequest(); // PutStreamRequest | New values for sensor fusion vector.
+let sensorId = "sensorId_example"; // String | Unique identifier for sensor
+
+apiInstance.putStream(body, sensorId).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
+});
+
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**PutStreamRequest**](PutStreamRequest.md)| New values for sensor fusion vector. | 
+ **sensorId** | **String**| Unique identifier for sensor | 
+
+### Return type
+
+[**PutStreamResponse**](PutStreamResponse.md)
 
 ### Authorization
 

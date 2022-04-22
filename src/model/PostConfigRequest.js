@@ -13,7 +13,7 @@
  *
  */
 import {ApiClient} from '../ApiClient';
-import {PostFeatureConfig} from './PostFeatureConfig';
+import {FeatureConfig} from './FeatureConfig';
 
 /**
  * The PostConfigRequest model module.
@@ -60,7 +60,7 @@ export class PostConfigRequest {
       if (data.hasOwnProperty('learningMaxSamples'))
         obj.learningMaxSamples = ApiClient.convertToType(data['learningMaxSamples'], 'Number');
       if (data.hasOwnProperty('features'))
-        obj.features = ApiClient.convertToType(data['features'], [PostFeatureConfig]);
+        obj.features = ApiClient.convertToType(data['features'], [FeatureConfig]);
     }
     return obj;
   }
@@ -115,7 +115,7 @@ PostConfigRequest.prototype.learningMaxClusters = undefined;
 PostConfigRequest.prototype.learningMaxSamples = undefined;
 
 /**
- * @member {Array.<module:model/PostFeatureConfig>} features
+ * @member {Array.<module:model/FeatureConfig>} features
  */
 PostConfigRequest.prototype.features = undefined;
 

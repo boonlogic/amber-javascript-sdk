@@ -31,8 +31,12 @@ import {PostSensorRequest} from '../model/PostSensorRequest';
 import {PostSensorResponse} from '../model/PostSensorResponse';
 import {PostStreamRequest} from '../model/PostStreamRequest';
 import {PostStreamResponse} from '../model/PostStreamResponse';
+import {PutConfigRequest} from '../model/PutConfigRequest';
+import {PutConfigResponse} from '../model/PutConfigResponse';
 import {PutSensorRequest} from '../model/PutSensorRequest';
 import {PutSensorResponse} from '../model/PutSensorResponse';
+import {PutStreamRequest} from '../model/PutStreamRequest';
+import {PutStreamResponse} from '../model/PutStreamResponse';
 import {Version} from '../model/Version';
 
 /**
@@ -809,6 +813,65 @@ export class DefaultApi {
 
 
     /**
+     * Update configuration for a sensor instance
+     * Updates the configuration for the sensor instance specified.
+     * @param {module:model/PutConfigRequest} body Updates to sensor configuration
+     * @param {String} sensorId Unique identifier for sensor
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/PutConfigResponse} and HTTP response
+     */
+    putConfigWithHttpInfo(body, sensorId) {
+      
+      let postBody = body;
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling putConfig");
+      }
+      // verify the required parameter 'sensorId' is set
+      if (sensorId === undefined || sensorId === null) {
+        throw new Error("Missing the required parameter 'sensorId' when calling putConfig");
+      }
+
+      let pathParams = {
+        
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        'sensorId': sensorId
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = ['authorize-amber-pool'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = PutConfigResponse;
+
+      return this.apiClient.callApi(
+        '/config', 'PUT',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType
+      );
+    }
+
+    /**
+     * Update configuration for a sensor instance
+     * Updates the configuration for the sensor instance specified.
+     * @param {<&vendorExtensions.x-jsdoc-type>} body Updates to sensor configuration
+     * @param {<&vendorExtensions.x-jsdoc-type>} sensorId Unique identifier for sensor
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/PutConfigResponse}
+     */
+    putConfig(body, sensorId) {
+      return this.putConfigWithHttpInfo(body, sensorId)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
+
+    /**
      * Update label for a sensor instance
      * Changes the label of an existing sensor instance to the new label specified.
      * @param {module:model/PutSensorRequest} body New label to apply to sensor instance
@@ -861,6 +924,65 @@ export class DefaultApi {
      */
     putSensor(body, sensorId) {
       return this.putSensorWithHttpInfo(body, sensorId)
+        .then(function(response_and_data) {
+          return response_and_data.data;
+        });
+    }
+
+
+    /**
+     * Stream data to a sensor fusion vector
+     * Update fusion vector with new values for the given features, and optionally submit to Amber. Analytic results returned are the same as POST /stream.
+     * @param {module:model/PutStreamRequest} body New values for sensor fusion vector.
+     * @param {String} sensorId Unique identifier for sensor
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/PutStreamResponse} and HTTP response
+     */
+    putStreamWithHttpInfo(body, sensorId) {
+      
+      let postBody = body;
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling putStream");
+      }
+      // verify the required parameter 'sensorId' is set
+      if (sensorId === undefined || sensorId === null) {
+        throw new Error("Missing the required parameter 'sensorId' when calling putStream");
+      }
+
+      let pathParams = {
+        
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        'sensorId': sensorId
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = ['authorize-amber-pool'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
+      let returnType = PutStreamResponse;
+
+      return this.apiClient.callApi(
+        '/stream', 'PUT',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType
+      );
+    }
+
+    /**
+     * Stream data to a sensor fusion vector
+     * Update fusion vector with new values for the given features, and optionally submit to Amber. Analytic results returned are the same as POST /stream.
+     * @param {<&vendorExtensions.x-jsdoc-type>} body New values for sensor fusion vector.
+     * @param {<&vendorExtensions.x-jsdoc-type>} sensorId Unique identifier for sensor
+     * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/PutStreamResponse}
+     */
+    putStream(body, sensorId) {
+      return this.putStreamWithHttpInfo(body, sensorId)
         .then(function(response_and_data) {
           return response_and_data.data;
         });
