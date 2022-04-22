@@ -478,6 +478,16 @@ export class AmberClientClass {
         }
     }
 
+    /**
+     * Enable learning on existing sensor
+     * @param sensorId
+     * @param anomalyHistoryWindow
+     * @param learningRateNumerator
+     * @param learningRateDenominator
+     * @param learningMaxClusters
+     * @param learningMaxSamples
+     * @returns {Promise<unknown>}
+     */
     async enableLearning(sensorId, anomalyHistoryWindow, learningRateNumerator = null,
         learningRateDenominator = null, learningMaxClusters = null,
         learningMaxSamples = null) {

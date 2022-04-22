@@ -156,6 +156,12 @@
                       </a></li>
                       
                       <li><a
+                        href='#amberclientclassenablelearning'
+                        class='regular pre-open'>
+                        #enableLearning
+                      </a></li>
+                      
+                      <li><a
                         href='#amberclientclassgetversion'
                         class='regular pre-open'>
                         #getVersion
@@ -732,7 +738,7 @@ can't be created. (bad json, missing required fields, etc)</p>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>configureSensor(sensorId, featureCount, streamingWindowSize, samplesToBuffer, learningRateNumerator, learningRateDenominator, learningMaxClusters, learningMaxSamples, anomaly_history_window, features)</span>
+            <span class='code strong strong truncate'>configureSensor(sensorId, featureCount, streamingWindowSize, samplesToBuffer, learningRateNumerator, learningRateDenominator, learningMaxClusters, learningMaxSamples, anomalyHistoryWindow, features, anomaly_history_window)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -742,7 +748,7 @@ can't be created. (bad json, missing required fields, etc)</p>
 
   <p>Configure an amber sensor instance</p>
 
-    <div class='pre p1 fill-light mt0'>configureSensor(sensorId: any, featureCount: any, streamingWindowSize: any, samplesToBuffer: any, learningRateNumerator: any, learningRateDenominator: any, learningMaxClusters: any, learningMaxSamples: any, anomaly_history_window: any, features: any): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;unknown></div>
+    <div class='pre p1 fill-light mt0'>configureSensor(sensorId: any, featureCount: any, streamingWindowSize: any, samplesToBuffer: any, learningRateNumerator: any, learningRateDenominator: any, learningMaxClusters: any, learningMaxSamples: any, anomalyHistoryWindow: any, features: any, anomaly_history_window: any): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;unknown></div>
   
   
 
@@ -830,7 +836,7 @@ can't be created. (bad json, missing required fields, etc)</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>anomaly_history_window</span> <code class='quiet'>(any
+            <span class='code bold'>anomalyHistoryWindow</span> <code class='quiet'>(any
             = <code>10000</code>)</code>
 	    
           </div>
@@ -841,6 +847,14 @@ can't be created. (bad json, missing required fields, etc)</p>
           <div>
             <span class='code bold'>features</span> <code class='quiet'>(any
             = <code>[]</code>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>anomaly_history_window</span> <code class='quiet'>(any)</code>
 	    
           </div>
           
@@ -1544,6 +1558,120 @@ can't be created. (bad json, missing required fields, etc)</p>
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>rule</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;unknown></code>:
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='amberclientclassenablelearning'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>enableLearning(sensorId, anomalyHistoryWindow, learningRateNumerator, learningRateDenominator, learningMaxClusters, learningMaxSamples)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Enable learning on existing sensor</p>
+
+    <div class='pre p1 fill-light mt0'>enableLearning(sensorId: any, anomalyHistoryWindow: any, learningRateNumerator: any, learningRateDenominator: any, learningMaxClusters: any, learningMaxSamples: any): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;unknown></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>sensorId</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>anomalyHistoryWindow</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>learningRateNumerator</span> <code class='quiet'>(any
+            = <code>null</code>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>learningRateDenominator</span> <code class='quiet'>(any
+            = <code>null</code>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>learningMaxClusters</span> <code class='quiet'>(any
+            = <code>null</code>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>learningMaxSamples</span> <code class='quiet'>(any
+            = <code>null</code>)</code>
 	    
           </div>
           
