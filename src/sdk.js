@@ -336,7 +336,6 @@ export class AmberClientClass {
             this.defaultClient.basePath = this.license_profile.server
             let body = new this.AmberApiServer.PostStreamRequest(csv)
             body.saveImage = saveImage
-            console.log(body)
             return await this.apiInstance.postStream(body, sensorId)
         } catch (error) {
             throw new AmberHttpException('streamSensor failed', error)
@@ -435,20 +434,12 @@ export class AmberClientClass {
      * Configure to fusion vector
      * @returns {Promise<unknown>}
      */
-    async configureFusion(sensorId, featureCount, features) {
+    async configureFusion(sensorId, features) {
         try {
             await this._authenticate()
             this.defaultClient.basePath = this.license_profile.server
             if (features == null || features.length === 0) {
-                if (featureCount < 1) {
-                    throw "invalid 'feature_count': must be positive integer"
-                }
-                for (let i = 0; i < featureCount; i++) {
-                    features.push({
-                        labels: '',
-                        submitRule: ''
-                    })
-                }
+                throw "invalid 'feature_count': must be positive integer"
             }
             let body = {
                 'features': features
@@ -475,8 +466,8 @@ export class AmberClientClass {
                 'vector': vector,
                 'submitRule': rule
             }
-            let putConfigResponse = await this.apiInstance.putStream(body, sensorId)
-            return putConfigResponse['features']
+            let putStreamResponse = await this.apiInstance.putStream(body, sensorId)
+            return putStreamResponse
         } catch (error) {
             throw new AmberHttpException('configureFusion failed', error)
         }
@@ -492,7 +483,6 @@ export class AmberClientClass {
             this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getVersion()
         } catch (error) {
-            console.log(error)
             throw new AmberHttpException('getVersion failed', error)
         }
     }

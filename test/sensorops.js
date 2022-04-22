@@ -1,5 +1,6 @@
 const {assert, expect} = require('chai')
 const {AmberClient} = require("..")
+const {PutStreamResponse} = require("../dist")
 const secrets = require('./secrets.js')
 const fs = require('fs')
 
@@ -180,12 +181,139 @@ describe('#sensor_ops()', function () {
         })
     })
 
+    context('fusion', function () {
+
+        let features = []
+        for (let i = 0; i < 3; i++) {
+            features.push({label: `f${i}`, submitRule: 'submit'})
+        }
+
+        it('should configure sensor with feature count = 3', async function () {
+            try {
+                let response = await amber.configureSensor(test_sensor, 3, 1)
+            } catch (error) {
+                assert.fail(null, response, 'unintended response from configureFusion')
+            }
+        })
+        it('should return http status 404 if sensor not found', async function () {
+            try {
+                let response = await amber.configureFusion(test_sensor + '7', features)
+                assert.fail(null, response, 'unintended response from configureFusion')
+            } catch (error) {
+                expect(error.status).to.equal(404)
+            }
+        })
+        it('should return http status 400 when feature count does not match features', async function () {
+            try {
+                let featuresCopy = JSON.parse(JSON.stringify(features));
+                featuresCopy.pop()
+                let response = await amber.configureFusion(test_sensor, featuresCopy)
+                assert.fail(null, response, 'unintended response from configureFusion')
+            } catch (error) {
+                expect(error.status).to.equal(400)
+            }
+        })
+        it('should return http status 400 when duplicate feature found', async function () {
+            try {
+                let featuresCopy = JSON.parse(JSON.stringify(features));
+                featuresCopy[0].label = featuresCopy[1].label
+                let response = await amber.configureFusion(test_sensor, featuresCopy)
+                assert.fail(null, response, 'unintended response from configureFusion')
+            } catch (error) {
+                expect(error.status).to.equal(400)
+            }
+        })
+        it('should return http status 400 unrecognized submit rule specified', async function () {
+            try {
+                let featuresCopy = JSON.parse(JSON.stringify(features));
+                featuresCopy[0].submitRule = 'badRule'
+                let response = await amber.configureFusion(test_sensor, featuresCopy)
+                assert.fail(null, response, 'unintended response from configureFusion')
+            } catch (error) {
+                expect(error.status).to.equal(400)
+            }
+        })
+        it('should configure a fusion vector', async function () {
+            try {
+                let response = await amber.configureFusion(test_sensor, features)
+                expect(response.length).to.equal(features.length)
+            } catch (error) {
+                assert.fail(null, response, 'unintended response from configureFusion')
+            }
+        })
+
+         it('should not return results when streaming partial fusion vector', async function () {
+             try {
+                 let v = [{label: 'f1', value: 2}, {label: 'f2', value: 4}]
+                 let exp = new PutStreamResponse([null, 2, 4], "nan,2,4")
+                 let response = await amber.streamFusion(test_sensor, v, 'submit')
+                 expect(response).to.eql(exp)
+             } catch (error) {
+                 assert.fail(null, response, 'unintended response from configureFusion')
+             }
+         })
+
+         it('should return results when streaming full fusion vector', async function () {
+             try {
+                 let v = [{'label': 'f0', 'value': 1}, {'label': 'f1', 'value': 3}, {'label': 'f2', 'value': 5}]
+                 let exp = {
+                     vector: [1, 3, 5],
+                     vectorCSV: "1,3,5",
+                     results: {
+                         clusterCount: 0,
+                         message: '',
+                         progress: 0,
+                         retryCount: 0,
+                         state: "Buffering",
+                         streamingWindowSize: 1,
+                         totalInferences: 0,
+                         AD: [0], AH: [0], AM: [0], AW: [0], ID: [0], RI: [0], SI: [0]
+                     }
+                 }
+                 let response = await amber.streamFusion(test_sensor, v, 'submit')
+                 expect(response).to.eql(exp)
+             } catch (error) {
+                 assert.fail(null, response, 'unintended response from configureFusion')
+             }
+         })
+
+         it('should return return 400 on bad fusion feature', async function () {
+             try {
+                 let v = [{label: 'f75', value: 2}, {label: 'f3', value: 4}]
+                 let response = await amber.streamFusion(test_sensor, v, 'submit')
+                 assert.fail(null, response, 'unintended response from configureFusion')
+             } catch (error) {
+                 expect(error.status).to.equal(400)
+             }
+         })
+
+         it('should return return 400 when duplicate fusion label specified', async function () {
+             try {
+                 let v = [{'label': 'f1', 'value': 2}, {'label': 'f1', 'value': 4}]
+                 let response = await amber.streamFusion(test_sensor, v, 'submit')
+                 assert.fail(null, response, 'unintended response from configureFusion')
+             } catch (error) {
+                 expect(error.status).to.equal(400)
+             }
+         })
+
+         it('should reconfigure as non fusion sensor', async function () {
+             try {
+                 let response = await amber.configureSensor(test_sensor, 1, 25,
+                     10000, 10,
+                     10000, 1000,
+                     1000000, 10000)
+             } catch (error) {
+                 assert.fail(null, response, 'unintended response from configureFusion')
+             }
+         })
+    })
+
     context('postStream', function () {
         it('should stream data and get results', async function () {
             try {
                 let csv = '1.0,2.0,1.0,1.5'
                 let response = await amber.streamSensor(test_sensor, csv, true)
-                console.log(`JAT::::::\n`)
                 expect(response.state).to.equal('Buffering')
                 expect(response.message).to.equal('')
                 expect(response.progress).to.equal(0)
@@ -313,7 +441,7 @@ describe('#sensor_ops()', function () {
 
         it('should return http status 404 if sensor not found', async function () {
             try {
-                let response = await amber.configureFusion(test_sensor + '7', features.length, features)
+                let response = await amber.configureFusion(test_sensor + '7', features)
                 assert.fail(null, response, 'unintended response from getConfig')
             } catch (error) {
                 expect(error.status).to.equal(404)
