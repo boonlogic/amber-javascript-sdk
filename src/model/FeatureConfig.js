@@ -13,7 +13,6 @@
  *
  */
 import {ApiClient} from '../ApiClient';
-import {VersionNumber} from './VersionNumber';
 
 /**
  * The FeatureConfig model module.
@@ -25,12 +24,8 @@ export class FeatureConfig {
    * Constructs a new <code>FeatureConfig</code>.
    * @alias module:model/FeatureConfig
    * @class
-   * @param minVal {Number} the value that should be considered the minimum value for this feature. This can be set to a value larger than the actual min if you want to treat all value less than that as the same (for instance, to keep a noise spike from having undue influence in the clustering
-   * @param maxVal {Number} corresponding maximum value
    */
-  constructor(minVal, maxVal) {
-    this.minVal = minVal;
-    this.maxVal = maxVal;
+  constructor() {
   }
 
   /**
@@ -43,37 +38,32 @@ export class FeatureConfig {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new FeatureConfig();
-      if (data.hasOwnProperty('VersionNumber'))
-        obj.versionNumber = VersionNumber.constructFromObject(data['VersionNumber']);
-      if (data.hasOwnProperty('minVal'))
-        obj.minVal = ApiClient.convertToType(data['minVal'], 'Number');
       if (data.hasOwnProperty('maxVal'))
         obj.maxVal = ApiClient.convertToType(data['maxVal'], 'Number');
+      if (data.hasOwnProperty('minVal'))
+        obj.minVal = ApiClient.convertToType(data['minVal'], 'Number');
       if (data.hasOwnProperty('weight'))
         obj.weight = ApiClient.convertToType(data['weight'], 'Number');
       if (data.hasOwnProperty('label'))
         obj.label = ApiClient.convertToType(data['label'], 'String');
+      if (data.hasOwnProperty('submitRule'))
+        obj.submitRule = ApiClient.convertToType(data['submitRule'], 'String');
     }
     return obj;
   }
 }
 
 /**
- * @member {module:model/VersionNumber} versionNumber
+ * corresponding maximum value
+ * @member {Number} maxVal
  */
-FeatureConfig.prototype.versionNumber = undefined;
+FeatureConfig.prototype.maxVal = undefined;
 
 /**
  * the value that should be considered the minimum value for this feature. This can be set to a value larger than the actual min if you want to treat all value less than that as the same (for instance, to keep a noise spike from having undue influence in the clustering
  * @member {Number} minVal
  */
 FeatureConfig.prototype.minVal = undefined;
-
-/**
- * corresponding maximum value
- * @member {Number} maxVal
- */
-FeatureConfig.prototype.maxVal = undefined;
 
 /**
  * corresponding weight
@@ -86,4 +76,28 @@ FeatureConfig.prototype.weight = undefined;
  * @member {String} label
  */
 FeatureConfig.prototype.label = undefined;
+
+/**
+ * Allowed values for the <code>submitRule</code> property.
+ * @enum {String}
+ * @readonly
+ */
+FeatureConfig.SubmitRuleEnum = {
+  /**
+   * value: "submit"
+   * @const
+   */
+  submit: "submit",
+
+  /**
+   * value: "nosubmit"
+   * @const
+   */
+  nosubmit: "nosubmit"
+};
+/**
+ * policy for submitting sensor fusion vector when this feature is updated. One of \"submit\", \"nosubmit\" (defaults to \"submit\")
+ * @member {module:model/FeatureConfig.SubmitRuleEnum} submitRule
+ */
+FeatureConfig.prototype.submitRule = undefined;
 

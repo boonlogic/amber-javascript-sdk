@@ -334,7 +334,8 @@ export class AmberClientClass {
         try {
             await this._authenticate()
             this.defaultClient.basePath = this.license_profile.server
-            let body = new this.AmberApiServer.PostStreamRequest(saveImage, csv)
+            let body = new this.AmberApiServer.PostStreamRequest(csv)
+            body.saveImage = saveImage
             return await this.apiInstance.postStream(body, sensorId)
         } catch (error) {
             throw new AmberHttpException('streamSensor failed', error)
@@ -430,6 +431,54 @@ export class AmberClientClass {
     }
 
     /**
+     * Configure sensor fusion vector
+     * @param sensorId
+     * @param features
+     * @returns {Promise<unknown>}
+     */
+    async configureFusion(sensorId, features) {
+        try {
+            await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
+            if (features == null || features.length === 0) {
+                throw "invalid 'feature_count': must be positive integer"
+            }
+            let body = {
+                'features': features
+            }
+            let putConfigResponse = await this.apiInstance.putConfig(body, sensorId)
+            return putConfigResponse['features']
+        } catch (error) {
+            throw new AmberHttpException('configureFusion failed', error)
+        }
+    }
+
+    /**
+     * Stream to fusion vector
+     * @param sensorId
+     * @param vector
+     * @param rule
+     * @returns {Promise<unknown>}
+     */
+    async streamFusion(sensorId, vector, rule) {
+        try {
+            await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
+            if (!['submit', 'nosubmit'].includes(rule)) {
+                throw new `rule must be 'submit' or 'nosubmit', got ${rule}`
+            }
+            let body = {
+                'vector': vector,
+                'submitRule': rule
+            }
+            let putStreamResponse = await this.apiInstance.putStream(body, sensorId)
+            return putStreamResponse
+        } catch (error) {
+            throw new AmberHttpException('configureFusion failed', error)
+        }
+    }
+
+    /**
      * Get version information for Amber server
      * @returns {Promise<unknown>}
      */
@@ -439,7 +488,6 @@ export class AmberClientClass {
             this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getVersion()
         } catch (error) {
-            console.log(error)
             throw new AmberHttpException('getVersion failed', error)
         }
     }
