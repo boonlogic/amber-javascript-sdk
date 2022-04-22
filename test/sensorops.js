@@ -1,8 +1,8 @@
 const {assert, expect} = require('chai')
-const {AmberClient} = require("..")
-const {StreamingParameters, PutStreamResponse} = require("../dist")
 const secrets = require('./secrets.js')
 const fs = require('fs')
+const {PutStreamResponse} = require('../dist/model/PutStreamResponse')
+const {StreamingParameters} = require('../dist/model/StreamingParameters')
 
 let amber = null
 let test_sensor = null
