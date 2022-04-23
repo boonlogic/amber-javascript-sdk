@@ -1,7 +1,7 @@
 const {assert, expect} = require('chai')
 const secrets = require('./secrets.js')
 const fs = require('fs')
-const {AmberClient} = require("..")
+const {StreamingParameters, PutStreamResponse} = require('../dist')
 
 let amber = null
 let test_sensor = null
@@ -244,7 +244,7 @@ describe('#sensor_ops()', function () {
          it('should not return results when streaming partial fusion vector', async function () {
              try {
                  let v = [{label: 'f1', value: 2}, {label: 'f2', value: 4}]
-                 let exp = new AmberClient.PutStreamResponse([null, 2, 4], "nan,2,4")
+                 let exp = PutStreamResponse.constructFromObject({vector: [null, 2, 4], vectorCSV: "nan,2,4"})
                  let response = await amber.streamFusion(test_sensor, v, 'submit')
                  expect(response).to.eql(exp)
              } catch (error) {
@@ -450,7 +450,7 @@ describe('#sensor_ops()', function () {
         })
         it('should enable learning', async function () {
             try {
-                let exp = AmberClient.StreamingParameters.constructFromObject({
+                let exp = StreamingParameters.constructFromObject({
                     anomalyHistoryWindow: 1000,
                     learningRateNumerator: 10,
                     learningRateDenominator: 10000,
