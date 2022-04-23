@@ -1,8 +1,7 @@
 const {assert, expect} = require('chai')
-const {AmberClient} = require("..")
-const {PutStreamResponse} = require("../dist")
 const secrets = require('./secrets.js')
 const fs = require('fs')
+const {StreamingParameters, PutStreamResponse} = require('../dist')
 
 let amber = null
 let test_sensor = null
@@ -245,7 +244,7 @@ describe('#sensor_ops()', function () {
          it('should not return results when streaming partial fusion vector', async function () {
              try {
                  let v = [{label: 'f1', value: 2}, {label: 'f2', value: 4}]
-                 let exp = new PutStreamResponse([null, 2, 4], "nan,2,4")
+                 let exp = PutStreamResponse.constructFromObject({vector: [null, 2, 4], vectorCSV: "nan,2,4"})
                  let response = await amber.streamFusion(test_sensor, v, 'submit')
                  expect(response).to.eql(exp)
              } catch (error) {
@@ -432,19 +431,36 @@ describe('#sensor_ops()', function () {
         })
     })
 
-    context('configureFusion', function () {
-
-        let features = []
-        for (let i = 0; i < 5; i++) {
-            features.push({label: `f${i}`, submitRule: 'submit'})
-        }
-
+    context('enableLearning', function () {
         it('should return http status 404 if sensor not found', async function () {
             try {
-                let response = await amber.configureFusion(test_sensor + '7', features)
+                let response = await amber.enableLearning(test_sensor + '7')
                 assert.fail(null, response, 'unintended response from getConfig')
             } catch (error) {
                 expect(error.status).to.equal(404)
+            }
+        })
+        it('should return http status 404 if sensor not found', async function () {
+            try {
+                let response = await amber.enableLearning(test_sensor + '7')
+                assert.fail(null, response, 'unintended response from getConfig')
+            } catch (error) {
+                expect(error.status).to.equal(404)
+            }
+        })
+        it('should enable learning', async function () {
+            try {
+                let exp = StreamingParameters.constructFromObject({
+                    anomalyHistoryWindow: 1000,
+                    learningRateNumerator: 10,
+                    learningRateDenominator: 10000,
+                    learningMaxClusters: 1000,
+                    learningMaxSamples: 1000000})
+                let response = await amber.enableLearning(test_sensor, 1000, 10,
+                    10000, 1000, 1000000)
+                expect(response).to.eql(exp)
+            } catch (error) {
+                assert.fail(null, response, 'unintended response from getConfig')
             }
         })
     })

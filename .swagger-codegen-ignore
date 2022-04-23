@@ -6,7 +6,9 @@
 
 # As an example, the C# client generator defines ApiClient.cs.
 # You can make changes and tell Swagger Codgen to ignore just this file by uncommenting the following line:
-#ApiClient.cs
+src/ApiClient.cs
+README.md
+package.json
 
 # You can match any string of characters against a directory, file or extension with a single asterisk (*):
 #foo/*/qux
@@ -20,4 +22,4 @@
 # For example, you can ignore all files in a docs folder with the file extension .md:
 #docs/*.md
 # Then explicitly reverse the ignore rule for a single file:
-#!docs/README.md
+!docs/README.md

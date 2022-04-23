@@ -67,6 +67,7 @@ import {SensorInstance} from './model/SensorInstance';
 import {SensorUsageInfo} from './model/SensorUsageInfo';
 import {StreamStatus} from './model/StreamStatus';
 import {StreamingEndpointUsageInfo} from './model/StreamingEndpointUsageInfo';
+import {StreamingParameters} from './model/StreamingParameters';
 import {Uint16Array} from './model/Uint16Array';
 import {Uint32Array} from './model/Uint32Array';
 import {Uint64Array} from './model/Uint64Array';
@@ -435,6 +436,12 @@ export {
      * @property {module:model/StreamingEndpointUsageInfo}
      */
     StreamingEndpointUsageInfo,
+
+    /**
+     * The StreamingParameters model constructor.
+     * @property {module:model/StreamingParameters}
+     */
+    StreamingParameters,
 
     /**
      * The Uint16Array model constructor.
