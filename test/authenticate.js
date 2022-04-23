@@ -1,5 +1,4 @@
 const expect = require('chai').expect
-const {AmberClient} = require("..")
 const secrets = require('./secrets.js')
 
 describe('#authenticate()', function () {

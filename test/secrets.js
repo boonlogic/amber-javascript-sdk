@@ -1,4 +1,4 @@
-const {AmberClient} = require("..")
+const {AmberClient} = require("../dist/sdk")
 const { SecretsManagerClient, GetSecretValueCommand } = require("@aws-sdk/client-secrets-manager");
 
 const env_mappings = {
