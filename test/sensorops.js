@@ -244,7 +244,7 @@ describe('#sensor_ops()', function () {
          it('should not return results when streaming partial fusion vector', async function () {
              try {
                  let v = [{label: 'f1', value: 2}, {label: 'f2', value: 4}]
-                 let exp = PutStreamResponse.constructFromObject({vector: [null, 2, 4], vectorCSV: "None,2,4"})
+                 let exp = PutStreamResponse.constructFromObject({vector: "None,2,4"})
                  let response = await amber.streamFusion(test_sensor, v, 'submit')
                  expect(response).to.eql(exp)
              } catch (error) {
