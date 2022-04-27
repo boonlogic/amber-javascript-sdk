@@ -45,6 +45,12 @@
         // expect(instance.features).to.be(expectedValueLiteral);
       });
 
+      it('should have the property streaming (base name: "streaming")', function() {
+        // TODO: update the code to test the property streaming
+        expect(instance).to.have.property('streaming');
+        // expect(instance.streaming).to.be(expectedValueLiteral);
+      });
+
     });
   });
 

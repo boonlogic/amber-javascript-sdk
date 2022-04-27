@@ -13,7 +13,6 @@
  *
  */
 import {ApiClient} from '../ApiClient';
-import {MayContainNullsArray} from './MayContainNullsArray';
 import {PostStreamResponse} from './PostStreamResponse';
 
 /**
@@ -26,12 +25,10 @@ export class PutStreamResponse {
    * Constructs a new <code>PutStreamResponse</code>.
    * @alias module:model/PutStreamResponse
    * @class
-   * @param vector {module:model/MayContainNullsArray} 
-   * @param vectorCSV {String} updated sensor fusion vector as a string of comma-separated values
+   * @param vector {String} updated sensor fusion vector as a string of comma-separated values
    */
-  constructor(vector, vectorCSV) {
+  constructor(vector) {
     this.vector = vector;
-    this.vectorCSV = vectorCSV;
   }
 
   /**
@@ -45,9 +42,7 @@ export class PutStreamResponse {
     if (data) {
       obj = obj || new PutStreamResponse();
       if (data.hasOwnProperty('vector'))
-        obj.vector = MayContainNullsArray.constructFromObject(data['vector']);
-      if (data.hasOwnProperty('vectorCSV'))
-        obj.vectorCSV = ApiClient.convertToType(data['vectorCSV'], 'String');
+        obj.vector = ApiClient.convertToType(data['vector'], 'String');
       if (data.hasOwnProperty('results'))
         obj.results = PostStreamResponse.constructFromObject(data['results']);
     }
@@ -56,15 +51,10 @@ export class PutStreamResponse {
 }
 
 /**
- * @member {module:model/MayContainNullsArray} vector
+ * updated sensor fusion vector as a string of comma-separated values
+ * @member {String} vector
  */
 PutStreamResponse.prototype.vector = undefined;
-
-/**
- * updated sensor fusion vector as a string of comma-separated values
- * @member {String} vectorCSV
- */
-PutStreamResponse.prototype.vectorCSV = undefined;
 
 /**
  * @member {module:model/PostStreamResponse} results

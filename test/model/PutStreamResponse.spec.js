@@ -45,12 +45,6 @@
         // expect(instance.vector).to.be(expectedValueLiteral);
       });
 
-      it('should have the property vectorCSV (base name: "vectorCSV")', function() {
-        // TODO: update the code to test the property vectorCSV
-        expect(instance).to.have.property('vectorCSV');
-        // expect(instance.vectorCSV).to.be(expectedValueLiteral);
-      });
-
       it('should have the property results (base name: "results")', function() {
         // TODO: update the code to test the property results
         expect(instance).to.have.property('results');

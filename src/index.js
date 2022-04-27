@@ -44,7 +44,6 @@ import {MRecentTimes} from './model/MRecentTimes';
 import {MStreamingParameters} from './model/MStreamingParameters';
 import {MTraining} from './model/MTraining';
 import {MagicNumber} from './model/MagicNumber';
-import {MayContainNullsArray} from './model/MayContainNullsArray';
 import {PCA} from './model/PCA';
 import {PostAuth2Request} from './model/PostAuth2Request';
 import {PostAuth2Response} from './model/PostAuth2Response';
@@ -298,12 +297,6 @@ export {
      * @property {module:model/MagicNumber}
      */
     MagicNumber,
-
-    /**
-     * The MayContainNullsArray model constructor.
-     * @property {module:model/MayContainNullsArray}
-     */
-    MayContainNullsArray,
 
     /**
      * The PCA model constructor.
