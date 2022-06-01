@@ -42,6 +42,8 @@ export class PostPretrainRequest {
       obj = obj || new PostPretrainRequest();
       if (data.hasOwnProperty('data'))
         obj.data = ApiClient.convertToType(data['data'], 'String');
+      if (data.hasOwnProperty('format'))
+        obj.format = ApiClient.convertToType(data['format'], 'String');
       if (data.hasOwnProperty('autotuneConfig'))
         obj.autotuneConfig = ApiClient.convertToType(data['autotuneConfig'], 'Boolean');
     }
@@ -53,6 +55,13 @@ export class PostPretrainRequest {
  * @member {String} data
  */
 PostPretrainRequest.prototype.data = undefined;
+
+/**
+ * format of 'data' field, [csv | b64float]
+ * @member {String} format
+ * @default 'csv'
+ */
+PostPretrainRequest.prototype.format = 'csv';
 
 /**
  * @member {Boolean} autotuneConfig

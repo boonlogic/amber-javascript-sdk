@@ -425,6 +425,7 @@ describe('#sensor_ops()', function () {
                 let response = await amber.getStatus(test_sensor + '7')
                 assert.fail(null, response, 'unintended response from getStatus')
             } catch (error) {
+                console.log(error)
                 expect(error.status).to.equal(404)
             }
         })

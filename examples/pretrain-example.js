@@ -15,10 +15,10 @@ async function pretraining() {
         console.log(`configureSensorResponse: ${JSON.stringify(configureSensorResponse,null,4)}`)
 
         // read the entire data set
-        let filedata = fs.readFileSync('pretrain.csv', 'UTF-8')
+        let filedata = fs.readFileSync('../test/pretrainxl.csv', 'UTF-8')
 
         // begin pretraining with autotuneConfig enabled
-        let pretrainResponse = await amberInstance.pretrainSensor(mySensor, filedata, true)
+        let pretrainResponse = await amberInstance.pretrainSensorXL(mySensor, filedata, true)
         console.log(`pretrainResponse: ${JSON.stringify(pretrainResponse,null,4)}`)
         let state = pretrainResponse.state
         while (state == "Pretraining") {
