@@ -24,7 +24,7 @@ export class GetPretrainResponse {
    * Constructs a new <code>GetPretrainResponse</code>.
    * @alias module:model/GetPretrainResponse
    * @class
-   * @param state {String} state of pretraining, None, Pretraining, Pretrained, Error
+   * @param state {String} state of pretraining, one of: None, Chunking, Pretraining, Pretrained, Error
    */
   constructor(state) {
     this.state = state;
@@ -50,7 +50,7 @@ export class GetPretrainResponse {
 }
 
 /**
- * state of pretraining, None, Pretraining, Pretrained, Error
+ * state of pretraining, one of: None, Chunking, Pretraining, Pretrained, Error
  * @member {String} state
  */
 GetPretrainResponse.prototype.state = undefined;
