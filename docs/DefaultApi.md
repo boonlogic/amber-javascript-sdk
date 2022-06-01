@@ -551,7 +551,7 @@ No authorization required
 
 <a name="postPretrain"></a>
 # **postPretrain**
-> PostPretrainResponse postPretrain(body, sensorId)
+> PostPretrainResponse postPretrain(body, sensorId, opts)
 
 Pretrain a sensor using historical data
 
@@ -571,8 +571,11 @@ authorize-amber-pool.apiKey = 'YOUR API KEY';
 let apiInstance = new AmberApiServer.DefaultApi();
 let body = new AmberApiServer.PostPretrainRequest(); // PostPretrainRequest | Data to be streamed to sensor. Should be formatted as a simple string of comma-separated numbers with no spaces (e.g. "0,0.5,1,1.5,2").
 let sensorId = "sensorId_example"; // String | Unique identifier for sensor
-
-apiInstance.postPretrain(body, sensorId).then((data) => {
+let opts = { 
+  'amberChunk': "amberChunk_example", // String | Specification of chunk, 1:3 2:3 3:3 for example
+  'amberTransaction': "amberTransaction_example" // String | Unique identifier for chunk transactions
+};
+apiInstance.postPretrain(body, sensorId, opts).then((data) => {
   console.log('API called successfully. Returned data: ' + data);
 }, (error) => {
   console.error(error);
@@ -586,6 +589,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**PostPretrainRequest**](PostPretrainRequest.md)| Data to be streamed to sensor. Should be formatted as a simple string of comma-separated numbers with no spaces (e.g. &quot;0,0.5,1,1.5,2&quot;). | 
  **sensorId** | **String**| Unique identifier for sensor | 
+ **amberChunk** | **String**| Specification of chunk, 1:3 2:3 3:3 for example | [optional] 
+ **amberTransaction** | **String**| Unique identifier for chunk transactions | [optional] 
 
 ### Return type
 

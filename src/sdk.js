@@ -9,6 +9,7 @@ const process = require('process')
 const expandHomeDir = require('expand-home-dir')
 const fs = require('fs')
 const gzip = require('node-gzip')
+const Buffer = require('buffer/').Buffer
 
 /**
  * AmberUserException is used when an AmberClient object
@@ -353,6 +354,7 @@ export class AmberClientClass {
             this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getStatus(sensorId)
         } catch (error) {
+            console.log(error)
             throw new AmberHttpException('getStatus failed', error)
         }
     }
@@ -384,6 +386,76 @@ export class AmberClientClass {
             return await this.apiInstance.postPretrain(bodyStr, sensorId)
         } catch (error) {
             throw new AmberHttpException('pretrainSensor failed', error)
+        }
+    }
+
+    /**
+     * Pretrain large data sets to an amber sensor
+     * @param sensorId
+     * @param csv
+     * @param autotuneConfig
+     * @returns {Promise<unknown>}
+     */
+    async pretrainSensorXL(sensorId, csv, autotuneConfig) {
+        try {
+            await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
+            let body = new this.AmberApiServer.PostPretrainRequest()
+            // trim spaces from beginning and end
+            csv = csv.trim()
+            // trim whitespace other than newlines
+            csv = csv.replace(/\r \t/g, "")
+            // create a single csv string with no newlines
+            csv = csv.replace(/\n/g, ",")
+
+            // create a list of values
+            let csvList = csv.split(",")
+
+            let chunkSize = 1000000
+            let chunkMax = Math.trunc(csvList.length / chunkSize)
+            if (csvList.length % chunkSize !== 0) {
+                chunkMax += 1
+            }
+
+            let response = null
+            let opts = {}
+            for (let chunkIdx = 0; chunkIdx < chunkMax; chunkIdx++) {
+
+                // calculate start and end positions
+                let start = chunkIdx * chunkSize
+                let end = (chunkIdx + 1) * chunkSize
+                if (end > csvList.length) {
+                    end = csvList.length
+                }
+
+                // create next packedFloat chunk
+                let f32 = new Float32Array(end - start)
+                let fIdx = 0
+                for (let csvIdx = start; csvIdx <= end; csvIdx++) {
+                    f32[fIdx] = parseFloat(csvList[csvIdx])
+                    fIdx++
+                }
+
+                // create next request body
+                body.data = Buffer.from(f32.buffer).toString('base64');
+                body.autoTuneConfig = this.AmberApiServer.ApiClient.convertToType(autotuneConfig, 'Boolean');
+                body.format = 'packed-float'
+                let bodyStr = JSON.stringify(body)
+                if (bodyStr.length > 10000) {
+                    bodyStr = await gzip.gzip(bodyStr)
+                }
+
+                // create chunk specifier
+                opts.amberChunk = `${chunkIdx+1}:${chunkMax}`
+
+                response = await this.apiInstance.postPretrainWithHttpInfo(bodyStr, sensorId, opts)
+
+                // use ambertransaction on next chunk
+                opts.amberTransaction = response.response['header']['ambertransaction']
+            }
+            return response.data
+        } catch (error) {
+            throw new AmberHttpException('pretrainSensorXL failed', error)
         }
     }
 

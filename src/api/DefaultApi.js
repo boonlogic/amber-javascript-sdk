@@ -646,10 +646,13 @@ export class DefaultApi {
      * Pretrains a sensor. Ingoing data should be formatted as a simple string of comma-separated numbers with no spaces.
      * @param {module:model/PostPretrainRequest} body Data to be streamed to sensor. Should be formatted as a simple string of comma-separated numbers with no spaces (e.g. &quot;0,0.5,1,1.5,2&quot;).
      * @param {String} sensorId Unique identifier for sensor
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.amberChunk Specification of chunk, 1:3 2:3 3:3 for example
+     * @param {String} opts.amberTransaction Unique identifier for chunk transactions
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/PostPretrainResponse} and HTTP response
      */
-    postPretrainWithHttpInfo(body, sensorId) {
-      
+    postPretrainWithHttpInfo(body, sensorId, opts) {
+      opts = opts || {};
       let postBody = body;
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
@@ -667,7 +670,7 @@ export class DefaultApi {
         
       };
       let headerParams = {
-        'sensorId': sensorId
+        'sensorId': sensorId,'amberChunk': opts['amberChunk'],'amberTransaction': opts['amberTransaction']
       };
       let formParams = {
         
@@ -690,10 +693,13 @@ export class DefaultApi {
      * Pretrains a sensor. Ingoing data should be formatted as a simple string of comma-separated numbers with no spaces.
      * @param {<&vendorExtensions.x-jsdoc-type>} body Data to be streamed to sensor. Should be formatted as a simple string of comma-separated numbers with no spaces (e.g. &quot;0,0.5,1,1.5,2&quot;).
      * @param {<&vendorExtensions.x-jsdoc-type>} sensorId Unique identifier for sensor
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.amberChunk Specification of chunk, 1:3 2:3 3:3 for example
+     * @param {String} opts.amberTransaction Unique identifier for chunk transactions
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/PostPretrainResponse}
      */
-    postPretrain(body, sensorId) {
-      return this.postPretrainWithHttpInfo(body, sensorId)
+    postPretrain(body, sensorId, opts) {
+      return this.postPretrainWithHttpInfo(body, sensorId, opts)
         .then(function(response_and_data) {
           return response_and_data.data;
         });

@@ -24,7 +24,7 @@ export class PostPretrainResponse {
    * Constructs a new <code>PostPretrainResponse</code>.
    * @alias module:model/PostPretrainResponse
    * @class
-   * @param state {String} state of pretraining, None, Pretraining, Pretrained
+   * @param state {String} state of pretraining, one of: Chunking, Pretraining, Pretrained, Error
    */
   constructor(state) {
     this.state = state;
@@ -42,6 +42,10 @@ export class PostPretrainResponse {
       obj = obj || new PostPretrainResponse();
       if (data.hasOwnProperty('state'))
         obj.state = ApiClient.convertToType(data['state'], 'String');
+      if (data.hasOwnProperty('amberTransaction'))
+        obj.amberTransaction = ApiClient.convertToType(data['amberTransaction'], 'String');
+      if (data.hasOwnProperty('amberChunk'))
+        obj.amberChunk = ApiClient.convertToType(data['amberChunk'], 'String');
       if (data.hasOwnProperty('message'))
         obj.message = ApiClient.convertToType(data['message'], 'String');
     }
@@ -50,10 +54,20 @@ export class PostPretrainResponse {
 }
 
 /**
- * state of pretraining, None, Pretraining, Pretrained
+ * state of pretraining, one of: Chunking, Pretraining, Pretrained, Error
  * @member {String} state
  */
 PostPretrainResponse.prototype.state = undefined;
+
+/**
+ * @member {String} amberTransaction
+ */
+PostPretrainResponse.prototype.amberTransaction = undefined;
+
+/**
+ * @member {String} amberChunk
+ */
+PostPretrainResponse.prototype.amberChunk = undefined;
 
 /**
  * latest pretrain message

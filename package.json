@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@stdlib/assert-is-gzip-buffer": "0.0.7",
+    "buffer": "^6.0.3",
     "core-js": "^3.22.2",
     "expand-home-dir": "0.0.3",
     "js-beautify": "^1.14.3",
