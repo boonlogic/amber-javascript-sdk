@@ -15,6 +15,7 @@ Method | HTTP request | Description
 [**getVersion**](DefaultApi.md#getVersion) | **GET** /version | Retrieves API version information
 [**postConfig**](DefaultApi.md#postConfig) | **POST** /config | Apply configuration to a sensor instance
 [**postOauth2**](DefaultApi.md#postOauth2) | **POST** /oauth2 | Request a bearer token using Amber account credentials
+[**postOutage**](DefaultApi.md#postOutage) | **POST** /outage | Informs the server of an outage
 [**postPretrain**](DefaultApi.md#postPretrain) | **POST** /pretrain | Pretrain a sensor using historical data
 [**postSensor**](DefaultApi.md#postSensor) | **POST** /sensor | Create a new a sensor instance
 [**postStream**](DefaultApi.md#postStream) | **POST** /stream | Stream data to a sensor
@@ -547,6 +548,55 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="postOutage"></a>
+# **postOutage**
+> PostOutageResponse postOutage(sensorId)
+
+Informs the server of an outage
+
+Clears the load buffer of streaming window and resets statistics. Returns stream status
+
+### Example
+```javascript
+import {AmberApiServer} from 'amber_api_server';
+let defaultClient = AmberApiServer.ApiClient.instance;
+
+// Configure API key authorization: authorize-amber-pool
+let authorize-amber-pool = defaultClient.authentications['authorize-amber-pool'];
+authorize-amber-pool.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//authorize-amber-pool.apiKeyPrefix = 'Token';
+
+let apiInstance = new AmberApiServer.DefaultApi();
+let sensorId = "sensorId_example"; // String | Unique identifier for sensor
+
+apiInstance.postOutage(sensorId).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
+});
+
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **sensorId** | **String**| Unique identifier for sensor | 
+
+### Return type
+
+[**PostOutageResponse**](PostOutageResponse.md)
+
+### Authorization
+
+[authorize-amber-pool](../README.md#authorize-amber-pool)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 <a name="postPretrain"></a>

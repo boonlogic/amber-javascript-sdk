@@ -440,14 +440,6 @@ describe('#sensor_ops()', function () {
                 expect(error.status).to.equal(404)
             }
         })
-        it('should return http status 404 if sensor not found', async function () {
-            try {
-                let response = await amber.enableLearning(test_sensor + '7')
-                assert.fail(null, response, 'unintended response from getConfig')
-            } catch (error) {
-                expect(error.status).to.equal(404)
-            }
-        })
         it('should enable learning', async function () {
             try {
                 let exp = StreamingParameters.constructFromObject({
@@ -464,6 +456,29 @@ describe('#sensor_ops()', function () {
             }
         })
     })
+
+    context('postOutage', function () {
+        it('should return http status 404 if sensor not found', async function () {
+            try {
+                let response = await amber.postOutage(test_sensor + '7')
+                assert.fail(null, response, 'unintended response from postOutage')
+            } catch (error) {
+                expect(error.status).to.equal(404)
+            }
+        })
+        it('should post outage learning', async function () {
+            try {
+                let response = await amber.postOutage(test_sensor)
+                assert.equal(response.state, 'Buffering')
+                assert.equal(response.progress, 0)
+                assert.equal(response.clusterCount, 0)
+                assert.equal(response.retryCount, 0)
+            } catch (error) {
+                assert.fail(null, response, 'unintended response from getConfig')
+            }
+        })
+    })
+
 
     context('deleteSensor', function () {
         it('should delete sensor', async function () {

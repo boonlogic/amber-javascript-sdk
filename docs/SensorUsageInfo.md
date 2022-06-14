@@ -4,6 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **postConfig** | [**EndpointUsageInfo**](EndpointUsageInfo.md) |  | 
+**postOutage** | [**EndpointUsageInfo**](EndpointUsageInfo.md) |  | 
 **postStream** | [**StreamingEndpointUsageInfo**](StreamingEndpointUsageInfo.md) |  | 
 **putSensor** | [**EndpointUsageInfo**](EndpointUsageInfo.md) |  | 
 **getSensor** | [**EndpointUsageInfo**](EndpointUsageInfo.md) |  | 
