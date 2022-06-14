@@ -325,6 +325,21 @@ export class AmberClientClass {
     }
 
     /**
+     * Post a known outage for a specified Amber sensor
+     * @param sensorId
+     * @returns {Promise<unknown>}
+     */
+    async postOutage(sensorId) {
+        try {
+            await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
+            return await this.apiInstance.postOutage(sensorId)
+        } catch (error) {
+            throw new AmberHttpException('configureSensor failed', error)
+        }
+    }
+
+    /**
      * Stream data to an amber sensor and return the inference result
      * @param sensorId
      * @param csv
@@ -446,7 +461,7 @@ export class AmberClientClass {
                 }
 
                 // create chunk specifier
-                opts.amberChunk = `${chunkIdx+1}:${chunkMax}`
+                opts.amberChunk = `${chunkIdx + 1}:${chunkMax}`
 
                 response = await this.apiInstance.postPretrainWithHttpInfo(bodyStr, sensorId, opts)
 
@@ -590,6 +605,7 @@ export class AmberClientClass {
             throw new AmberHttpException('enableLearning failed', error)
         }
     }
+
     /*
 
         if learning_max_clusters:

@@ -29,6 +29,9 @@ async function walkthrough() {
         const getStatusResponse = await amberInstance.getStatus(mySensor)
         console.log(`getStatusResponse = ${JSON.stringify(getStatusResponse,null,4)}`)
 
+        const postOutageResponse = await amberInstance.postOutage(mySensor)
+        console.log(`getOutageResponse = ${JSON.stringify(postOutageResponse,null,4)}`)
+
         const deleteSensorResponse = await amberInstance.deleteSensor(mySensor)
         console.log(`deleteSensorResponse = ${JSON.stringify(deleteSensorResponse,null,4)}`)
     }

@@ -1,6 +1,6 @@
 {
   "name": "amber-javascript-sdk",
-  "version": "1.0.41",
+  "version": "1.0.42",
   "description": "Boon_Logic_Amber_SDK",
   "license": "Unlicense",
   "main": "dist/sdk.js",
@@ -52,5 +52,15 @@
     "expect.js": "~0.3.1",
     "mocha": "^9.2.2",
     "sinon": "13.0.2"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/boonlogic/amber-javascript-sdk/issues"
+  },
+  "homepage": "https://github.com/boonlogic/amber-javascript-sdk#readme",
+  "directories": {
+    "doc": "docs",
+    "example": "examples",
+    "test": "test"
+  },
+  "author": ""
 }
