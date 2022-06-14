@@ -273,10 +273,10 @@ export class AmberClientClass {
      * @returns {Promise<unknown>}
      */
     async configureSensor(sensorId, featureCount = 1, streamingWindowSize = 25,
-                          samplesToBuffer = 10000, learningRateNumerator = 10,
-                          learningRateDenominator = 10000, learningMaxClusters = 1000,
-                          learningMaxSamples = 1000000, anomalyHistoryWindow = 10000,
-                          features = []) {
+        samplesToBuffer = 10000, learningRateNumerator = 10,
+        learningRateDenominator = 10000, learningMaxClusters = 1000,
+        learningMaxSamples = 1000000, anomalyHistoryWindow = 10000,
+        features = []) {
         try {
             await this._authenticate()
             this.defaultClient.basePath = this.license_profile.server
@@ -576,8 +576,8 @@ export class AmberClientClass {
      * @returns {Promise<unknown>}
      */
     async enableLearning(sensorId, anomalyHistoryWindow, learningRateNumerator = null,
-                         learningRateDenominator = null, learningMaxClusters = null,
-                         learningMaxSamples = null) {
+        learningRateDenominator = null, learningMaxClusters = null,
+        learningMaxSamples = null) {
         try {
             await this._authenticate()
             this.defaultClient.basePath = this.license_profile.server
