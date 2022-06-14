@@ -273,10 +273,10 @@ export class AmberClientClass {
      * @returns {Promise<unknown>}
      */
     async configureSensor(sensorId, featureCount = 1, streamingWindowSize = 25,
-        samplesToBuffer = 10000, learningRateNumerator = 10,
-        learningRateDenominator = 10000, learningMaxClusters = 1000,
-        learningMaxSamples = 1000000, anomalyHistoryWindow = 10000,
-        features = []) {
+                          samplesToBuffer = 10000, learningRateNumerator = 10,
+                          learningRateDenominator = 10000, learningMaxClusters = 1000,
+                          learningMaxSamples = 1000000, anomalyHistoryWindow = 10000,
+                          features = []) {
         try {
             await this._authenticate()
             this.defaultClient.basePath = this.license_profile.server
@@ -321,6 +321,21 @@ export class AmberClientClass {
             return await this.apiInstance.deleteSensor(sensorId)
         } catch (error) {
             throw new AmberHttpException('deleteSensor failed', error)
+        }
+    }
+
+    /**
+     * Post a known outage for a specified Amber sensor
+     * @param sensorId
+     * @returns {Promise<unknown>}
+     */
+    async postOutage(sensorId) {
+        try {
+            await this._authenticate()
+            this.defaultClient.basePath = this.license_profile.server
+            return await this.apiInstance.postOutage(sensorId)
+        } catch (error) {
+            throw new AmberHttpException('configureSensor failed', error)
         }
     }
 
@@ -446,7 +461,7 @@ export class AmberClientClass {
                 }
 
                 // create chunk specifier
-                opts.amberChunk = `${chunkIdx+1}:${chunkMax}`
+                opts.amberChunk = `${chunkIdx + 1}:${chunkMax}`
 
                 response = await this.apiInstance.postPretrainWithHttpInfo(bodyStr, sensorId, opts)
 
@@ -561,8 +576,8 @@ export class AmberClientClass {
      * @returns {Promise<unknown>}
      */
     async enableLearning(sensorId, anomalyHistoryWindow, learningRateNumerator = null,
-        learningRateDenominator = null, learningMaxClusters = null,
-        learningMaxSamples = null) {
+                         learningRateDenominator = null, learningMaxClusters = null,
+                         learningMaxSamples = null) {
         try {
             await this._authenticate()
             this.defaultClient.basePath = this.license_profile.server
@@ -590,6 +605,7 @@ export class AmberClientClass {
             throw new AmberHttpException('enableLearning failed', error)
         }
     }
+
     /*
 
         if learning_max_clusters:
