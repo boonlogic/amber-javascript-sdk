@@ -470,9 +470,12 @@ describe('#sensor_ops()', function () {
             try {
                 let response = await amber.postOutage(test_sensor)
                 assert.equal(response.state, 'Buffering')
+                assert.equal(response.message, '')
                 assert.equal(response.progress, 0)
                 assert.equal(response.clusterCount, 0)
                 assert.equal(response.retryCount, 0)
+                assert.equal(response.streamingWindowSize, 25)
+                assert.equal(response.totalInferences, 0)
             } catch (error) {
                 assert.fail(null, response, 'unintended response from getConfig')
             }
