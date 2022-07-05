@@ -111,7 +111,8 @@ describe('#sensor_ops()', function () {
                 let response = await amber.configureSensor(test_sensor, 1, 25,
                     10000, 10,
                     10000, 1000,
-                    1000000, 10000)
+                    1000000, 10000,
+                    null, .055)
                 expect(response.featureCount).to.equal(1)
                 expect(response.streamingWindowSize).to.equal(25)
                 expect(response.samplesToBuffer).to.equal(10000)
@@ -166,6 +167,7 @@ describe('#sensor_ops()', function () {
                 expect(response.learningMaxClusters).to.equal(1000)
                 expect(response.learningMaxSamples).to.equal(1000000)
                 expect(response.anomalyHistoryWindow).to.equal(10000)
+                expect(response.percentVariation).to.equal(.055)
             } catch (error) {
                 assert.fail(!error, error, 'unintended exception from getConfig')
             }
@@ -425,7 +427,6 @@ describe('#sensor_ops()', function () {
                 let response = await amber.getStatus(test_sensor + '7')
                 assert.fail(null, response, 'unintended response from getStatus')
             } catch (error) {
-                console.log(error)
                 expect(error.status).to.equal(404)
             }
         })
