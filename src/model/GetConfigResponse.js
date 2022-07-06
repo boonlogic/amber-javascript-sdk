@@ -63,6 +63,8 @@ export class GetConfigResponse extends StreamingParameters {
         obj.percentVariation = ApiClient.convertToType(data['percentVariation'], 'Number');
       if (data.hasOwnProperty('samplesToBuffer'))
         obj.samplesToBuffer = ApiClient.convertToType(data['samplesToBuffer'], 'Number');
+      if (data.hasOwnProperty('percentVariationOverride'))
+        obj.percentVariationOverride = ApiClient.convertToType(data['percentVariationOverride'], 'Number');
     }
     return obj;
   }
@@ -96,4 +98,10 @@ GetConfigResponse.prototype.percentVariation = undefined;
  * @member {Number} samplesToBuffer
  */
 GetConfigResponse.prototype.samplesToBuffer = undefined;
+
+/**
+ * override autotuned percent variation with this value
+ * @member {Number} percentVariationOverride
+ */
+GetConfigResponse.prototype.percentVariationOverride = undefined;
 
