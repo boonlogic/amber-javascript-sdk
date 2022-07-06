@@ -57,6 +57,8 @@ export class PostConfigResponse extends StreamingParameters {
         obj.features = ApiClient.convertToType(data['features'], [FeatureConfig]);
       if (data.hasOwnProperty('samplesToBuffer'))
         obj.samplesToBuffer = ApiClient.convertToType(data['samplesToBuffer'], 'Number');
+      if (data.hasOwnProperty('percentVariationOverride'))
+        obj.percentVariationOverride = ApiClient.convertToType(data['percentVariationOverride'], 'Number');
     }
     return obj;
   }
@@ -84,4 +86,10 @@ PostConfigResponse.prototype.features = undefined;
  * @member {Number} samplesToBuffer
  */
 PostConfigResponse.prototype.samplesToBuffer = undefined;
+
+/**
+ * override autotuned percent variation with this value
+ * @member {Number} percentVariationOverride
+ */
+PostConfigResponse.prototype.percentVariationOverride = undefined;
 
