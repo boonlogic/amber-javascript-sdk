@@ -1,6 +1,6 @@
 {
   "name": "amber-javascript-sdk",
-  "version": "1.0.42",
+  "version": "1.0.43",
   "description": "Boon_Logic_Amber_SDK",
   "license": "Unlicense",
   "main": "dist/sdk.js",
@@ -11,6 +11,7 @@
     "test": "cd test && mocha --timeout 180000 test.js",
     "test-v1": "cd test && AMBER_TEST_LICENSE_ID=v1 mocha --timeout 180000 test.js",
     "test-v1next": "cd test && AMBER_TEST_LICENSE_ID=v1next mocha --timeout 180000 test.js",
+    "test-dev": "cd test && AMBER_TEST_LICENSE_ID=dev mocha --timeout 180000 test.js",
     "generate": "./generate-from-spec.sh",
     "docs": "documentation build src/sdk.js -f html --shallow -o docs"
   },

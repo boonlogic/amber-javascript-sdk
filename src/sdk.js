@@ -276,7 +276,7 @@ export class AmberClientClass {
         samplesToBuffer = 10000, learningRateNumerator = 10,
         learningRateDenominator = 10000, learningMaxClusters = 1000,
         learningMaxSamples = 1000000, anomalyHistoryWindow = 10000,
-        features = []) {
+        features = [], percentVariationOverride = null) {
         try {
             await this._authenticate()
             this.defaultClient.basePath = this.license_profile.server
@@ -288,6 +288,9 @@ export class AmberClientClass {
             body.learningMaxClusters = learningMaxClusters
             body.learningMaxSamples = learningMaxSamples
             body.features = features
+            if (percentVariationOverride != null) {
+                body.percentVariationOverride = percentVariationOverride
+            }
             return await this.apiInstance.postConfig(body, sensorId)
         } catch (error) {
             throw new AmberHttpException('configureSensor failed', error)
@@ -369,7 +372,6 @@ export class AmberClientClass {
             this.defaultClient.basePath = this.license_profile.server
             return await this.apiInstance.getStatus(sensorId)
         } catch (error) {
-            console.log(error)
             throw new AmberHttpException('getStatus failed', error)
         }
     }

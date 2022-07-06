@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset='utf-8'>
-  <title>amber-javascript-sdk 1.0.40 | Documentation</title>
+  <title>amber-javascript-sdk 1.0.43 | Documentation</title>
   <meta name='description' content='Boon_Logic_Amber_SDK'>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' rel='stylesheet'>
@@ -15,7 +15,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>amber-javascript-sdk</h3>
-          <div class='mb1'><code>1.0.40</code></div>
+          <div class='mb1'><code>1.0.43</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -111,6 +111,12 @@
                         href='#amberclientclassdeletesensor'
                         class='regular pre-open'>
                         #deleteSensor
+                      </a></li>
+                      
+                      <li><a
+                        href='#amberclientclasspostoutage'
+                        class='regular pre-open'>
+                        #postOutage
                       </a></li>
                       
                       <li><a
@@ -744,7 +750,7 @@ can't be created. (bad json, missing required fields, etc)</p>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>configureSensor(sensorId, featureCount, streamingWindowSize, samplesToBuffer, learningRateNumerator, learningRateDenominator, learningMaxClusters, learningMaxSamples, anomalyHistoryWindow, features, anomaly_history_window)</span>
+            <span class='code strong strong truncate'>configureSensor(sensorId, featureCount, streamingWindowSize, samplesToBuffer, learningRateNumerator, learningRateDenominator, learningMaxClusters, learningMaxSamples, anomalyHistoryWindow, features, percentVariationOverride, anomaly_history_window)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -754,7 +760,7 @@ can't be created. (bad json, missing required fields, etc)</p>
 
   <p>Configure an amber sensor instance</p>
 
-    <div class='pre p1 fill-light mt0'>configureSensor(sensorId: any, featureCount: any, streamingWindowSize: any, samplesToBuffer: any, learningRateNumerator: any, learningRateDenominator: any, learningMaxClusters: any, learningMaxSamples: any, anomalyHistoryWindow: any, features: any, anomaly_history_window: any): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;unknown></div>
+    <div class='pre p1 fill-light mt0'>configureSensor(sensorId: any, featureCount: any, streamingWindowSize: any, samplesToBuffer: any, learningRateNumerator: any, learningRateDenominator: any, learningMaxClusters: any, learningMaxSamples: any, anomalyHistoryWindow: any, features: any, percentVariationOverride: any, anomaly_history_window: any): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;unknown></div>
   
   
 
@@ -853,6 +859,15 @@ can't be created. (bad json, missing required fields, etc)</p>
           <div>
             <span class='code bold'>features</span> <code class='quiet'>(any
             = <code>[]</code>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>percentVariationOverride</span> <code class='quiet'>(any
+            = <code>.05</code>)</code>
 	    
           </div>
           
@@ -984,6 +999,76 @@ can't be created. (bad json, missing required fields, etc)</p>
   <p>Delete an amber sensor instance</p>
 
     <div class='pre p1 fill-light mt0'>deleteSensor(sensorId: any): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;unknown></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>sensorId</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;unknown></code>:
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='amberclientclasspostoutage'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>postOutage(sensorId)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Post a known outage for a specified Amber sensor</p>
+
+    <div class='pre p1 fill-light mt0'>postOutage(sensorId: any): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;unknown></div>
   
   
 
