@@ -33,11 +33,9 @@ export class PostOutageResponse extends StreamStatus {
    * @param retryCount {} number of restarts that have happened during autotuning
    * @param streamingWindowSize {} the current streaming window size that is being used
    * @param totalInferences {} inferences since the most recent restart
-   * @param lastModified {} Unix time stamp of the last posted stream data
-   * @param lastModifiedDelta {} number of seconds since the last posted stream data
    */
-  constructor(state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences, lastModified, lastModifiedDelta) {
-    super(state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences, lastModified, lastModifiedDelta);
+  constructor(state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences) {
+    super(state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences);
   }
 
   /**

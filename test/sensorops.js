@@ -290,13 +290,11 @@ describe('#sensor_ops()', function () {
                          state: "Buffering",
                          streamingWindowSize: 1,
                          totalInferences: 0,
-                         lastModified: 123456789,
-                         lastModifiedDelta: 0,
                          AD: [0], AH: [0], AM: [0], AW: [0], ID: [0], RI: [0], SI: [0]
                      }
                  }
                  let response = await amber.streamFusion(test_sensor, v, 'submit')
-                 expect(Object.keys(response)).to.eql(Object.keys(exp))
+                 expect(response).to.eql(exp)
              } catch (error) {
                  assert.fail(null, response, 'unintended response from configureFusion')
              }
@@ -346,8 +344,6 @@ describe('#sensor_ops()', function () {
                 expect(response.retryCount).to.equal(0)
                 expect(response.streamingWindowSize).to.equal(25)
                 expect(response.totalInferences).to.equal(0)
-                expect(lastModified in response).to.equal(true)
-                expect(lastModifiedDelta in response).to.equal(true)
                 expect(response.RI).to.deep.equal([0, 0, 0, 0])
                 expect(response.SI).to.deep.equal([0, 0, 0, 0])
                 expect(response.AD).to.deep.equal([0, 0, 0, 0])
@@ -504,8 +500,6 @@ describe('#sensor_ops()', function () {
                 assert.equal(response.retryCount, 0)
                 assert.equal(response.streamingWindowSize, 25)
                 assert.equal(response.totalInferences, 0)
-                assert.equal(lastModified in response, true)
-                assert.equal(lastModifiedDelta in response, true)
             } catch (error) {
                 assert.fail(null, response, 'unintended response from getConfig')
             }

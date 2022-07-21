@@ -10,5 +10,3 @@ Name | Type | Description | Notes
 **retryCount** | **Number** | number of restarts that have happened during autotuning | 
 **streamingWindowSize** | **Number** | the current streaming window size that is being used | 
 **totalInferences** | **Number** | inferences since the most recent restart | 
-**lastModified** | **Number** | Unix time stamp of the last posted stream data | 
-**lastModifiedDelta** | **Number** | number of seconds since the last posted stream data | 

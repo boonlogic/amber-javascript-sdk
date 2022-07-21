@@ -36,8 +36,6 @@ export class PostStreamResponse extends StreamStatus {
    * @param retryCount {} number of restarts that have happened during autotuning
    * @param streamingWindowSize {} the current streaming window size that is being used
    * @param totalInferences {} inferences since the most recent restart
-   * @param lastModified {} Unix time stamp of the last posted stream data
-   * @param lastModifiedDelta {} number of seconds since the last posted stream data
    * @param RI {} 
    * @param SI {} 
    * @param AD {} 
@@ -46,8 +44,8 @@ export class PostStreamResponse extends StreamStatus {
    * @param AW {} 
    * @param ID {} 
    */
-  constructor(state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences, lastModified, lastModifiedDelta, RI, SI, AD, AH, AM, AW, ID) {
-    super(state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences, lastModified, lastModifiedDelta);
+  constructor(state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences, RI, SI, AD, AH, AM, AW, ID) {
+    super(state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences);
     this.RI = RI;
     this.SI = SI;
     this.AD = AD;

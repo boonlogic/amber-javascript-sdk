@@ -7,4 +7,3 @@ node_modules
 /src/ApiClient.js
 /examples/package.json
 /examples/package-lock.json
-swagger.json
