@@ -501,7 +501,7 @@ describe('#sensor_ops()', function () {
                 assert.equal(response.streamingWindowSize, 25)
                 assert.equal(response.totalInferences, 0)
             } catch (error) {
-                assert.fail(null, response, 'unintended response from getConfig')
+                assert.fail(null, response, 'unintended response from postOutage')
             }
         })
     })
