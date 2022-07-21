@@ -31,8 +31,10 @@ export class StreamStatus {
    * @param retryCount {Number} number of restarts that have happened during autotuning
    * @param streamingWindowSize {Number} the current streaming window size that is being used
    * @param totalInferences {Number} inferences since the most recent restart
+   * @param lastModified {Number} Unix time stamp of the last posted stream data
+   * @param lastModifiedDelta {Number} number of seconds since the last posted stream data
    */
-  constructor(state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences) {
+  constructor(state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences, lastModified, lastModifiedDelta) {
     this.state = state;
     this.message = message;
     this.progress = progress;
@@ -40,6 +42,8 @@ export class StreamStatus {
     this.retryCount = retryCount;
     this.streamingWindowSize = streamingWindowSize;
     this.totalInferences = totalInferences;
+    this.lastModified = lastModified;
+    this.lastModifiedDelta = lastModifiedDelta;
   }
 
   /**
@@ -66,6 +70,10 @@ export class StreamStatus {
         obj.streamingWindowSize = ApiClient.convertToType(data['streamingWindowSize'], 'Number');
       if (data.hasOwnProperty('totalInferences'))
         obj.totalInferences = ApiClient.convertToType(data['totalInferences'], 'Number');
+      if (data.hasOwnProperty('lastModified'))
+        obj.lastModified = ApiClient.convertToType(data['lastModified'], 'Number');
+      if (data.hasOwnProperty('lastModifiedDelta'))
+        obj.lastModifiedDelta = ApiClient.convertToType(data['lastModifiedDelta'], 'Number');
     }
     return obj;
   }
@@ -112,4 +120,16 @@ StreamStatus.prototype.streamingWindowSize = undefined;
  * @member {Number} totalInferences
  */
 StreamStatus.prototype.totalInferences = undefined;
+
+/**
+ * Unix time stamp of the last posted stream data
+ * @member {Number} lastModified
+ */
+StreamStatus.prototype.lastModified = undefined;
+
+/**
+ * number of seconds since the last posted stream data
+ * @member {Number} lastModifiedDelta
+ */
+StreamStatus.prototype.lastModifiedDelta = undefined;
 
