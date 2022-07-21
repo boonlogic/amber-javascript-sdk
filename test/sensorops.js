@@ -346,8 +346,8 @@ describe('#sensor_ops()', function () {
                 expect(response.retryCount).to.equal(0)
                 expect(response.streamingWindowSize).to.equal(25)
                 expect(response.totalInferences).to.equal(0)
-                expect("lastModified" in Object.keys(response)).to.equal(true)
-                expect("lastModifiedDelta" in Object.keys(response)).to.equal(true)
+                expect(response.hasOwnProperty('lastModified')).to.equal(true)
+                expect(response.hasOwnProperty('lastModifiedDelta')).to.equal(true)
                 expect(response.RI).to.deep.equal([0, 0, 0, 0])
                 expect(response.SI).to.deep.equal([0, 0, 0, 0])
                 expect(response.AD).to.deep.equal([0, 0, 0, 0])
@@ -504,8 +504,8 @@ describe('#sensor_ops()', function () {
                 assert.equal(response.retryCount, 0)
                 assert.equal(response.streamingWindowSize, 25)
                 assert.equal(response.totalInferences, 0)
-                assert.equal("lastModified" in Object.keys(response), true)
-                assert.equal("lastModifiedDelta" in Object.keys(response), true)
+                assert.equal(response.hasOwnProperty('lastModified'), true)
+                assert.equal(response.hasOwnProperty('lastModifiedDelta'), true)
             } catch (error) {
                 assert.fail('unintended response from postOutage')
             }
