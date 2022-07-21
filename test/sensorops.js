@@ -504,10 +504,10 @@ describe('#sensor_ops()', function () {
                 assert.equal(response.retryCount, 0)
                 assert.equal(response.streamingWindowSize, 25)
                 assert.equal(response.totalInferences, 0)
-                assert.equal(lastModified in response, true)
-                assert.equal(lastModifiedDelta in response, true)
+                assert.equal(lastModified in Object.keys(response), true)
+                assert.equal(lastModifiedDelta in Object.keys(response), true)
             } catch (error) {
-                assert.fail(null, response, 'unintended response from getConfig')
+                assert.fail('unintended response from getConfig')
             }
         })
     })
