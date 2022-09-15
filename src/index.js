@@ -26,6 +26,7 @@ import {GetSensorsResponse} from './model/GetSensorsResponse';
 import {GetStatusResponse} from './model/GetStatusResponse';
 import {GetSummaryResponse} from './model/GetSummaryResponse';
 import {Int32Array} from './model/Int32Array';
+import {LearningParameters} from './model/LearningParameters';
 import {MAP} from './model/MAP';
 import {MAmberStatus} from './model/MAmberStatus';
 import {MAutotune} from './model/MAutotune';
@@ -190,6 +191,12 @@ export {
      * @property {module:model/Int32Array}
      */
     Int32Array,
+
+    /**
+     * The LearningParameters model constructor.
+     * @property {module:model/LearningParameters}
+     */
+    LearningParameters,
 
     /**
      * The MAP model constructor.

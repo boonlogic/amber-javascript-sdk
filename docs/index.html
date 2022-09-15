@@ -867,7 +867,7 @@ can't be created. (bad json, missing required fields, etc)</p>
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>percentVariationOverride</span> <code class='quiet'>(any
-            = <code>.05</code>)</code>
+            = <code>null</code>)</code>
 	    
           </div>
           
@@ -1777,7 +1777,7 @@ can't be created. (bad json, missing required fields, etc)</p>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>enableLearning(sensorId, anomalyHistoryWindow, learningRateNumerator, learningRateDenominator, learningMaxClusters, learningMaxSamples)</span>
+            <span class='code strong strong truncate'>enableLearning(sensorId, learningRateNumerator, learningRateDenominator, learningMaxClusters, learningMaxSamples)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -1787,7 +1787,7 @@ can't be created. (bad json, missing required fields, etc)</p>
 
   <p>Enable learning on existing sensor</p>
 
-    <div class='pre p1 fill-light mt0'>enableLearning(sensorId: any, anomalyHistoryWindow: any, learningRateNumerator: any, learningRateDenominator: any, learningMaxClusters: any, learningMaxSamples: any): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;unknown></div>
+    <div class='pre p1 fill-light mt0'>enableLearning(sensorId: any, learningRateNumerator: any, learningRateDenominator: any, learningMaxClusters: any, learningMaxSamples: any): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;unknown></div>
   
   
 
@@ -1805,14 +1805,6 @@ can't be created. (bad json, missing required fields, etc)</p>
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>sensorId</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>anomalyHistoryWindow</span> <code class='quiet'>(any)</code>
 	    
           </div>
           
