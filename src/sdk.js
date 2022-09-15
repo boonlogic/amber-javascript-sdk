@@ -570,14 +570,13 @@ export class AmberClientClass {
     /**
      * Enable learning on existing sensor
      * @param sensorId
-     * @param anomalyHistoryWindow
      * @param learningRateNumerator
      * @param learningRateDenominator
      * @param learningMaxClusters
      * @param learningMaxSamples
      * @returns {Promise<unknown>}
      */
-    async enableLearning(sensorId, anomalyHistoryWindow, learningRateNumerator = null,
+    async enableLearning(sensorId, learningRateNumerator = null,
         learningRateDenominator = null, learningMaxClusters = null,
         learningMaxSamples = null) {
         try {
@@ -585,9 +584,6 @@ export class AmberClientClass {
             this.defaultClient.basePath = this.license_profile.server
             let body = {
                 streaming: {}
-            }
-            if (anomalyHistoryWindow != null) {
-                body.streaming['AnomalyHistoryWindow'] = anomalyHistoryWindow
             }
             if (learningRateNumerator != null) {
                 body.streaming['LearningRateNumerator'] = learningRateNumerator
@@ -607,21 +603,6 @@ export class AmberClientClass {
             throw new AmberHttpException('enableLearning failed', error)
         }
     }
-
-    /*
-
-        if learning_max_clusters:
-            streaming['learningMaxClusters'] = learning_max_clusters
-
-        url = self.license_profile['server'] + '/config'
-        headers = {
-            'Content-Type': 'application/json',
-            'sensorId': sensor_id
-        }
-        body = {'streaming': streaming}
-        return self._api_call('PUT', url, headers, body=body)['streaming']
-
-     */
 
     /**
      * Get version information for Amber server

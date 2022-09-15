@@ -14,7 +14,7 @@
  */
 import {ApiClient} from '../ApiClient';
 import {FusionConfig} from './FusionConfig';
-import {StreamingParameters} from './StreamingParameters';
+import {LearningParameters} from './LearningParameters';
 
 /**
  * The PutConfigRequest model module.
@@ -43,7 +43,7 @@ export class PutConfigRequest {
       if (data.hasOwnProperty('features'))
         obj.features = ApiClient.convertToType(data['features'], [FusionConfig]);
       if (data.hasOwnProperty('streaming'))
-        obj.streaming = StreamingParameters.constructFromObject(data['streaming']);
+        obj.streaming = LearningParameters.constructFromObject(data['streaming']);
     }
     return obj;
   }
@@ -55,7 +55,7 @@ export class PutConfigRequest {
 PutConfigRequest.prototype.features = undefined;
 
 /**
- * @member {module:model/StreamingParameters} streaming
+ * @member {module:model/LearningParameters} streaming
  */
 PutConfigRequest.prototype.streaming = undefined;
 

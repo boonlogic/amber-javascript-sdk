@@ -1,7 +1,7 @@
 const {assert, expect} = require('chai')
 const secrets = require('./secrets.js')
 const fs = require('fs')
-const {StreamingParameters, PutStreamResponse} = require('../dist')
+const {LearningParameters, PutStreamResponse} = require('../dist')
 
 let amber = null
 let test_sensor = null
@@ -28,7 +28,7 @@ describe('#sensor_ops()', function () {
                 let sensor_obj = await amber.createSensor('test-sensor-javascript')
                 test_sensor = sensor_obj.sensorId
             } catch (error) {
-                assert.fail(!error, error, 'unintended exception from createSensor')
+                assert.fail(error)
             }
         })
     })
@@ -39,7 +39,7 @@ describe('#sensor_ops()', function () {
                 let response = await amber.updateLabel(test_sensor, 'test-sensor-javascript-sdk')
                 expect(response.label).to.equal('test-sensor-javascript-sdk')
             } catch (error) {
-                assert.fail(!error, error, 'unintended exception from updateLabel')
+                assert.fail(error)
             }
         })
         it('should return http status 404 if sensor not found', async function () {
@@ -59,7 +59,7 @@ describe('#sensor_ops()', function () {
                 expect(response.label).to.equal('test-sensor-javascript-sdk')
                 expect(response.sensorId).to.equal(test_sensor)
             } catch (error) {
-                assert.fail(!error, error, 'unintended exception from getSensor')
+                assert.fail(error)
             }
         })
         it('should return http status 404 if sensor not found', async function () {
@@ -78,7 +78,7 @@ describe('#sensor_ops()', function () {
                 let response = await amber.listSensors()
                 expect(response).to.be.a('Array')
             } catch (error) {
-                assert.fail(!error, error, 'unintended exception from listSensors')
+                assert.fail(error)
             }
         })
     })
@@ -104,7 +104,7 @@ describe('#sensor_ops()', function () {
                 expect(response.features[0].label).to.equal('fancy-label')
                 expect(response.percentVariationOverride).not.hasOwnProperty('percentVariationOverride')
             } catch (error) {
-                assert.fail(!error, error, 'unintended exception from configureSensor')
+                assert.fail(error)
             }
         })
         it('should configure the test sensor using PV override', async function () {
@@ -126,7 +126,7 @@ describe('#sensor_ops()', function () {
                 expect(response.features[0].maxVal).to.equal(1)
                 expect(response.percentVariationOverride).to.equal(.055)
             } catch (error) {
-                assert.fail(!error, error, 'unintended exception from configureSensor')
+                assert.fail(error)
             }
         })
         it('should configure the test sensor using default feature values', async function () {
@@ -147,7 +147,7 @@ describe('#sensor_ops()', function () {
                 expect(response.features[0].minVal).to.equal(0)
                 expect(response.features[0].maxVal).to.equal(1)
             } catch (error) {
-                assert.fail(!error, error, 'unintended exception from configureSensor')
+                assert.fail(error)
             }
         })
         it('should return http status 404 if sensor not found', async function () {
@@ -192,7 +192,7 @@ describe('#sensor_ops()', function () {
                 expect(response.anomalyHistoryWindow).to.equal(10000)
                 expect(response.percentVariation).to.equal(.05)
             } catch (error) {
-                assert.fail(!error, error, 'unintended exception from getConfig')
+                assert.fail(error)
             }
         })
         it('should return http status 404 if sensor not found', async function () {
@@ -262,74 +262,74 @@ describe('#sensor_ops()', function () {
                 let response = await amber.configureFusion(test_sensor, features)
                 expect(response.length).to.equal(features.length)
             } catch (error) {
-                assert.fail(null, response, 'unintended response from configureFusion')
+                assert.fail(error)
             }
         })
 
-         it('should not return results when streaming partial fusion vector', async function () {
-             try {
-                 let v = [{label: 'f1', value: 2}, {label: 'f2', value: 4}]
-                 let exp = PutStreamResponse.constructFromObject({vector: "None,2,4"})
-                 let response = await amber.streamFusion(test_sensor, v, 'submit')
-                 expect(response).to.eql(exp)
-             } catch (error) {
-                 assert.fail(null, response, 'unintended response from configureFusion')
-             }
-         })
+        it('should not return results when streaming partial fusion vector', async function () {
+            try {
+                let v = [{label: 'f1', value: 2}, {label: 'f2', value: 4}]
+                let exp = PutStreamResponse.constructFromObject({vector: "None,2,4"})
+                let response = await amber.streamFusion(test_sensor, v, 'submit')
+                expect(response).to.eql(exp)
+            } catch (error) {
+                assert.fail(error)
+            }
+        })
 
-         it('should return results when streaming full fusion vector', async function () {
-             try {
-                 let v = [{'label': 'f0', 'value': 1}, {'label': 'f1', 'value': 3}, {'label': 'f2', 'value': 5}]
-                 let exp = {
-                     vector: "1,3,5",
-                     results: {
-                         clusterCount: 0,
-                         message: '',
-                         progress: 0,
-                         retryCount: 0,
-                         state: "Buffering",
-                         streamingWindowSize: 1,
-                         totalInferences: 0,
-                         AD: [0], AH: [0], AM: [0], AW: [0], ID: [0], RI: [0], SI: [0]
-                     }
-                 }
-                 let response = await amber.streamFusion(test_sensor, v, 'submit')
-                 expect(response).to.eql(exp)
-             } catch (error) {
-                 assert.fail(null, response, 'unintended response from configureFusion')
-             }
-         })
+        it('should return results when streaming full fusion vector', async function () {
+            try {
+                let v = [{'label': 'f0', 'value': 1}, {'label': 'f1', 'value': 3}, {'label': 'f2', 'value': 5}]
+                let exp = {
+                    vector: "1,3,5",
+                    results: {
+                        clusterCount: 0,
+                        message: '',
+                        progress: 0,
+                        retryCount: 0,
+                        state: "Buffering",
+                        streamingWindowSize: 1,
+                        totalInferences: 0,
+                        AD: [0], AH: [0], AM: [0], AW: [0], ID: [0], RI: [0], SI: [0]
+                    }
+                }
+                let response = await amber.streamFusion(test_sensor, v, 'submit')
+                expect(response).to.eql(exp)
+            } catch (error) {
+                assert.fail(error)
+            }
+        })
 
-         it('should return return 400 on bad fusion feature', async function () {
-             try {
-                 let v = [{label: 'f75', value: 2}, {label: 'f3', value: 4}]
-                 let response = await amber.streamFusion(test_sensor, v, 'submit')
-                 assert.fail(null, response, 'unintended response from configureFusion')
-             } catch (error) {
-                 expect(error.status).to.equal(400)
-             }
-         })
+        it('should return return 400 on bad fusion feature', async function () {
+            try {
+                let v = [{label: 'f75', value: 2}, {label: 'f3', value: 4}]
+                let response = await amber.streamFusion(test_sensor, v, 'submit')
+                assert.fail(null, response, 'unintended response from configureFusion')
+            } catch (error) {
+                expect(error.status).to.equal(400)
+            }
+        })
 
-         it('should return return 400 when duplicate fusion label specified', async function () {
-             try {
-                 let v = [{'label': 'f1', 'value': 2}, {'label': 'f1', 'value': 4}]
-                 let response = await amber.streamFusion(test_sensor, v, 'submit')
-                 assert.fail(null, response, 'unintended response from configureFusion')
-             } catch (error) {
-                 expect(error.status).to.equal(400)
-             }
-         })
+        it('should return return 400 when duplicate fusion label specified', async function () {
+            try {
+                let v = [{'label': 'f1', 'value': 2}, {'label': 'f1', 'value': 4}]
+                let response = await amber.streamFusion(test_sensor, v, 'submit')
+                assert.fail(null, response, 'unintended response from configureFusion')
+            } catch (error) {
+                expect(error.status).to.equal(400)
+            }
+        })
 
-         it('should reconfigure as non fusion sensor', async function () {
-             try {
-                 let response = await amber.configureSensor(test_sensor, 1, 25,
-                     10000, 10,
-                     10000, 1000,
-                     1000000, 10000)
-             } catch (error) {
-                 assert.fail(null, response, 'unintended response from configureFusion')
-             }
-         })
+        it('should reconfigure as non fusion sensor', async function () {
+            try {
+                let response = await amber.configureSensor(test_sensor, 1, 25,
+                    10000, 10,
+                    10000, 1000,
+                    1000000, 10000)
+            } catch (error) {
+                assert.fail(error)
+            }
+        })
     })
 
     context('postStream', function () {
@@ -351,7 +351,7 @@ describe('#sensor_ops()', function () {
                 expect(response.AW).to.deep.equal([0, 0, 0, 0])
                 expect(response.ID).to.deep.equal([0, 0, 0, 0])
             } catch (error) {
-                assert.fail(!error, error, 'unintended exception from postStream')
+                assert.fail(error)
             }
         })
         it('should return http status 404 if sensor not found', async function () {
@@ -381,7 +381,7 @@ describe('#sensor_ops()', function () {
                 }
                 expect(state).to.equal('Pretrained')
             } catch (error) {
-                assert.fail(!error, error, 'unintended exception from pretrainSensor')
+                assert.fail(error)
             }
         })
         it('should return http status 404 if sensor not found', async function () {
@@ -400,7 +400,7 @@ describe('#sensor_ops()', function () {
                 let response = await amber.getRootCause(test_sensor, '[1,2]')
                 expect(response).to.be.a('Array')
             } catch (error) {
-                assert.fail(!error, error, 'unintended exception from getRootCause')
+                assert.fail(error)
             }
         })
         it('should get root cause with pattern', async function () {
@@ -408,7 +408,7 @@ describe('#sensor_ops()', function () {
                 let response = await amber.getRootCause(test_sensor, null, '[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]]')
                 expect(response).to.be.a('Array')
             } catch (error) {
-                assert.fail(!error, error, 'unintended exception from getRootCause')
+                assert.fail(error)
             }
         })
         it('should return http status 404 if sensor not found', async function () {
@@ -426,23 +426,23 @@ describe('#sensor_ops()', function () {
             try {
                 let response = await amber.getStatus(test_sensor)
                 expect(response.pca).to.be.a('Array')
-                expect(response.pca).to.have.lengthOf(66)
+                expect(response.pca).to.have.lengthOf(55)
                 expect(response.clusterGrowth).to.be.a('Array')
-                expect(response.clusterGrowth).to.have.lengthOf(66)
+                expect(response.clusterGrowth).to.have.lengthOf(55)
                 expect(response.clusterSizes).to.be.a('Array')
-                expect(response.clusterSizes).to.have.lengthOf(66)
+                expect(response.clusterSizes).to.have.lengthOf(55)
                 expect(response.anomalyIndexes).to.be.a('Array')
-                expect(response.anomalyIndexes).to.have.lengthOf(66)
+                expect(response.anomalyIndexes).to.have.lengthOf(55)
                 expect(response.frequencyIndexes).to.be.a('Array')
-                expect(response.frequencyIndexes).to.have.lengthOf(66)
+                expect(response.frequencyIndexes).to.have.lengthOf(55)
                 expect(response.distanceIndexes).to.be.a('Array')
-                expect(response.distanceIndexes).to.have.lengthOf(66)
+                expect(response.distanceIndexes).to.have.lengthOf(55)
                 expect(response.totalInferences).to.equal(115306)
-                expect(response.numClusters).to.equal(66)
+                expect(response.numClusters).to.equal(55)
                 expect(response.anomalyThreshold).to.equal(750)
                 expect(response.state).to.equal('Monitoring')
             } catch (error) {
-                assert.fail(!error, error, 'unintended exception from getStatus')
+                assert.fail(error)
             }
         })
         it('should return http status 404 if sensor not found', async function () {
@@ -466,17 +466,17 @@ describe('#sensor_ops()', function () {
         })
         it('should enable learning', async function () {
             try {
-                let exp = StreamingParameters.constructFromObject({
-                    anomalyHistoryWindow: 1000,
+                let exp = LearningParameters.constructFromObject({
                     learningRateNumerator: 10,
                     learningRateDenominator: 10000,
                     learningMaxClusters: 1000,
-                    learningMaxSamples: 1000000})
-                let response = await amber.enableLearning(test_sensor, 1000, 10,
+                    learningMaxSamples: 1000000
+                })
+                let response = await amber.enableLearning(test_sensor, 10,
                     10000, 1000, 1000000)
                 expect(response).to.eql(exp)
             } catch (error) {
-                assert.fail(null, response, 'unintended response from getConfig')
+                assert.fail(error)
             }
         })
     })
@@ -501,7 +501,7 @@ describe('#sensor_ops()', function () {
                 assert.equal(response.streamingWindowSize, 25)
                 assert.equal(response.totalInferences, 0)
             } catch (error) {
-                assert.fail(null, response, 'unintended response from postOutage')
+                assert.fail(error)
             }
         })
     })
@@ -513,7 +513,7 @@ describe('#sensor_ops()', function () {
                 let response = await amber.deleteSensor(test_sensor)
                 expect(response.message).to.equal('sensor has been deleted')
             } catch (error) {
-                assert.fail(!error, error, 'unintended exception from deleteSensor')
+                assert.fail(error)
             }
         })
         it('should return http status 404 if sensor not found', async function () {
@@ -538,7 +538,7 @@ describe('#sensor_ops()', function () {
                 expect(response.nanoSecure).to.be.a('string')
                 expect(response.swaggerUi).to.be.a('string')
             } catch (error) {
-                assert.fail(!error, error, 'unintended exception from getVersion')
+                assert.fail(error)
             }
         })
     })
