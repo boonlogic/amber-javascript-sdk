@@ -290,7 +290,9 @@ describe('#sensor_ops()', function () {
                         state: "Buffering",
                         streamingWindowSize: 1,
                         totalInferences: 0,
-                        AD: [0], AH: [0], AM: [0], AW: [0], ID: [0], RI: [0], SI: [0]
+                        AD: [0], AH: [0], AM: [0], AW: [0],
+                        ID: [0], RI: [0], SI: [0],
+                        NI: [0], NS: [0], NW: [0], OM: [0]
                     }
                 }
                 let response = await amber.streamFusion(test_sensor, v, 'submit')
@@ -349,6 +351,10 @@ describe('#sensor_ops()', function () {
                 expect(response.AD).to.deep.equal([0, 0, 0, 0])
                 expect(response.AH).to.deep.equal([0, 0, 0, 0])
                 expect(response.AW).to.deep.equal([0, 0, 0, 0])
+                expect(response.NI).to.deep.equal([0, 0, 0, 0])
+                expect(response.NS).to.deep.equal([0, 0, 0, 0])
+                expect(response.NW).to.deep.equal([0, 0, 0, 0])
+                expect(response.OM).to.deep.equal([0, 0, 0, 0])
                 expect(response.ID).to.deep.equal([0, 0, 0, 0])
             } catch (error) {
                 assert.fail(error)
@@ -426,19 +432,19 @@ describe('#sensor_ops()', function () {
             try {
                 let response = await amber.getStatus(test_sensor)
                 expect(response.pca).to.be.a('Array')
-                expect(response.pca).to.have.lengthOf(55)
+                expect(response.pca).to.have.lengthOf(84)
                 expect(response.clusterGrowth).to.be.a('Array')
-                expect(response.clusterGrowth).to.have.lengthOf(55)
+                expect(response.clusterGrowth).to.have.lengthOf(84)
                 expect(response.clusterSizes).to.be.a('Array')
-                expect(response.clusterSizes).to.have.lengthOf(55)
+                expect(response.clusterSizes).to.have.lengthOf(84)
                 expect(response.anomalyIndexes).to.be.a('Array')
-                expect(response.anomalyIndexes).to.have.lengthOf(55)
+                expect(response.anomalyIndexes).to.have.lengthOf(84)
                 expect(response.frequencyIndexes).to.be.a('Array')
-                expect(response.frequencyIndexes).to.have.lengthOf(55)
+                expect(response.frequencyIndexes).to.have.lengthOf(84)
                 expect(response.distanceIndexes).to.be.a('Array')
-                expect(response.distanceIndexes).to.have.lengthOf(55)
+                expect(response.distanceIndexes).to.have.lengthOf(84)
                 expect(response.totalInferences).to.equal(115306)
-                expect(response.numClusters).to.equal(55)
+                expect(response.numClusters).to.equal(84)
                 expect(response.anomalyThreshold).to.equal(750)
                 expect(response.state).to.equal('Monitoring')
             } catch (error) {
@@ -459,7 +465,7 @@ describe('#sensor_ops()', function () {
         it('should return http status 404 if sensor not found', async function () {
             try {
                 let response = await amber.enableLearning(test_sensor + '7')
-                assert.fail(null, response, 'unintended response from getConfig')
+                assert.fail(null, response, 'unintended response from enableLearning')
             } catch (error) {
                 expect(error.status).to.equal(404)
             }
