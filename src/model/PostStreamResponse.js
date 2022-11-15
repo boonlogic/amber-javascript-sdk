@@ -36,23 +36,31 @@ export class PostStreamResponse extends StreamStatus {
    * @param retryCount {} number of restarts that have happened during autotuning
    * @param streamingWindowSize {} the current streaming window size that is being used
    * @param totalInferences {} inferences since the most recent restart
+   * @param ID {} 
    * @param RI {} 
    * @param SI {} 
    * @param AD {} 
    * @param AH {} 
    * @param AM {} 
    * @param AW {} 
-   * @param ID {} 
+   * @param NI {} 
+   * @param NS {} 
+   * @param NW {} 
+   * @param OM {} 
    */
-  constructor(state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences, RI, SI, AD, AH, AM, AW, ID) {
+  constructor(state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences, ID, RI, SI, AD, AH, AM, AW, NI, NS, NW, OM) {
     super(state, message, progress, clusterCount, retryCount, streamingWindowSize, totalInferences);
+    this.ID = ID;
     this.RI = RI;
     this.SI = SI;
     this.AD = AD;
     this.AH = AH;
     this.AM = AM;
     this.AW = AW;
-    this.ID = ID;
+    this.NI = NI;
+    this.NS = NS;
+    this.NW = NW;
+    this.OM = OM;
   }
 
   /**
@@ -66,6 +74,8 @@ export class PostStreamResponse extends StreamStatus {
     if (data) {
       obj = obj || new PostStreamResponse();
       StreamStatus.constructFromObject(data, obj);
+      if (data.hasOwnProperty('ID'))
+        obj.ID = Int32Array.constructFromObject(data['ID']);
       if (data.hasOwnProperty('RI'))
         obj.RI = Uint16Array.constructFromObject(data['RI']);
       if (data.hasOwnProperty('SI'))
@@ -78,12 +88,23 @@ export class PostStreamResponse extends StreamStatus {
         obj.AM = Float32Array.constructFromObject(data['AM']);
       if (data.hasOwnProperty('AW'))
         obj.AW = Uint16Array.constructFromObject(data['AW']);
-      if (data.hasOwnProperty('ID'))
-        obj.ID = Int32Array.constructFromObject(data['ID']);
+      if (data.hasOwnProperty('NI'))
+        obj.NI = Uint16Array.constructFromObject(data['NI']);
+      if (data.hasOwnProperty('NS'))
+        obj.NS = Uint16Array.constructFromObject(data['NS']);
+      if (data.hasOwnProperty('NW'))
+        obj.NW = Float32Array.constructFromObject(data['NW']);
+      if (data.hasOwnProperty('OM'))
+        obj.OM = Float32Array.constructFromObject(data['OM']);
     }
     return obj;
   }
 }
+
+/**
+ * @member {module:model/Int32Array} ID
+ */
+PostStreamResponse.prototype.ID = undefined;
 
 /**
  * @member {module:model/Uint16Array} RI
@@ -116,7 +137,22 @@ PostStreamResponse.prototype.AM = undefined;
 PostStreamResponse.prototype.AW = undefined;
 
 /**
- * @member {module:model/Int32Array} ID
+ * @member {module:model/Uint16Array} NI
  */
-PostStreamResponse.prototype.ID = undefined;
+PostStreamResponse.prototype.NI = undefined;
+
+/**
+ * @member {module:model/Uint16Array} NS
+ */
+PostStreamResponse.prototype.NS = undefined;
+
+/**
+ * @member {module:model/Float32Array} NW
+ */
+PostStreamResponse.prototype.NW = undefined;
+
+/**
+ * @member {module:model/Float32Array} OM
+ */
+PostStreamResponse.prototype.OM = undefined;
 
