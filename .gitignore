@@ -8,3 +8,4 @@ node_modules
 /examples/package.json
 *package-lock.json
 swagger.json
+amber-api.json

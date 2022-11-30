@@ -26,7 +26,7 @@ export class PostOutageResponse extends StreamStatus {
    * @alias module:model/PostOutageResponse
    * @class
    * @extends module:model/StreamStatus
-   * @param state {} state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error, Autotuning retry
+   * @param state {} state of the sensor, states will be prefixed with a state variable  followed by a colon followed by a message indicating progress.  Possible state variables  are: Not streaming, Buffering, Autotuning, Learning, Learning Complete, Monitoring,  Streaming error,  Autotuning error
    * @param message {} message to accompany the current state
    * @param progress {} completion percentage (applies to Buffering and Autotuning states)
    * @param clusterCount {} current cluster count (applies to Learning and Monitoring states)
