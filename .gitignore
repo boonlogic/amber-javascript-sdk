@@ -6,6 +6,5 @@ node_modules
 *.tgz
 /src/ApiClient.js
 /examples/package.json
-/examples/package-lock.json
-package-lock.json
+*package-lock.json
 swagger.json
