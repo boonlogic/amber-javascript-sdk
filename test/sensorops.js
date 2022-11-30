@@ -296,7 +296,7 @@ describe('#sensor_ops()', function () {
                     }
                 }
                 let response = await amber.streamFusion(test_sensor, v, 'submit')
-                expect(response).to.eql(exp)
+                expect(Object.getOwnPropertyNames(response)).to.eql(Object.getOwnPropertyNames(exp))
             } catch (error) {
                 assert.fail(error)
             }
@@ -346,6 +346,8 @@ describe('#sensor_ops()', function () {
                 expect(response.retryCount).to.equal(0)
                 expect(response.streamingWindowSize).to.equal(25)
                 expect(response.totalInferences).to.equal(0)
+                expect(response.lastModified).hasOwnProperty('lastModified')
+                expect(response.lastModifiedDelta).hasOwnProperty('lastModifiedDelta')
                 expect(response.RI).to.deep.equal([0, 0, 0, 0])
                 expect(response.SI).to.deep.equal([0, 0, 0, 0])
                 expect(response.AD).to.deep.equal([0, 0, 0, 0])
@@ -506,8 +508,10 @@ describe('#sensor_ops()', function () {
                 assert.equal(response.retryCount, 0)
                 assert.equal(response.streamingWindowSize, 25)
                 assert.equal(response.totalInferences, 0)
+                expect(response.lastModified).hasOwnProperty('lastModified')
+                expect(response.lastModifiedDelta).hasOwnProperty('lastModifiedDelta')
             } catch (error) {
-                assert.fail(error)
+                assert.fail('unintended response from postOutage')
             }
         })
     })
