@@ -1,6 +1,6 @@
 {
   "name": "amber-javascript-sdk",
-  "version": "1.0.45",
+  "version": "1.2.0",
   "description": "Boon_Logic_Amber_SDK",
   "license": "Unlicense",
   "main": "dist/sdk.js",
@@ -18,7 +18,12 @@
   "browser": {
     "fs": false
   },
-  "files": ["package.json", "dist", "README.md", "README-dev.md"],
+  "files": [
+    "package.json",
+    "dist",
+    "README.md",
+    "README-dev.md"
+  ],
   "dependencies": {
     "@stdlib/assert-is-gzip-buffer": "0.0.7",
     "buffer": "^6.0.3",
@@ -64,5 +69,6 @@
     "example": "examples",
     "test": "test"
   },
-  "author": ""
+  "author": "",
+  "keywords": []
 }
