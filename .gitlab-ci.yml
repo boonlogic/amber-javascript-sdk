@@ -1,4 +1,4 @@
-image: 715859896688.dkr.ecr.us-east-1.amazonaws.com/pipeline-x86-ubuntu:latest
+image: 715859896688.dkr.ecr.us-east-1.amazonaws.com/pipeline-x86-js:latest
 
 include:
   - template: 'Workflows/Boon-Pipelines.gitlab-ci.yml'
@@ -11,9 +11,6 @@ before_script:
   - chmod 700 ~/.ssh
   - ssh-keyscan gitlab.boonlogic.com >> ~/.ssh/known_hosts
   - chmod 644 ~/.ssh/known_hosts
-  - export PATH=~/.local/bin:$PATH
-  - . ~/.nvm/nvm.sh
-  - nvm install v14.5.0
 
 variables:
   GIT_STRATEGY: none
@@ -25,7 +22,6 @@ variables:
 stages:
   - build
   - self-test
-  - test-setup
   - test
 
 build:
@@ -33,15 +29,22 @@ build:
   tags:
     - expert-docker
   script:
-  - chmod -Rf 755 ci-root && rm -rf ci-root || true
-  - git clone git@gitlab.boonlogic.com:development/builder.git ci-root
-  - cd ci-root
-  - git checkout ${CI_COMMIT_REF_NAME} || true
-  - BRANCH=${CI_COMMIT_REF_NAME} make amber-javascript-sdk-env
-  - make amber-javascript-sdk-build
+    - chmod -Rf 755 ci-root && rm -rf ci-root || true
+    - git clone git@gitlab.boonlogic.com:development/builder.git ci-root
+    - cd ci-root
+    - git checkout ${CI_COMMIT_REF_NAME} || true
+    - ls -lta ~
+    - which npm
+    - BRANCH=${CI_COMMIT_REF_NAME} make amber-javascript-sdk-env
+    - make amber-javascript-sdk-build
+    - pipelines/expert-api/create-amber-pipeline-vars > amber.env
+    - cat amber.env
   artifacts:
     paths:
-    - ci-root/
+    - ci-root
+    reports:
+      dotenv:
+        - ci-root/amber.env
 
 code-check:
   stage: self-test
@@ -51,64 +54,48 @@ code-check:
     - cd ci-root
     - make amber-javascript-sdk-code-check
 
-test-setup:
-  stage: test-setup
+test-v1:
+  stage: test
+  needs: [build]
   tags:
     - expert-docker
+  services:
+    - name: 715859896688.dkr.ecr.us-east-1.amazonaws.com/expert-server:${AMBER_TAG}
+      alias: amber-test-fixture
+  variables:
+    BOON_PRODUCT_ID: amber-cloud
+    BOON_AMBER_PORT: 5007
+    BOON_MAX_INSTANCES: 1
+    MONGO_URI: $V1_MONGO_URI
   script:
-    - cd ci-root
-    - BRANCH=${CI_COMMIT_REF_NAME} make amber-cli-env
-    - make amber-cli-build
-    - BRANCH=${CI_COMMIT_REF_NAME} make expert-api-env
-    - make expert-api-build
+    - ci-root/pipelines/expert-api/create-amberv1-test-config > ${CI_PROJECT_DIR}/ci-root/.Amber.license
+    - cd ${CI_PROJECT_DIR}/ci-root/packages/amber-javascript-sdk/amber-javascript-sdk
+    - export AMBER_TEST_LICENSE_FILE=${CI_PROJECT_DIR}/ci-root/.Amber.license
+    - export AMBER_TEST_LICENSE_ID=v1sdk
+    - npm run test
   artifacts:
     paths:
-      - ci-root/packages/amber-cli
-      - ci-root/packages/expert-server
+    - ci-root/packages/amber-javascript-sdk/amber-javascript-sdk
 
-test-aol:
+test-v2:
   stage: test
   tags:
     - expert-docker
-  before_script:
-    - . ~/.nvm/nvm.sh
-    - nvm install v14.5.0
-    - export PATH=~/.local/bin:$PATH
-    - cd ci-root/packages/amber-cli/amber-cli
-    - export API_ID="qa-${CI_JOB_ID}"
-    - ./amber aws create-test-config --api ${API_ID} > ${CI_PROJECT_DIR}/ci-root/packages/amber-javascript-sdk/amber-javascript-sdk/Amber.license
-    - ./amber aws create-deployment --function dev:${API_ID} --release rel-0.0.598
-    - echo -n "*** sleep for 90 seconds to allow api gateway to be fully up... " && sleep 90 && echo "(done)"
-    - cd ${CI_PROJECT_DIR}/ci-root/packages/expert-server/expert-api
-    - make deploy-amber-lambda-${API_ID}
-    - echo -n "*** sleep for 5 seconds to allow lambda to be fully up... " && sleep 5 && echo "(done)"
+  needs: [build]
+  services:
+    - name: 715859896688.dkr.ecr.us-east-1.amazonaws.com/expert-server:${AMBER_TAG}
+      alias: amber-test-fixture
+  variables:
+    BOON_PRODUCT_ID: amber-cloud-v2
+    BOON_AMBER_PORT: 5007
+    BOON_MAX_INSTANCES: 1
+    MONGO_URI: $V2_MONGO_URI
   script:
+    - ci-root/pipelines/expert-api/create-amberv1-test-config > ${CI_PROJECT_DIR}/ci-root/.Amber.license
     - cd ${CI_PROJECT_DIR}/ci-root/packages/amber-javascript-sdk/amber-javascript-sdk
-    - export AMBER_TEST_LICENSE_FILE=${PWD}/Amber.license
-    - export AMBER_TEST_LICENSE_ID=aol
-    - npm run test
-  after_script:
-    - export API_ID="qa-${CI_JOB_ID}"
-    - cd ci-root/packages/amber-cli/amber-cli
-    - ./amber aws delete-deployment --function dev:${API_ID}
+    - export AMBER_TEST_LICENSE_FILE=${CI_PROJECT_DIR}/ci-root/.Amber.license
+    - export AMBER_TEST_LICENSE_ID=v2sdk
+    - echo "npm run test"
   artifacts:
     paths:
-      - ci-root/packages/amber-javascript-sdk/amber-javascript-sdk
-
-test-aoc:
-  stage: test
-  tags:
-    - expert-docker
-  before_script:
-    - . ~/.nvm/nvm.sh
-    - nvm install v14.5.0
-    - cd ci-root/packages/amber-cli/amber-cli
-    - ./amber aop create-test-config --port 9876 > ${CI_PROJECT_DIR}/ci-root/packages/amber-javascript-sdk/amber-javascript-sdk/Amber.license
-    - cd ${CI_PROJECT_DIR}/ci-root/packages/expert-server/expert-api
-    - export PORT=9876
-    - make start-amber-cloud
-  script:
-    - cd ${CI_PROJECT_DIR}/ci-root/packages/amber-javascript-sdk/amber-javascript-sdk
-    - export AMBER_TEST_LICENSE_FILE=${PWD}/Amber.license
-    - export AMBER_TEST_LICENSE_ID=aoc
-    - npm run test
+    - ci-root/packages/amber-javascript-sdk/amber-javascript-sdk
