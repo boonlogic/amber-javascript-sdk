@@ -33,12 +33,9 @@ build:
     - git clone git@gitlab.boonlogic.com:development/builder.git ci-root
     - cd ci-root
     - git checkout ${CI_COMMIT_REF_NAME} || true
-    - ls -lta ~
-    - which npm
     - BRANCH=${CI_COMMIT_REF_NAME} make amber-javascript-sdk-env
     - make amber-javascript-sdk-build
     - pipelines/expert-api/create-amber-pipeline-vars > amber.env
-    - cat amber.env
   artifacts:
     paths:
     - ci-root
